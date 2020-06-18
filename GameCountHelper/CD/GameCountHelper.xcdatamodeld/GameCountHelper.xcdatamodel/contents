@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="18G103" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="GameSession" representedClassName="GameSession" syncable="YES">
+        <attribute name="finish" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="players_ordered" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Player" inverseName="games_ordered" inverseEntity="Player"/>
+        <relationship name="rounds_ordered" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Round" inverseName="game" inverseEntity="Round"/>
+    </entity>
+    <entity name="Player" representedClassName="Player" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="games_ordered" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="GameSession" inverseName="players_ordered" inverseEntity="GameSession"/>
+    </entity>
+    <entity name="Round" representedClassName="Round" syncable="YES">
+        <attribute name="score" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
+        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GameSession" inverseName="rounds_ordered" inverseEntity="GameSession"/>
+    </entity>
+    <elements>
+        <element name="GameSession" positionX="291.0078125" positionY="-134.57421875" width="128" height="118"/>
+        <element name="Player" positionX="-171.23046875" positionY="-166.9453125" width="128" height="88"/>
+        <element name="Round" positionX="-81.86328125" positionY="147.265625" width="128" height="73"/>
+    </elements>
+</model>

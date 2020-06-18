@@ -1,0 +1,12 @@
+/* 
+  localized.strings
+  Crypto
+
+  Created by Vlad on 4/4/20.
+  Copyright © 2020 Alexx. All rights reserved.
+*/
+
+"MainMenu_NewGame"="New Game";
+"GameMenu_Settings"="Settings";
+"GameMenu_Menu"="Menu";
+

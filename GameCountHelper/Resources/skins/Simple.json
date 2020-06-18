@@ -1,0 +1,218 @@
+
+{
+    "imageNames": {},
+    "bgColor": "D6C8B8",
+    "titlesText": {
+        "textDrawing": {
+            "brush": {
+                "fill": "888068",
+                "shadow": {"color": "444444", "radius": 2.0, "offset": [2.0, 2.0]}
+            },
+            "font": {"name": "ArialRoundedMTBold", "size": 74}
+        }
+    },
+    "text": {
+        "textDrawing": {
+            "brush": {
+                "fill": "807068"
+            },
+            "font": {"name": "HelveticaNeue-Medium", "size": 18}
+        }
+    },
+    "h1": {
+        "textDrawing": {
+            "brush": {
+                "fill": "A88460",
+                "shadow": {"color": "444444", "radius": 1.0, "offset": [1.0, 1.0]}
+            },
+            "font": {"name": "Arial-BoldMT", "size": 24}
+        }
+    },
+    "h2": {
+        "textDrawing": {
+            "brush": {
+                "fill": "786660"
+            },
+            "font": {"name": "HelveticaNeue-Medium", "size": 28}
+        }
+    },
+    "editableNumbers": {
+        "normal": {
+            "box": {"fill": "00000000", "strokeWidth": 0.0},
+            "textDrawing": {
+                "brush": {
+                    "fill": "A88460",
+                    "shadow": {"color": "444444", "radius": 1.0, "offset": [1.0, 1.0]}
+                },
+                "font": {"name": "Arial-BoldMT", "size": 24}
+            }
+        },
+        "selected": {
+            "box": {"fill": "F8D490", "stroke": "886440", "strokeWidth": 1.0},
+            "textDrawing": {
+                "brush": {
+                    "fill": "B89470"
+                },
+                "font": {"name": "Arial-BoldMT", "size": 24}
+            }
+        }
+    },
+    "dropMenu": {
+        "fill": "D6C8B8", "stroke": "886440",
+        "strokeWidth": 3,
+        "shadow": {"color": "444444", "radius": 4.0, "offset": [2.0, 2.0]}
+    },
+
+    "menuButton": {
+        "normal": {
+            "textDrawing": {
+                "brush": {
+                    "fill": "A88460", "stroke": "907850",
+                    "strokeWidth": 0,
+                    "shadow": {"color": "444444", "radius": 1.0, "offset": [1.0, 1.0]}
+                },
+                "font": {"name": "Arial-BoldMT", "size": 40}
+            }
+        },
+        "hl": {
+            "textDrawing": {
+                "brush": {
+                    "fill": "A07850", "stroke": "605830",
+                    "strokeWidth": 0,
+                    "shadow": {"color": "FFFFFF", "radius": 3.0, "offset": [1.0, 1.0]}
+                },
+                "font": {"name": "Arial-BoldMT", "size": 40}
+            }
+        }
+    },
+    "barButton": {
+        "normal": {
+            "textDrawing": {
+                "brush": {
+                    "fill": "A88460",
+                    "shadow": {"color": "444444", "radius": 1.0, "offset": [1.0, 1.0]}
+                },
+                "font": {"name": "Arial-BoldMT", "size": 20}
+            }
+        },
+        "hl": {
+            "textDrawing": {
+                "brush": {
+                    "fill": "A07850", "stroke": "605830",
+                    "shadow": {"color": "FFFFFF", "radius": 3.0, "offset": [1.0, 1.0]},
+                    "strokeWidth": 0
+                },
+                "font": {"name": "Arial-BoldMT", "size": 20}
+            }
+        }
+    },
+    "barTitle": {
+        "textDrawing": {
+            "brush": {
+                "fill": "807066",
+                "shadow": {"color": "CCCC88", "radius": 1.0, "offset": [0.0, 0.0]}
+            },
+            "font": {"name": "ArialRoundedMTBold", "size": 22}
+        }
+    },
+    "divider": {
+        "fill": "A88460",
+        "shadow": {"color": "44444488", "radius": 2.0, "offset": [2.0, 2.0]}
+    },
+
+    "letterStyles": {
+        "group": {
+            "selected": {
+                "textDrawing": {
+                    "brush": {"fill": "A07066"},
+                    "font": {"name": "Verdana-Bold", "size": 36}
+                }
+            },
+            "hlSelected": {
+                "box": {"fill": "B0B07080"},
+                "textDrawing": {
+                    "brush": {"fill": "B08076"},
+                    "font": {"name": "Verdana-Bold", "size": 42}
+                }
+            },
+            "normal": {
+                "textDrawing": {
+                    "brush": {"fill": "706066"},
+                    "font": {"name": "Verdana-Bold", "size": 36}
+                }
+            },
+            "hl": {
+                "box": {"fill": "B0B07080"},
+                "textDrawing": {
+                    "brush": {"fill": "908076"},
+                    "font": {"name": "Verdana-Bold", "size": 36}
+                }
+            },
+            "disabled": {
+                "textDrawing": {
+                    "brush": {"fill": "888886"},
+                    "font": {"name": "CourierNewPS-BoldMT", "size": 36}
+                }
+            }
+        },
+        "boxAdjust": {
+            "offset": [0.0, -2.0],
+            "expand": [3.0, 3.0]
+        }
+    },
+    
+    
+    
+    "keyStyles": {
+        "normal": {
+            "box": {
+                "fill": "A88460",
+                "shadow": {"color": "444444", "radius": 1.0, "offset": [1.0, 1.0]}
+            },
+            "textDrawing": {
+                "brush": {
+                    "fill": "E0D4C0"
+                },
+                "font": {"name": "Verdana-Bold", "size": 32}
+            }
+        },
+        "hl": {
+            "box": {
+                "fill": "A88460",
+                "shadow": {"color": "FFFFFF", "radius": 3.0, "offset": [1.0, 1.0]}
+            },
+            "textDrawing": {
+                "brush": {
+                    "fill": "D6C8B8"
+                },
+                "font": {"name": "Verdana-Bold", "size": 32}
+            }
+        },
+        "selected": {
+            "box": {
+                "fill": "C8A480"
+            },
+            "textDrawing": {
+                "brush": {"fill": "D0C4B0"},
+                "font": {"name": "Verdana-Bold", "size": 32}
+            }
+        },
+        "hlSelected": {
+            "box": {
+                "fill": "B0B07080",
+                "shadow": {"color": "FFFFFF", "radius": 3.0, "offset": [1.0, 1.0]}
+            },
+            "textDrawing": {
+                "brush": {"fill": "D6C8B8"},
+                "font": {"name": "Verdana-Bold", "size": 32}
+            }
+        },
+        "disabled": {
+            "textDrawing": {
+                "brush": {"fill": "888886"},
+                "font": {"name": "CourierNewPS-BoldMT", "size": 32}
+            }
+        }
+    }
+}
+

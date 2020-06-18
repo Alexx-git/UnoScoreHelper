@@ -1,0 +1,162 @@
+
+{
+    "imageNames": {"main": "matrix"},
+    "bgColor": "003200",
+    "titlesText": {
+        "textDrawing": {
+            "font": {"name": "RingMatrix3D", "size": 74},
+            "brush": {
+                "fill": "20DD20"
+            }
+        }
+    },
+    "menuButton": {
+        "normal": {
+            "textDrawing": {
+                "brush": {
+                    "fill": "30EE30",
+                    "shadow": {"color": "FFFF30", "radius": 3.0, "offset": [0.0, 0.0]}
+                },
+                "font": {"name": "RingMatrixTwo", "size": 42}
+            }
+        },
+        "hl": {
+            "textDrawing": {
+                "brush": {
+                    "fill": "20D020",
+                    "shadow": {"color": "D0D000", "radius": 2.0, "offset": [0.0, 0.0]}
+                },
+                "font": {"name": "RingMatrixTwo", "size": 38}
+            }
+        }
+    },
+    "barButton": {
+        "normal": {
+            "textDrawing": {
+                "brush": {"fill": "30F030"},
+                "font": {"name": "RingMatrix3D", "size": 20}
+            }
+        },
+        "hl": {
+            "textDrawing": {
+                "brush": {
+                    "fill": "10D010",
+                    "shadow": {"color": "004000", "radius": 3.0, "offset": [-2.0, 2.0]}
+                },
+                "font": {"name": "RingMatrixTwo", "size": 20}
+            }
+        }
+    },
+    "barTitle": {
+        "textDrawing": {
+            "colors": {
+                "fill": "CCEECC",
+                "shadow": {"color": "88FF88", "radius": 1.0, "offset": [0.0, 0.0]}
+            },
+            "font": {"name": "VT323-Regular", "size": 22}
+        }
+    },
+    "dropMenu": {
+        "fill": "003200", "stroke": "20D020",
+        "strokeWidth": 2,
+    },
+
+    
+    "letterStyles": {
+        "group": {
+            "selected": {
+                "textDrawing": {
+                    "brush": {"fill": "B0C000"},
+                    "font": {"name": "Famirids", "size": 36},
+                }
+            },
+            "hlSelected": {
+                "box": {"fill": "B0B07080"},
+                "textDrawing": {
+                    "brush": {"fill": "A0FF00"},
+                    "font": {"name": "Famirids", "size": 42},
+                }
+            },
+            "normal": {
+                "textDrawing": {
+                    "brush": {"fill": "20D020"},
+                    "font": {"name": "Famirids", "size": 36}
+                }
+            },
+            "hl": {
+                "box": {"fill": "107810"},
+                "textDrawing": {
+                    "brush": {"fill": "B0FFB0",
+                        "shadow": {"color": "88F088", "radius": 3.0, "offset": [0.0, 0.0]}
+                    },
+                    "font": {"name": "Famirids", "size": 36}
+                }
+            },
+            "disabled": {
+                "textDrawing": {
+                    "brush": {"fill": "30EE30"},
+                    "font": {"name": "Famirids", "size": 36}
+                }
+            }
+        },
+        "boxAdjust": {
+            "offset": [0.0, 0.0],
+            "expand": [0.0, 0.0]
+        }
+    },
+    
+    "keyStyles": {
+         "normal": {
+             "box": {
+                 "stroke": "90D090",
+                 "strokeWidth": 2,
+             },
+             "textDrawing": {
+                 "brush": {
+                     "fill": "C0FFC0",
+                 },
+                 "font": {"name": "Famirids", "size": 36},
+             }
+         },
+         "hl": {
+             "box": {
+                 "stroke": "B0FFB0",
+                 "strokeWidth": 3,
+                 "shadow": {"color": "D0FFD0", "radius": 3.0, "offset": [0.0, 0.0]}
+             },
+             "textDrawing": {
+                 "brush": {
+                     "fill": "C0FFC0"
+                 },
+                 "font": {"name": "Famirids", "size": 36},
+             }
+         },
+         "selected": {
+             "box": {
+                 "stroke": "90C08080",
+                 "strokeWidth": 2,
+                 "fill": "80B07080",
+             },
+             "textDrawing": {
+                 "brush": {"fill": "B0FFB0"},
+                 "font": {"name": "Famirids", "size": 36},
+             }
+         },
+         "hlSelected": {
+             "box": {
+                 "fill": "80B07080",
+                 "shadow": {"color": "D0FFD0", "radius": 3.0, "offset": [0.0, 0.0]}
+             },
+             "textDrawing": {
+                 "brush": {"fill": "D6C8B8"},
+                 "font": {"name": "Famirids", "size": 42},
+             }
+         },
+         "disabled": {
+             "textDrawing": {
+                 "brush": {"fill": "888886"},
+                 "font": {"name": "Famirids", "size": 36}
+             }
+         }
+     }
+}
