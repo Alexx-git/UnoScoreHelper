@@ -60,7 +60,6 @@ class RowView: BoxView {
         if items.count != values.count {
             createLabels(count: values.count)
         }
-        
         for (index, value) in values.enumerated() {
             labels[index].text = value
         }
@@ -75,6 +74,7 @@ class RowView: BoxView {
             let label = SkinLabel()
             labels.append(label)
             label.textAlignment = .center
+            label.setContentHuggingPriority(.defaultHigh, for: .vertical)
             self.items.append(label.boxZero)
             prevLabel?.alPinWidth(0.0, to: label)
             prevLabel = label

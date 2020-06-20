@@ -15,6 +15,7 @@ class NumPadInputView: BoxView, Skinnable {
         case num(value: Int)
         case delete
         case ok
+        case cancel
     }
     
     typealias Handler = (ButtonType) -> Void
@@ -22,6 +23,7 @@ class NumPadInputView: BoxView, Skinnable {
     private var numButtons = [SkinButton]()
     let delButton = SkinButton()
     let okButton = SkinButton()
+    let cancelButton = SkinButton()
     let btnContentInsets = UIEdgeInsets.allX(12.0).allY(4.0)
     var handler: Handler?
     
@@ -67,7 +69,14 @@ class NumPadInputView: BoxView, Skinnable {
             self.handler?(.ok)
         }
         setupButton(okButton)
-        self.items.append(okButton.boxLeft(>=16.0))
+        self.items.append(okButton.boxLeft(16.0))
+        
+        cancelButton.setTitle("Cancel".ls)
+        cancelButton.onClick = { [unowned self] btn in
+            self.handler?(.cancel)
+        }
+        setupButton(cancelButton)
+        self.items.append(cancelButton.boxLeft(>=16.0))
     }
     
     func setSkin(_ skin: Skin?)

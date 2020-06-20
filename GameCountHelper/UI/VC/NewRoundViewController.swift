@@ -11,9 +11,13 @@ import BoxView
 
 class NewRoundViewController: UIViewController, UITextFieldDelegate {
     
+    typealias LabelTapHandler = (SkinLabel) -> Void
+    
     typealias OkHandler = ([Int])->(Void)
     
     var onOk: OkHandler?
+    
+    var tapHandler: LabelTapHandler?
     
     var roundNumber: Int = 0
 
@@ -23,8 +27,6 @@ class NewRoundViewController: UIViewController, UITextFieldDelegate {
     
     var editLabels = [SkinLabel]()
     
-    var currentField: UITextField?
-    
     var skinGroups = [SkinKey: SkinGroup]()
     
     var boxView: BoxView {
@@ -32,7 +34,6 @@ class NewRoundViewController: UIViewController, UITextFieldDelegate {
     }
     
     var contentBoxView = BoxView()
-    let actionBoxView = BoxView(axis: .x, spacing: 1.0, insets: UICommon.insets)
     
     let titleLabel = SkinLabel()
     
@@ -40,9 +41,7 @@ class NewRoundViewController: UIViewController, UITextFieldDelegate {
     
     let numPadView = NumPadInputView()
     
-    let newRoundButton = SkinButton.newAL()
-    
-    let cancelButton = SkinButton.newAL()
+    var currentEdit: SkinLabel?
     
     override func loadView() {
         view = BoxView(axis: .y, spacing: 5.0, insets: .all(10.0))
@@ -61,23 +60,38 @@ class NewRoundViewController: UIViewController, UITextFieldDelegate {
         scrollView.addBoxItem(listBoxView.boxZero)
         listBoxView.alPinHeight(.zero, to: scrollView).priority = .defaultLow
         listBoxView.alPinWidth(.zero, to: scrollView)
+        numPadView.setupWithHandler { [unowned self] btnType in
+            switch btnType {
+                case .num(let value): self.editLabelNumPadClicked("\(value)")
+                case .delete: self.editLabelBackSpaceClicked()
+                case .ok: self.newRoundButtonClicked()
+                case .cancel: self.cancelButtonClicked()
+            }
+        }
         contentBoxView.items = [
             titleLabel.boxZero,
             scrollView.boxZero,
-            numPadView.boxZero,
-            actionBoxView.boxZero
+            numPadView.boxZero
         ]
-        actionBoxView.items = [cancelButton.boxRight(>=16.0), newRoundButton.boxZero]
         setEditFields(with: players)
+        tapHandler = { label in
+            self.currentEdit = label
+        }
+        let tapRec = ClosureTapGestureRecognizer()
+        tapRec.onTap = { [unowned self] rec in
+            let point = rec.location(in: self.view)
+            for label in self.editLabels {
+                let rect = label.convert(label.bounds, to: self.view)
+                if rect.contains(point) {
+                    self.tapHandler?(label)
+//                    self.selectedLabel = label
+//                    label.state = .selected
+                    break
+                }
+            }
 
-        cancelButton.setTitle("Cancel")
-        cancelButton.onClick = {btn in
-            self.cancelButtonClicked()
         }
-        newRoundButton.setTitle("Ok")
-        newRoundButton.onClick = {btn in
-            self.newRoundButtonClicked()
-        }
+        view.addGestureRecognizer(tapRec)
     }
     
     required init?(coder: NSCoder) {
@@ -117,6 +131,26 @@ class NewRoundViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func editLabelNumPadClicked(_ value: String) {
+        if let edit = currentEdit {
+            if edit.text == "-" {
+                edit.text = value
+            } else {
+                edit.text = (edit.text ?? "") + value
+            }
+        }
+    }
+    
+    func editLabelBackSpaceClicked() {
+        if let edit = currentEdit {
+            if (edit.text?.count ?? 0) < 2 {
+                edit.text = "-"
+            } else {
+                edit.text?.removeLast()
+            }
+        }
+    }
+    
     func cancelButtonClicked() {
         self.dismiss(animated: true, completion: nil)
     }
@@ -125,11 +159,6 @@ class NewRoundViewController: UIViewController, UITextFieldDelegate {
         let values = editLabels.map{Int($0.text ?? "0") ?? 0}
         onOk?(values)
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        currentField = textField
-        return true
     }
     
     func setSkinGroups(_ groups: [SkinKey: SkinGroup])

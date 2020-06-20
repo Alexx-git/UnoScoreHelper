@@ -64,29 +64,17 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
             titleDivView.boxZero,
             tableView.boxZero,
             resultDivView.boxZero,
-            resultRowView.boxZero,
-//            editingView.boxZero,
-//            numPadView.boxTopBottom(==8.0, >=0.0)
+            resultRowView.boxBottom(>=0.0)
         ]
         
         playersRowView.insets = UICommon.insets
+        
         playersRowView.numberLabel.text = "#".ls
         setupTableView()
- 
+        
         resultRowView.insets = UICommon.insets
-        let results = [String](repeating: "0", count: game.players.count)
-        resultRowView.setRow(values: results)
-        
-//        editingView.insets.left = playersRowView.insets.left + playersRowView.numberWidth
-        
-//        numPadView.setupWithHandler { [unowned self] btnType in
-//            switch btnType {
-//                case .ok: self.addRound()
-//                case .delete: self.editFieldDeleteLast()
-//                case .num(let value): self.editFieldAddString("\(value)")
-//            }
-//        }
-        
+        updateResults()
+
         self.startTimer()
         
         tableView.onSizeUpdate = { [unowned self] sz in
@@ -153,17 +141,9 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
     
     //MARK: - Rounds
     
-    func addRound() {
-//        game.newRound(with: editingView.editFields.map{Int($0.text ?? "0") ?? 0})
-        
-        updateRows()
-       
-        if let skin = skin {
-            updateSkin(skin)
-        }
-    }
+
     
-    func updateRows() {
+    func updateResults() {
         var values = [Int](repeating: 0, count: game.players.count)
         for round in game.rounds {
             for (index, player) in game.players.enumerated() {
@@ -182,7 +162,12 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
 //                self.updateTableHeight(animated: true)
 //            }
             self.resultRowView.setRow(values: values.map{"\($0)"})
-            self.tableView.scrollToRow(at: IndexPath(row: self.game.rounds.count - 1, section: 0), at: .bottom, animated: true)
+            var lastRound = self.game.rounds.count
+            if lastRound > 0 {
+                lastRound -= 1
+                self.tableView.scrollToRow(at: IndexPath(row:  lastRound, section: 0), at: .bottom, animated: true)
+            }
+            
         }
     }
     
@@ -242,13 +227,20 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
     func clickedNewRoundButton() {
         let newRoundVC = NewRoundViewController(players: game.players)
         newRoundVC.roundNumber = game.rounds.count + 1
-        newRoundVC.onOk = { scores in
-            DispatchQueue.main.async {
-                self.game.newRound(with: scores)
-                self.tableView.reloadData()
+        newRoundVC.onOk = { [unowned self] scores in
+            self.game.newRound(with: scores)
+            if let skin = self.skin {
+                self.updateSkin(skin)
             }
+            self.updateResults()
         }
         self.present(newRoundVC, animated: true, completion: nil)
+    }
+    
+    func shufflePlayersIn(order players: [Player]) {
+        game.players = players
+        updateViewContent()
+        updateResults()
     }
 
 }

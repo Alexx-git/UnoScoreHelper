@@ -51,10 +51,16 @@ extension GameSessionViewController {
             self.dropMenuView?.dismiss(animated: false)
 //            self.navigationController?.pushViewController(SkinsViewController(), animated: true)
             self.clickedNewRoundButton()
+            self.shufflePlayersIn(order: self.game.players.reversed())
         }
 
         let moreButton = SkinButton.newAL()
         moreButton.setTitle("All Settings".ls)
+        moreButton.onClick = { [unowned self] btn in
+            self.dropMenuView?.dismiss(animated: false)
+
+            self.shufflePlayersIn(order: self.game.players.reversed())
+        }
 
         showDropMenuItems([button, moreButton], sender: sender)
     }
