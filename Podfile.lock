@@ -1,0 +1,20 @@
+PODS:
+  - BoxView (1.4.0)
+  - PureLayout (3.1.6)
+
+DEPENDENCIES:
+  - BoxView (~> 1.4)
+  - PureLayout
+
+SPEC REPOS:
+  trunk:
+    - BoxView
+    - PureLayout
+
+SPEC CHECKSUMS:
+  BoxView: 2d0fd7876b2fcaeb0321d096caaafde0181b2dd1
+  PureLayout: bd3c4ec3a3819ad387c99ebb72c6b129c3ed4d2d
+
+PODFILE CHECKSUM: f2ebe2a09b1e78359825e4384b2635b2d956b38d
+
+COCOAPODS: 1.9.1
