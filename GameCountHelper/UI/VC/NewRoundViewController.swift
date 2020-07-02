@@ -41,7 +41,7 @@ class NewRoundViewController: BaseViewController, UITextFieldDelegate {
     
     let numPadView = NumPadInputView()
     
-    var currentEdit: SkinLabel?
+    var currentLabel: SkinLabel?
     
     var rowSkinGroups = [SkinKey: SkinGroup]()
     
@@ -78,11 +78,10 @@ class NewRoundViewController: BaseViewController, UITextFieldDelegate {
         ]
         setEditFields(with: players)
         tapHandler = { label in
-//            if let skin = self.skin {
-//                label.setSkinGroups([SkinKey.label: skin.keyStyles])
+            guard label !== self.currentLabel else {return}
             label.state = .selected
-            self.currentEdit?.state = .normal
-            self.currentEdit = label
+            self.currentLabel?.state = .normal
+            self.currentLabel = label
         }
         let tapRec = ClosureTapGestureRecognizer()
         tapRec.onTap = { [unowned self] rec in
@@ -100,7 +99,7 @@ class NewRoundViewController: BaseViewController, UITextFieldDelegate {
         }
         view.addGestureRecognizer(tapRec)
         editLabels[0].state = .selected
-        currentEdit = editLabels[0]
+        currentLabel = editLabels[0]
     }
     
     
@@ -144,7 +143,7 @@ class NewRoundViewController: BaseViewController, UITextFieldDelegate {
     }
     
     func editLabelNumPadClicked(_ value: String) {
-        if let edit = currentEdit {
+        if let edit = currentLabel {
             if edit.text == "-" {
                 edit.text = value
             } else {
@@ -154,7 +153,7 @@ class NewRoundViewController: BaseViewController, UITextFieldDelegate {
     }
     
     func editLabelBackSpaceClicked() {
-        if let edit = currentEdit {
+        if let edit = currentLabel {
             if (edit.text?.count ?? 0) < 2 {
                 edit.text = "-"
             } else {
