@@ -15,9 +15,11 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
     
     let game: GameSession
     
-    let playersRowView = RowView()
+//    let playersRowView = RowView()
+    let playersRowView = GenericRowView<PlayerHeaderView>()
     let titleDivView = DivView()
-    let tableView = ContentSizedTableView.newAL()
+    let tableView = ContentSizedTableView.newAutoLayout()
+    let newRoundButton = SkinButton.newAutoLayout()
     let resultDivView = DivView()
     let resultRowView = RowView()
 //    let editingView = GameRoundEditingView()
@@ -28,13 +30,16 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
     var timeElapsedBefore: TimeInterval = 0.0
     
     var tableHeight: NSLayoutConstraint?
-//    var tableHeightIsUpdatedByRound: Bool = false
-//    var rowHeight: CGFloat? = nil
     var rowSkinGroups = [SkinKey: SkinGroup]()
     var roundViewIndexWidth: CGFloat = 0.0
     
     var editSelection: RowEditSelection?
     var rowLabelTapHandler: RowView.LabelTapHandler?
+    
+    var minAllowedFontSize: CGFloat = 16.0
+    var minFont: UIFont?
+    
+    let columnSpacing: CGFloat = 5.0
 
     //MARK: - Inits
     
@@ -58,38 +63,62 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         topBarView.titleLabel.text = "00:00"
         bgImageView.alpha = 0.5
         view.backgroundColor = .green
-
         contentBoxView.items = [
-            playersRowView.boxZero,
-            titleDivView.boxZero,
-            tableView.boxZero,
-            resultDivView.boxZero,
-            resultRowView.boxBottom(>=0.0)
+            playersRowView.boxed,
+            titleDivView.boxed,
+            tableView.boxed,
+            resultDivView.boxed,
+            resultRowView.boxed,
+            newRoundButton.boxed.all(16.0).bottom(>=16.0)
         ]
         
-        playersRowView.insets = UICommon.insets
-        
+        playersRowView.insets = .all(12.0)
+        playersRowView.spacing = columnSpacing
         playersRowView.numberLabel.text = "#".ls
+        playersRowView.onInit = { element in
+        }
+        playersRowView.closureSetValue = { header, value in
+            let (title, image) = value as! (String, UIImage?)
+            header.label.text = title
+            header.image = image
+        }
         setupTableView()
         
-        resultRowView.insets = UICommon.insets
+        newRoundButton.setTitle("New Round".ls)
+        newRoundButton.layer.cornerRadius = 10.0
+        newRoundButton.onClick = { [unowned self] btn  in
+            self.clickedNewRoundButton()
+        }
+        
+        resultRowView.insets = UIEdgeInsets.allY(8.0).allX(12.0)
+        resultRowView.spacing = columnSpacing
         updateResults()
 
         self.startTimer()
         
         tableView.onSizeUpdate = { [unowned self] sz in
-            print("sz.height: \(sz.height)")
-            let height = (sz.height >= 10.0) ? sz.height : 10.0
+//            print("sz.height: \(sz.height)")
+            let height = (sz.height >= 10.0) ? sz.height : 10
             if let tableHeight = self.tableHeight {
                 tableHeight.constant = height
                 if height > 10.0 {
-                    UIView.animate(withDuration: 0.3) {
+//                    var r = self.tableView.frame
+//                    if r.origin.x < 0.0 {
+//                        r.origin.x = 0.0
+//                        self.tableView.frame = r
+//                    }
+//                    if (self.tableView.frame.origin.x < 0.0) {
                         self.view.layoutIfNeeded()
-                    }
+//                    }
+//                    else {
+//                        UIView.animate(withDuration: 0.3) {
+//                            self.view.layoutIfNeeded()
+//                        }
+//                    }
                 }
             }
             else {
-                self.tableHeight = self.tableView.alPinHeight(<=height)
+                self.tableHeight = self.tableView.bxPinHeight(<=height)
             }
         }
         
@@ -104,9 +133,7 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
 
     override func updateViewContent() {
         super.updateViewContent()
-        playersRowView.setRow(values: game.players.map{$0.name ?? ""})
-//        editingView.setFieldCount(game.players.count)
-
+        playersRowView.setRow(values: game.players.map{($0.name ?? "", $0.image ?? nil)})
     }
     
     
@@ -115,33 +142,33 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         let font = skin.h1.textDrawing?.font
         
         roundViewIndexWidth = font?.rectSizeForText("444", fontSize: font?.pointSize ?? 16).width ?? 0
-        let titleGroups = SkinKey.label.groupsWithNormalStyle(skin.h1)
-        playersRowView.setSkinGroups([SkinKey.label: skin.letterStyles.group])        
-        rowSkinGroups = [SkinKey.label: skin.editableNumbers]
+//        let titleGroups = SkinKey.label.groupsWithNormalStyle(skin.h1)
+        let divGroup = Skin.State.normal.groupWithStyle(Skin.Style(box: skin.divider, textDrawing: nil))
+        let titleGroups = [SkinKey.label: skin.letterStyles.group, SkinKey.divider: divGroup]
+        playersRowView.setSkinGroups(titleGroups)
+        let scoreGroups = [SkinKey.label: skin.editableNumbers, SkinKey.divider: divGroup]
+
+        rowSkinGroups = scoreGroups
         titleDivView.setBrush(skin.divider)
         resultDivView.setBrush(skin.divider)
         resultRowView.setSkinGroups(titleGroups)
+        newRoundButton.setSkinGroups([SkinKey.button: skin.keyStyles])
+        tableView.separatorColor = skin.divider.fill
+        
 //        numPadView.setSkin(skin)
         playersRowView.numberWidth = roundViewIndexWidth
         resultRowView.numberWidth = roundViewIndexWidth
 //        editingView.setSkinGroups(SkinKey.textField.groupsWithNormalStyle(skin.h1))
+//        playersRowView.adjustFont()
+        adjustFont()
     }
     
-//    override func viewWillLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//
-//    }
-    
-    
+
     func valuesInPlayerOrder(for round: Round) -> [String] {
         return game.players.map{"\(round.score[$0.id] ?? 0)"}
     }
-    
 
-    
     //MARK: - Rounds
-    
-
     
     func updateResults() {
         var values = [Int](repeating: 0, count: game.players.count)
@@ -156,16 +183,17 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
 //        if self.rowHeight != nil {
 //            self.tableHeightIsUpdatedByRound = true
 //        }
-        tableView.reloadData()
+        adjustFont()
         mainAsyncAfter(0.1) {
 //            if self.rowHeight != nil {
 //                self.updateTableHeight(animated: true)
 //            }
+            self.resultRowView.numberLabel.text = ":"
             self.resultRowView.setRow(values: values.map{"\($0)"})
             var lastRound = self.game.rounds.count
             if lastRound > 0 {
                 lastRound -= 1
-                self.tableView.scrollToRow(at: IndexPath(row:  lastRound, section: 0), at: .bottom, animated: true)
+//                self.tableView.scrollToRow(at: IndexPath(row:  lastRound, section: 0), at: .bottom, animated: true)
             }
             
         }
@@ -237,10 +265,63 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         self.present(newRoundVC, animated: true, completion: nil)
     }
     
-    func shufflePlayersIn(order players: [Player]) {
-        game.players = players
-        updateViewContent()
-        updateResults()
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+//        playersRowView.adjustFont()
+    }
+    
+//    func shufflePlayersIn(order players: [Player]) {
+//        game.players = players
+//        updateViewContent()
+//        updateResults()
+//    }
+    
+    func adjustFont() {
+        var maxCount = 0
+        var maxScores = [Int]()
+        for round in game.rounds {
+            for score in round.score.values {
+                let count = "\(score)".count
+                if count > maxCount {
+                    maxCount = count
+                    maxScores = [score]
+                } else if count == maxCount {
+                    maxScores.append(score)
+                }
+            }
+        }
+        guard let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? RoundTableViewCell else {return}
+        guard let font = cell.rowView.labels.first?.font else {return}
+        var minSize: CGFloat = 40.0
+        let labelWidth = playersRowView.elementWidth()
+        let size = CGSize(width: labelWidth, height: 40.0)
+        for score in maxScores {
+            guard let text = "\(score)" as? NSString else {continue}
+            minSize = min(minSize, font.maxFontSizeForText(text, in: size))
+        }
+        minFont = font.withSize(max(minSize, minAllowedFontSize))
+        tableView.reloadData()
+        self.view.layoutIfNeeded()
     }
 
 }
+
+//extension GenericRowView<Element> where Element: PlayerHeaderView {
+//    func adjustFont() {
+//        var minSize: CGFloat = 40.0
+//        
+//        let width = elementWidth()
+//        let size = CGSize(width: width, height: 40.0)
+//        guard let font = elements.first?.label.font else {return}
+//        for element in elements {
+//            guard let text = element.label.text as? NSString else {continue}
+//            minSize = min(minSize, font.maxFontSizeForText(text, in: size))
+//        }
+//        let minFont = font.withSize(max(minSize, minAllowedFontSize))
+//        setFont(font: minFont)
+//    }
+//    
+//    func setFont(font: UIFont) {
+//        
+//    }
+//}

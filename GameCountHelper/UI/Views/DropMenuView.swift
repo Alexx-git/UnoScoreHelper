@@ -13,19 +13,18 @@ protocol DropMenuItem: FontScalable, SkinStylable where Self: UIView {
 }
 
 
-class DropMenuView: BaseView, Skinnable {
-    let boxView = BoxView()
-    var boxConstraints: LayoutAttributeConstraints = [:]
-    var heightConstraint: NSLayoutConstraint?
+class DropMenuView: BoxView, Skinnable {
+    
+    let itemsBoxView = BoxView()
+
     weak var owner: BaseViewController?
 
-    override func setupSubviews() {
-        super.setupSubviews()
-        addSubview(boxView)
+    override func setup() {
+        super.setup()
         self.backgroundColor = UIColor(white: 0.0, alpha: 0.1)
-        boxView.insets = UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0)
-        boxView.spacing = 4.0
-        layer.cornerRadius = 5.0
+        itemsBoxView.insets = UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0)
+        itemsBoxView.spacing = 4.0
+        itemsBoxView.layer.cornerRadius = 8.0
         let tapRec = ClosureTapGestureRecognizer()
         tapRec.onTap = { [unowned self] _ in
             self.dismiss()
@@ -33,31 +32,28 @@ class DropMenuView: BaseView, Skinnable {
         self.addGestureRecognizer(tapRec)
     }
     
-    override func setupConstraints() {
-        super.setupConstraints()
-//        backView.alToSuperviewWithEdgeValues(.zero)
-//        boxConstraints = boxView.alToSuperviewWithEdgeValues(.zero)
+    func setLayuot(_ layout: BoxLayout) {
+        items = [itemsBoxView.boxed(layout: layout)]
+        
     }
-    
+
     func setItemViews(_ itemViews: [DropMenuItem]) {
-        var items = [BoxItem]()
         for view in itemViews {
             view.setFontScale(0.5)
-            items.append(view.boxZero)
+            itemsBoxView.items.append(view.boxed)
         }
-        boxView.items = items
     }
     
     func setSkin(_ skin: Skin?) {
         if let brush = skin?.dropMenu {
-            boxView.setBrush(brush)
+            itemsBoxView.setBrush(brush)
         }
         var groups = SkinKeyGroups()
         groups.setOptional(skin?.barButton, forKey: .label)
         groups.setOptional(skin?.menuButton, forKey: .button)
         groups.setOptional(skin?.keyStyles, forKey: .fillButton)
         
-        for item in boxView.items {
+        for item in itemsBoxView.items {
             if let diView = item.view as? DropMenuItem {
                 diView.setSkinGroups(groups)
             }
@@ -74,11 +70,11 @@ class DropMenuView: BaseView, Skinnable {
             let vaMenu = ViewAnimator(0.2)
             vaMenu.animation = { [weak self] in
                 self?.alpha = 0.0
-                let boxRect = self?.boxView.frame ?? .zero
+                let boxRect = self?.itemsBoxView.frame ?? .zero
                 var rect = boxRect
                 rect.origin.x += rect.width / 2.0
                 rect.size *= 0.1
-                self?.boxView.transform = CGAffineTransform(from: boxRect, toRect: rect )
+                self?.itemsBoxView.transform = CGAffineTransform(from: boxRect, toRect: rect )
             }
             vaMenu.completion = dismissCompletion
             vaMenu.run()
@@ -93,29 +89,48 @@ extension BaseViewController {
     
     func showDropMenu( _ menuView: DropMenuView, from rect: CGRect, offset: CGPoint) {
         dropMenuView = menuView
+        print("rect: \(rect)")
         menuView.owner = self
-        view.addSubview(menuView)
         let gap: CGFloat = 16.0
         let top = rect.maxY + offset.y
-        menuView.alToSuperviewWithEdgeValues(.zero)
-        menuView.boxView.autoPinEdge(toSuperviewEdge: .top, withInset: top)
+        view.addBoxItem(menuView.boxed)
+        var layout = BoxLayout().withTop(==top).with(.bottom, >=gap)
         if (rect.midX > self.view.bounds.width * 0.5) {
-            menuView.boxView.autoPinEdge(toSuperviewEdge: .right, withInset: gap)
-            menuView.boxView.autoPinEdge(toSuperviewEdge: .left, withInset: gap, relation: .greaterThanOrEqual)
+            layout.left = >=gap; layout.right = >=gap
         }
         else {
-            menuView.boxView.autoPinEdge(toSuperviewEdge: .right, withInset: gap, relation: .greaterThanOrEqual)
-            menuView.boxView.autoPinEdge(toSuperviewEdge: .left, withInset: gap)
+            layout.left = >=gap; layout.right = >=gap
         }
+        menuView.setLayuot(layout)
+        
+        let constr = NSLayoutConstraint(
+            item: menuView.itemsBoxView,
+            attribute: .centerX,
+            relatedBy: .equal,
+            toItem: menuView,
+            attribute: .centerX,
+            multiplier: rect.midX / self.view.bounds.midX,
+            constant: 0.0)
+        constr.priority = .defaultLow
+        constr.isActive = true
+        
         menuView.alpha = 0.0
 
+        var startRect = rect
+        startRect.origin.y += startRect.height * 0.7
+        startRect.size.height *= 0.2
+        
         let vaMenu = ViewAnimator(0.2, 0.05)
         vaMenu.before = {
-            menuView.boxView.transform = CGAffineTransform(from: menuView.boxView.frame, toRect: rect)
+            menuView.itemsBoxView.transform = CGAffineTransform(from: menuView.itemsBoxView.frame, toRect: startRect)
           }
         vaMenu.animation = {
             menuView.alpha = 1.0
-            menuView.boxView.transform = .identity
+            menuView.itemsBoxView.transform = .identity
+        }
+        vaMenu.completion = { _ in
+//            print("menuView.managedConstraints: \(menuView.managedConstraints)")
+//            print("itemsBoxView.managedConstraints: \(menuView.itemsBoxView.managedConstraints)")
         }
         vaMenu.run()
     }

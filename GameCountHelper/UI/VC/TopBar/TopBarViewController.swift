@@ -17,23 +17,26 @@ class TopBarViewController: BaseViewController {
 
     override func setupViewContent() {
         super.setupViewContent()
-        view.addSubview(topBarView)
-        view.addSubview(contentBoxView)
         topBarView.backgroundColor = .clear
     }
-
     
-    override func setupViewConstraints() {
-        super.setupViewConstraints()
-        topBarView.alToSuperviewWithEdgeValues([.top: 16.0, .left: 0.0, .right: 0.0])
-        contentBoxView.alToSuperviewWithEdgeValues(.all(0.0, excluding: .top))
-        contentBoxView.autoPinEdge(.top, to: .bottom, of: topBarView, withOffset: 0.0)
+    override func updateViewContent() {
+        super.updateViewContent()
+        
+        if #available(iOS 11, *) {
+            view.layoutMargins = UIApplication.shared.delegate?.window??.safeAreaInsets ?? .zero
+        }
+        view.addBoxItems([
+            topBarView.boxed.height(52.0),
+            contentBoxView.boxed
+        ])
     }
     
     override func updateSkin(_ skin: Skin) {
         super.updateSkin(skin)
         view.backgroundColor = skin.bgColor
         topBarView.setSkin(skin)
+//        topBarView.backgroundColor = .red
     }
     
     func setupBackButton() {
@@ -43,14 +46,13 @@ class TopBarViewController: BaseViewController {
         }
     }
     
-    func showDropMenuItems( _ items: [DropMenuItem], sender: UIView) {
+    func showDropMenuItems( _ items: [DropMenuItem], sender: UIView, offset: CGPoint = .zero) {
         dropMenuView = DropMenuView()
         dropMenuView?.setItemViews(items)
         dropMenuView?.setSkin(self.skin)
-        var fromRect = sender.convert(sender.bounds, to: view)
-        fromRect.origin.y += fromRect.height * 0.7
-        fromRect.size = fromRect.size * 0.2
-        showDropMenu(dropMenuView!, from: fromRect, offset: CGPoint(0.0, 0.0))
+//        print("sender: \(sender)")
+        let fromRect = sender.convert(sender.bounds, to: view)
+        showDropMenu(dropMenuView!, from: fromRect, offset: offset)
     }
 }
 

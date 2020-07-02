@@ -1,20 +1,28 @@
 PODS:
-  - BoxView (1.4.0)
+  - BoxView (1.6.1)
   - PureLayout (3.1.6)
 
 DEPENDENCIES:
-  - BoxView (~> 1.4)
+  - BoxView (from `https://github.com/vladimir-d/BoxView.git`)
   - PureLayout
 
 SPEC REPOS:
   trunk:
-    - BoxView
     - PureLayout
 
+EXTERNAL SOURCES:
+  BoxView:
+    :git: https://github.com/vladimir-d/BoxView.git
+
+CHECKOUT OPTIONS:
+  BoxView:
+    :commit: 86711cb61e6796905aff2c7c6eaffda8f61cc7cf
+    :git: https://github.com/vladimir-d/BoxView.git
+
 SPEC CHECKSUMS:
-  BoxView: 2d0fd7876b2fcaeb0321d096caaafde0181b2dd1
+  BoxView: 182ab46000f99a6f1529b170d96dff6c583525b9
   PureLayout: bd3c4ec3a3819ad387c99ebb72c6b129c3ed4d2d
 
-PODFILE CHECKSUM: f2ebe2a09b1e78359825e4384b2635b2d956b38d
+PODFILE CHECKSUM: 4a628a79917253a7ff287f0f591377d3b6533af9
 
 COCOAPODS: 1.9.1

@@ -15,7 +15,7 @@ protocol Skinnable {
 typealias SkinnableView = UIView & Skinnable
 
 enum SkinKey: String {
-    case button, label, fillButton, textField
+    case button, label, fillButton, textField, divider, image
     
     func groupsWithState(_ state: Skin.State, style: Skin.Style) -> [SkinKey: SkinGroup] {
         return [self: state.groupWithStyle(style)]
@@ -36,6 +36,18 @@ protocol SkinStylable {
 protocol FontScalable {
 //    var fontScale: CGFloat {get set}
     func setFontScale(_ fontScale: CGFloat)
+    
+    func adjustScaleForFont(_ font: UIFont, text: String, rectSize: CGSize)
+}
+
+extension FontScalable {
+    func adjustScaleForFont(_ font: UIFont, text: String, rectSize: CGSize) {
+        let fontSize = font.pointSize
+        if fontSize != 0.0 {
+            let scaledSize = font.maxFontSizeForText(text as NSString, in: rectSize)
+            setFontScale(scaledSize / fontSize)
+        }
+    }
 }
 
 

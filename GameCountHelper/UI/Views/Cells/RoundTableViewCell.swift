@@ -15,7 +15,9 @@ class RoundTableViewCell: BaseTableViewCell {
     override func setup() {
         super.setup()
         self.backgroundColor = .clear
-        boxView.items = [rowView.boxZero]
+        boxView.insets = .zero
+        rowView.insets = UIEdgeInsets.allX(12.0).allY(8.0)
+        boxView.items = [rowView.boxed]
     }
     
 }

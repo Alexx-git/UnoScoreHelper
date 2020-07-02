@@ -103,12 +103,6 @@ extension Skin {
         var brush: Skin.Brush
         
         var paragraphStyle: NSParagraphStyle
-//            = {
-//            let style = NSMutableParagraphStyle()
-////            style.alignment = .center
-//            return style
-//        }()
-        
         
         enum CodingKeys: String, CodingKey {
             case brush, effects, font
@@ -129,7 +123,9 @@ extension Skin {
             self.effects = try container.decodeIfPresent(Effects.self, forKey: .effects) ?? Effects()
             let drawingFont = try container.decodeIfPresent(Skin.Font.self, forKey: .font) ?? .standard
             self.font = drawingFont.uiFont()
-            self.paragraphStyle = NSMutableParagraphStyle()
+            var ps = NSMutableParagraphStyle()
+//            ps.lineBreakMode = .byTruncatingTail
+            self.paragraphStyle = ps
 //            style.alignment = .center
         }
         

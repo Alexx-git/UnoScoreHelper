@@ -62,6 +62,10 @@ extension Skin {
             let attributes = self.textDrawing?.textAttributes()
             return NSAttributedString(string: text, attributes: attributes)
         }
+        
+        var normalGroup: SkinGroup {
+            return Skin.State.normal.groupWithStyle(self)
+        }
     }
     
     typealias StateAndStyle = (Skin.State, Skin.Style)

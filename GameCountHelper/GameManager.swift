@@ -44,6 +44,11 @@ class GameManager {
         if let storedDate = storedGameDate.value {
             let predicate = NSPredicate(format: "start == %@", storedDate as NSDate)
             currentSession = GameSession.fetch(predicate: predicate, context: cdStack.viewContext())
+            if let game = currentSession {
+                for player in game.players {
+                    player.loadImage()
+                }
+            }
         }
         if let skin = SkinManager.loadSkinWithName(settings.skinName ?? SkinManager.defaultSkinName) {
             setSkin(skin)

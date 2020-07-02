@@ -20,7 +20,8 @@ class MenuView: BaseView, Skinnable {
         stackView.axis = .vertical
         stackView.spacing = 20.0
 //        stackView.autoPinEdgesToSuperviewEdges()
-        stackView.alToSuperviewWithEdgeValues([.left: 16.0, .right: 16.0])
+        self.addBoxItem(stackView.boxed.left(16.0).right(16.0))
+        //alToSuperviewWithEdgeValues([.left: 16.0, .right: 16.0])
         stackView.autoMatch(.height, to: .height, of: self, withOffset: -16.0, relation: .lessThanOrEqual)
         stackView.autoAlignAxis(toSuperviewAxis: .horizontal)
     }

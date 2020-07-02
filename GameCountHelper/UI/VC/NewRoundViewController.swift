@@ -9,7 +9,7 @@
 import UIKit
 import BoxView
 
-class NewRoundViewController: UIViewController, UITextFieldDelegate {
+class NewRoundViewController: BaseViewController, UITextFieldDelegate {
     
     typealias LabelTapHandler = (SkinLabel) -> Void
     
@@ -43,23 +43,26 @@ class NewRoundViewController: UIViewController, UITextFieldDelegate {
     
     var currentEdit: SkinLabel?
     
+    var rowSkinGroups = [SkinKey: SkinGroup]()
+    
     override func loadView() {
         view = BoxView(axis: .y, spacing: 5.0, insets: .all(10.0))
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         boxView.backgroundColor = UIColor(rgb: 0xFFFF00,alpha: 0.5)
         titleLabel.textAlignment = .center
-        titleLabel.text = "\(roundNumber) Round scores"
+        titleLabel.text = "Round \(roundNumber) scores"
         contentBoxView.backgroundColor = .lightGray
         contentBoxView.insets = .all(16.0)
         contentBoxView.spacing = 16.0
-        boxView.items = [contentBoxView.boxBottom(>=200.0)]
+        boxView.items = [contentBoxView.boxed.bottom(>=0.0)]
         let scrollView = UIScrollView()
-        scrollView.addBoxItem(listBoxView.boxZero)
-        listBoxView.alPinHeight(.zero, to: scrollView).priority = .defaultLow
-        listBoxView.alPinWidth(.zero, to: scrollView)
+        scrollView.addBoxItem(listBoxView.boxed)
+        listBoxView.bxPinHeight(.zero, to: scrollView).priority = .defaultLow
+        listBoxView.bxPinWidth(.zero, to: scrollView)
         numPadView.setupWithHandler { [unowned self] btnType in
             switch btnType {
                 case .num(let value): self.editLabelNumPadClicked("\(value)")
@@ -69,12 +72,16 @@ class NewRoundViewController: UIViewController, UITextFieldDelegate {
             }
         }
         contentBoxView.items = [
-            titleLabel.boxZero,
-            scrollView.boxZero,
-            numPadView.boxZero
+            titleLabel.boxed,
+            scrollView.boxed,
+            numPadView.boxed
         ]
         setEditFields(with: players)
         tapHandler = { label in
+//            if let skin = self.skin {
+//                label.setSkinGroups([SkinKey.label: skin.keyStyles])
+            label.state = .selected
+            self.currentEdit?.state = .normal
             self.currentEdit = label
         }
         let tapRec = ClosureTapGestureRecognizer()
@@ -92,7 +99,11 @@ class NewRoundViewController: UIViewController, UITextFieldDelegate {
 
         }
         view.addGestureRecognizer(tapRec)
+        editLabels[0].state = .selected
+        currentEdit = editLabels[0]
     }
+    
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -108,25 +119,26 @@ class NewRoundViewController: UIViewController, UITextFieldDelegate {
         nameLabels = []
         editLabels = []
         for player in players {
-            let nameLabel = SkinLabel.newAL()
+            let nameLabel = SkinLabel.newAutoLayout()
             nameLabel.text = player.name
             nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
             nameLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
-            let editLabel = SkinLabel.newAL()
+            let editLabel = SkinLabel.newAutoLayout()
             editLabel.text = "-"
             editLabel.font = UIFont.systemFont(ofSize: 32)
+            editLabel.textAlignment = .center
             editLabel.setContentCompressionResistancePriority(.defaultHigh + 2, for: .horizontal)
-            editLabel.alPinWidth(>=100.0)
+            editLabel.bxPinWidth(>=100.0)
             let playerBoxView = BoxView(axis: .x, spacing: 10.0, insets: .zero)
-            playerBoxView.items = [nameLabel.boxZero, editLabel.boxZero]
+            playerBoxView.items = [nameLabel.boxed, editLabel.boxed]
             nameLabels.append(nameLabel)
             editLabels.append(editLabel)
-            listBoxView.items.append(playerBoxView.boxZero)
+            listBoxView.items.append(playerBoxView.boxed)
         }
         let first = nameLabels.first
         for label in nameLabels {
             if label != first {
-                label.alPinWidth(.zero, to: first)
+                label.bxPinWidth(.zero, to: first)
             }
         }
     }
@@ -161,24 +173,20 @@ class NewRoundViewController: UIViewController, UITextFieldDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func setSkinGroups(_ groups: [SkinKey: SkinGroup])
+    override func updateSkin(_ skin: Skin)
     {
-        skinGroups = groups
-        updateSkin()
-    }
-    
-    func updateSkin()
-    {
-        let labelStyle = skinGroups[.label]?.styleForState(.normal)
+        super.updateSkin(skin)
+        
+        rowSkinGroups = [SkinKey.label: skin.editableNumbers]
         for label in nameLabels {
-            label.setSkinStyle(labelStyle)
+            label.setSkinGroups(rowSkinGroups)
         }
+//        titleLabel.setSkinStyle(labelStyle)
         let textFieldStyle = skinGroups[.textField]?.styleForState(.normal)
         for tf in self.editLabels {
-            tf.setSkinStyle(textFieldStyle)
+            tf.setSkinGroups(rowSkinGroups)
         }
+        numPadView.setSkin(skin)
     }
-    
-    
 
 }

@@ -17,8 +17,8 @@ class AddPlayerTableViewCell: BaseTableViewCell {
     override func setup() {
         super.setup()
         boxView.items = [
-            plusImageView.boxZero,
-            label.boxRight(>=0.0)
+            plusImageView.boxed.centerY().right(16.0),
+            label.boxed.right(>=0.0)
         ]
         label.textAlignment = .left
     }

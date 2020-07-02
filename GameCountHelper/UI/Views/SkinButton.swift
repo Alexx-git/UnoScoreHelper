@@ -35,6 +35,19 @@ class SkinButton: StateUpdatingButton, DropMenuItem {
     func setSkinGroups(_ groups: [SkinKey: SkinGroup]) {
         guard let group = groups[skinKey] else { return }
         skinGroup = group
+
+//        for (state, style) in skinGroup {
+//            let cState = Skin.State(rawValue:state)?.controlState ?? .normal
+//            let stateTitle = attributedTitle(for: cState)?.string ?? title(for: cState) ?? ""
+//            let attr = style.textDrawing?.textAttributes()
+//            let attrTitle = NSAttributedString(string: stateTitle, attributes: attr)
+//            self.setAttributedTitle(attrTitle, for: cState)
+//        }
+//        updateState()
+        updateStateTitles()
+    }
+    
+    func updateStateTitles() {
         for key in skinGroup.keys {
             skinGroup[key]?.scaleFontBy(fontScale)
         }

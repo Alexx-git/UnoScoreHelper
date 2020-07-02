@@ -32,8 +32,8 @@ class CardCounterView: BoxView {
 //    }
 //    
 //    func setup() {
-//        cardSetView.items = viewsForCards(cards).boxZero
-//        self.items = [resultView, cardSetView].boxZero
+//        cardSetView.items = viewsForCards(cards).boxed
+//        self.items = [resultView, cardSetView].boxed
 //    }
 //    
 //    func viewsForCards(_ cards: [CounterCard]) -> [UIView] {

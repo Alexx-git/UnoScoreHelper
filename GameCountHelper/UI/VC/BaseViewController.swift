@@ -22,6 +22,7 @@ class BaseViewController: UIViewController, CommonDataAccess {
     var dropMenuView: DropMenuView?
     
     override func viewDidLoad() {
+        print(">>self: \(self)")
         super.viewDidLoad()
         setupViewContent()
         self.setupViewConstraints()

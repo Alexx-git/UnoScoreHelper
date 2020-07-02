@@ -20,7 +20,7 @@ class PlayerListViewController: TopBarViewController, UITableViewDelegate, UITab
     
     override func setupViewContent() {
         super.setupViewContent()
-        contentBoxView.items = [tableView.boxZero]
+        contentBoxView.items = [tableView.boxed]
         tableView.dataSource = self
         tableView.delegate = self
         PlayerTableViewCell.register(tableView: tableView)
@@ -42,6 +42,7 @@ class PlayerListViewController: TopBarViewController, UITableViewDelegate, UITab
 //        }
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             handler?(players[indexPath.row])
@@ -55,7 +56,9 @@ class PlayerListViewController: TopBarViewController, UITableViewDelegate, UITab
             }
             navigationController?.pushViewController(newPlayerVC, animated: true)
         }
-    } 
+    }
+    
+// MARK: - UITableViewDataSource methods
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -74,15 +77,22 @@ class PlayerListViewController: TopBarViewController, UITableViewDelegate, UITab
             let cell = PlayerTableViewCell.dequeue(tableView: tableView)
             let player = players[indexPath.row]
             cell.label.text = player.name
-            cell.deleteButton.setTitle("Delete")
-            cell.deleteButton.onClick = {btn in
+            if let image = player.image {
+                cell.avatar = image
+            }
+            cell.removeButton.setTitle("Delete")
+            cell.removeButton.onClick = {btn in
                 self.deletePlayer(number: indexPath.row)
             }
             return cell
         } else {
             let cell = AddPlayerTableViewCell.dequeue(tableView: tableView)
-            cell.plusImageView.image = UIImage(named: "plus")
+            cell.plusImageView.image = .template("plus")
             cell.label.text = "New Player"
+            if let brush = skin?.barButton.styleForState(.normal)?.textDrawing?.brush {
+                cell.plusImageView.setImageBrush(brush)
+            }
+            
             return cell
         }
         

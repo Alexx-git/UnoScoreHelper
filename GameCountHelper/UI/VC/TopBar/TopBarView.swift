@@ -7,49 +7,29 @@
 //
 
 import UIKit
+import BoxView
 
-class TopBarView: BaseView {
+class TopBarView: BoxView {
     let barContentView = UIView.newAutoLayout()
     let divView = DivView()
     let leftButton = SkinButton.custom()
     let rightButton = SkinButton.custom()
-    let titleLabel = SkinLabel.newAL()
-    let centerView = UIView()
+    let titleLabel = SkinLabel.newAutoLayout()
     var heightConstraint: NSLayoutConstraint?
     
-    override func setupSubviews() {
-        super.setupSubviews()
-        addSubview(barContentView)
-        addSubview(divView)
-        barContentView.addSubview(leftButton)
-        barContentView.addSubview(rightButton)
-        barContentView.addSubview(centerView)
-        centerView.addSubview(titleLabel)
+    override func setup() {
+        super.setup()
+        axis = .x
         titleLabel.textAlignment = .center
-        leftButton.contentHorizontalAlignment = .left
-        rightButton.contentHorizontalAlignment = .right
-    }
-    
-    override func setupConstraints() {
-        super.setupConstraints()
-        let mrg: CGFloat = 16.0
-        let gap: CGFloat = 8.0
-        barContentView.alToSuperviewWithEdgeValues(.all(0.0, excluding: .bottom))
-        divView.alToSuperviewWithEdgeValues(.all(0.0, excluding: .top))
-        divView.autoPinEdge(.top, to: .bottom, of: barContentView, withOffset: 0.0)
-        centerView.autoMatch(.width, to: .width, of: self, withMultiplier: 0.4)
-        centerView.autoAlignAxis(.vertical, toSameAxisOf: self)
-        centerView.alToSuperviewWithEdgeValues([.top: 0.0, .bottom: 0.0])
-        leftButton.autoAlignAxis(.horizontal, toSameAxisOf: self)
-        leftButton.autoPinEdge(toSuperviewEdge: .leading, withInset: mrg)
-        leftButton.autoPinEdge(.trailing, to: .leading, of: centerView, withOffset: gap, relation: .greaterThanOrEqual)
-        leftButton.setContentHuggingPriority(.defaultHigh + 1, for: .horizontal)
-        rightButton.autoAlignAxis(.horizontal, toSameAxisOf: self)
-        rightButton.autoPinEdge(toSuperviewEdge: .trailing, withInset: mrg)
-        rightButton.autoPinEdge(.leading, to: .trailing, of: centerView, withOffset: gap, relation: .greaterThanOrEqual)
-        
-        titleLabel.alToSuperviewWithEdgeValues(.all(gap))
-        heightConstraint = self.autoSetDimension(.height, toSize: 52.0)
+//        leftButton.contentHorizontalAlignment = .left
+//        rightButton.contentHorizontalAlignment = .right
+        rightButton.backgroundColor = .red
+        items = [
+            leftButton.boxed.width(>=40.0).height(>=40.0).centerY(),
+            titleLabel.boxed.centerX(padding: 8.0),
+            rightButton.boxed.width(>=40.0).height(>=40.0).centerY(),
+        ]
+        self.addBoxItems([divView.boxed.top(nil)], insets: .zero)
     }
 
     func setSkin(_ skin: Skin) {

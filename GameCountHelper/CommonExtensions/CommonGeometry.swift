@@ -72,6 +72,10 @@ extension CGSize {
 		let hInsets = (container.width - self.width) / 2.0
 		return UIEdgeInsets(top: vInsets, left: hInsets, bottom: vInsets, right: hInsets)
 	}
+    
+    func sizeWithInsets(_ insets: UIEdgeInsets) -> CGSize {
+        return CGSize(width: self.width - insets.width, height: self.height - insets.height)
+    }
 
 	var point: CGPoint {
 		return CGPoint(x: width, y: height)
@@ -111,6 +115,7 @@ extension UIEdgeInsets {
 		}
 	}
 
+
 }
 
 extension CGAffineTransform {
@@ -141,6 +146,22 @@ extension UIEdgeInsets {
     
     func allY(_ value: CGFloat) -> Self {
         return UIEdgeInsets(top: value, left: self.left, bottom: value, right: self.right)
+    }
+    
+    mutating func with(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> UIEdgeInsets {
+        self.left ?= left
+        self.top ?= top
+        self.right ?= right
+        self.bottom ?= bottom
+        return self
+    }
+    
+    var width: CGFloat {
+        return left + right
+    }
+    
+    var height: CGFloat {
+        return top + bottom
     }
 }
 

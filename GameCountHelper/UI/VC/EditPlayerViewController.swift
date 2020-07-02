@@ -16,9 +16,10 @@ class EditPlayerViewController: TopBarViewController {
     let avatarSize = CGSize(200.0, 200.0)
     
     var player: Player?
+    
+    var image: UIImage?
         
-//    let imageView = UIImageView()
-    let avatarButton = ClickButton()
+    let avatarView = AvatarView()
     
     let textField = UITextField()
         
@@ -37,17 +38,21 @@ class EditPlayerViewController: TopBarViewController {
     func savePlayer() {
         let players = Player.fetchAllInstances(in: viewContext)
         guard let name = textField.text else {return}
-        let predicate = NSPredicate(format: "name == %@", name)
         
-        guard Player.fetch(predicate: predicate, context: viewContext) == nil else {
-            //show alert
-            return
+        for player in players {
+            if (player.name == name) && (player != self.player) {
+                //We have another player with same name. Show Alert
+                return
+            }
         }
         if player == nil {
             player = Player.newInstance()
             player!.id = Int64(players.count + 1)
         }
         player!.name = name
+        player!.image = image
+        player!.saveImage()
+        
         viewContext.saveIfNeed()
         self.handler(player!)
         self.navigationController?.popToRootViewController(animated: true)
@@ -59,18 +64,20 @@ class EditPlayerViewController: TopBarViewController {
         contentBoxView.insets = UIEdgeInsets(top: 20.0, left: 20.0, bottom: 20.0, right: 20.0)
         contentBoxView.spacing = 20.0
         contentBoxView.items = [
-            avatarButton.boxCenterX(),
-            textField.boxBottom(>=0.0),
+            avatarView.boxed.centerX(),
+            textField.boxed.bottom(>=0.0),
         ]
-        avatarButton.setImage(UIImage(named: "profile"), for: .normal)
-        avatarButton.autoSetDimensions(to: avatarSize)
-        avatarButton.layer.cornerRadius = avatarSize.width * 0.5
-        avatarButton.onClick = { [unowned self] btn in
+        image = player?.image
+        avatarView.imageView.image = image ?? UIImage(named: "profile")
+        avatarView.bxSetSize(avatarSize)
+        avatarView.layer.cornerRadius = avatarSize.width * 0.5
+        avatarView.button.onClick = { [unowned self] btn in
             self.avatarButtonPressed(sender: btn)
         }
 //        imageView.image = UIImage(named: "profile")
 //        imageView.autoSetDimensions(to: avatarSize)
-//        imageView.layer.cornerRadius = avatarSize.width * 0.5
+        avatarView.imageView.layer.cornerRadius = avatarSize.width * 0.5
+        avatarView.imageView.clipsToBounds = true
         textField.borderStyle = .roundedRect
         textField.text = player?.name
         textField.placeholder = "Player name".ls
@@ -92,5 +99,26 @@ class EditPlayerViewController: TopBarViewController {
             self.savePlayer()
         }
     }
+    
+    override func updateSkin(_ skin: Skin) {
+        super.updateSkin(skin)
+        if let brush = skin.avatar.textDrawing?.brush {
+            avatarView.setBrush(brush)
+        }
+//        playerCellGroups = [.button: skin.barButton,
+//                            .label: skin.h2.normalGroup,
+//                            .image: skin.avatar.normalGroup]
+    }
 
+}
+
+class AvatarView: BoxView {
+    let imageView = UIImageView()
+    let button = StateUpdatingButton()
+    
+    override func setup() {
+        super.setup()
+        items = [imageView.boxed]
+        addBoxItem(button.boxed)
+    }
 }

@@ -29,6 +29,9 @@ extension UIFont {
     }
     
     func maxFontSizeForText(_ text:NSString, in rectSize:CGSize) -> CGFloat {
+        if rectSize.width < 1.0 || rectSize.height < 1.0 {
+            return 0.0
+        }
         var fontSize:CGFloat = 17.0
         var textSize = self.rectSizeForText(text, fontSize: fontSize)
         if textSize.width < 1.0 || textSize.height < 1.0 {

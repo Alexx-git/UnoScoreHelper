@@ -20,6 +20,8 @@ class Skin: Decodable {
     var titlesText: Skin.Style = .empty
     var h1: Skin.Style = .empty
     var h2: Skin.Style = .empty
+    var avatar: Skin.Style = .empty
+    
     var text: Skin.Style = .empty
     var editableNumbers: SkinGroup = [:]
     var menuButton: SkinGroup = [:]
@@ -35,7 +37,7 @@ class Skin: Decodable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case name, imageNames, bgColor, dropMenu, dropMenuItem, titlesText, text, h1, h2, menuButton, barButton, barTitle, divider, letterStyles, keyStyles, editableNumbers
+        case name, imageNames, bgColor, dropMenu, dropMenuItem, titlesText, text, h1, h2, avatar, menuButton, barButton, barTitle, divider, letterStyles, keyStyles, editableNumbers
     }
     
     required init(from decoder: Decoder) throws {
@@ -47,6 +49,7 @@ class Skin: Decodable {
         container.setIfDecoded(&text, key: .text)
         container.setIfDecoded(&h1, key: .h1)
         container.setIfDecoded(&h2, key: .h2)
+        container.setIfDecoded(&avatar, key: .avatar)
         container.setIfDecoded(&editableNumbers, key: .editableNumbers)
 
         container.setIfDecoded(&dropMenu, key: .dropMenu)

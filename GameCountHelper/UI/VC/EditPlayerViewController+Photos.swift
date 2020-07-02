@@ -17,29 +17,30 @@ extension EditPlayerViewController: UIImagePickerControllerDelegate, UINavigatio
                                didFinishPickingMediaWithInfo infoArray: Dictionary<UIImagePickerController.InfoKey, Any>) {
         picker.dismiss(animated: true, completion: nil)
         guard let image = infoArray[UIImagePickerController.InfoKey.originalImage] as? UIImage else {return}
-        avatarButton.setImage(image, for: .normal)
+        avatarView.imageView.image = image
+        self.image = image
     }
     
     func avatarButtonPressed(sender: UIButton) {
-        let photosButton = SkinButton.newAL()
+        let photosButton = SkinButton.newAutoLayout()
         photosButton.setTitle("Load from Gallery".ls, for: .normal)
         photosButton.onClick = {  [unowned self] btn in
             self.dropMenuView?.dismiss(animated: false)
             self.checkPhotosAccess()
         }
-        let cameraButton = SkinButton.newAL()
+        let cameraButton = SkinButton.newAutoLayout()
         cameraButton.setTitle("Take photo from Camera".ls, for: .normal)
         cameraButton.onClick = {  [unowned self] btn in
             self.dropMenuView?.dismiss(animated: false)
             self.checkCameraAccess()
         }
-        let imageButton = SkinButton.newAL()
+        let imageButton = SkinButton.newAutoLayout()
         imageButton.setTitle("Select from images".ls, for: .normal)
         imageButton.onClick = {  [unowned self] btn in
             self.dropMenuView?.dismiss(animated: false)
             // Load a controller with collection view?
         }
-        showDropMenuItems([photosButton, cameraButton, imageButton], sender: sender)
+        showDropMenuItems([photosButton, cameraButton, imageButton], sender: sender, offset: CGPoint(0.0, -40.0))
     }
     
     func checkPhotosAccess() {
@@ -78,5 +79,5 @@ extension EditPlayerViewController: UIImagePickerControllerDelegate, UINavigatio
         pickerController.sourceType = source
         self.present(pickerController, animated: true, completion: nil)
     }
-}
 
+}

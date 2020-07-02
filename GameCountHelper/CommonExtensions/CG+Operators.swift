@@ -27,8 +27,6 @@ func / (i: Int, f: CGFloat) -> CGFloat {
     return CGFloat(i) / f
 }
 
-
-
 func += ( rect: inout CGRect, size: CGSize) {
 	rect.size += size
 }

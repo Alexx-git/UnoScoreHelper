@@ -34,8 +34,8 @@ class GameRoundEditingView: BoxView, UITextFieldDelegate {
             textField.removeKeyboard()
             editFields.append(textField)
             textField.font = UIFont.systemFont(ofSize: 32)
-            self.items.append(textField.boxZero)
-            prevField?.alPinWidth(0.0, to: textField)
+            self.items.append(textField.boxed)
+            prevField?.bxPinWidth(0.0, to: textField)
             prevField = textField
         }
     }

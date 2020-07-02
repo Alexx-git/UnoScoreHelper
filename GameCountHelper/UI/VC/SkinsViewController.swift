@@ -14,7 +14,7 @@ class SkinsViewController: TopBarViewController, UITableViewDataSource, UITableV
     var skins = [Skin]()
     override func setupViewContent() {
         super.setupViewContent()
-        contentBoxView.items = [tableView.boxZero]
+        contentBoxView.items = [tableView.boxed]
         SkinTableViewCell.register(tableView: tableView)
         
         tableView.backgroundColor = .gray
@@ -59,7 +59,7 @@ class SkinTableViewCell: BaseTableViewCell {
 
     override func setup() {
         super.setup()
-        boxView.items = [skinLabel.boxZero]
+        boxView.items = [skinLabel.boxed]
         contentView.backgroundColor = .lightGray
         skinLabel.adjustsFontSizeToFitWidth = true
     }

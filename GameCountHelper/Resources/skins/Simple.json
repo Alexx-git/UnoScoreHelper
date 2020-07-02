@@ -36,6 +36,15 @@
             "font": {"name": "HelveticaNeue-Medium", "size": 28}
         }
     },
+    "avatar": {
+        "textDrawing": {
+            "brush": {
+                "stroke": "907850",
+                "strokeWidth": 2,
+                "shadow": {"color": "444444", "radius": 2.0, "offset": [1.0, 1.0]}
+            }
+        }
+    },
     "editableNumbers": {
         "normal": {
             "box": {"fill": "00000000", "strokeWidth": 0.0},

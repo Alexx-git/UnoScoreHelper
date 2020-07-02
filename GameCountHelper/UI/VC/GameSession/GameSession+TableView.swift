@@ -16,12 +16,22 @@ extension GameSessionViewController {
         tableView.delegate = self
         tableView.backgroundColor = .clear
         RoundTableViewCell.register(tableView: tableView)
-        tableView.alPinHeight(>=10.0)
+        tableView.bxPinHeight(>=2.0)
         tableView.setContentCompressionResistancePriority(.required, for: .vertical)
+        tableView.separatorInset = .zero
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let sepView = UIView()
+        sepView.backgroundColor = skin?.divider.fill ?? .clear
+        return sepView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return game.players[0].rounds.count
         return game.rounds.count
     }
     
@@ -31,8 +41,12 @@ extension GameSessionViewController {
         cell.rowView.numberWidth = roundViewIndexWidth
         cell.rowView.setRow(values: valuesInPlayerOrder(for: game.rounds[indexPath.row]))
         let round = game.rounds[indexPath.row]
+        cell.rowView.spacing = columnSpacing
         cell.rowView.tag = indexPath.row
         cell.rowView.tapHandler = rowLabelTapHandler
+        if let font = minFont {
+            cell.rowView.setFont(font: font)
+        }
         for (index, label) in cell.rowView.labels.enumerated() {
             let player = game.players[index]
             let score = round.score[player.id] ?? 0

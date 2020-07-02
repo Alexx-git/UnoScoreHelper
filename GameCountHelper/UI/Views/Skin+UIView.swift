@@ -30,3 +30,22 @@ extension UIView {
         }
     }
 }
+
+extension UIImageView {
+    
+    func setImageBrush(_ brush: Skin.Brush?) {
+        if image != nil {
+            self.tintColor = brush?.fill
+            if let shadow = brush?.shadow {
+                layer.shadowColor = shadow.color.cgColor
+                layer.shadowRadius = shadow.radius
+                layer.shadowOffset = shadow.offset
+                layer.shadowOpacity = 1.0
+            }
+            else {
+                layer.shadowOpacity = 0.0
+                layer.shadowRadius = 0.0
+            }
+        }
+    }
+}

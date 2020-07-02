@@ -17,6 +17,15 @@ prefix func ??(a: Any?) -> Bool {
 	return (a == nil) ? false : true
 }
 
+
+infix operator ?=
+
+func ?=<T>( lhs: inout T, rhs: T?) {
+    if let obj = rhs {
+        lhs = obj
+    }
+}
+
 //postfix func =?(b: Bool?) -> Bool {
 //	return b ?? false
 //}
