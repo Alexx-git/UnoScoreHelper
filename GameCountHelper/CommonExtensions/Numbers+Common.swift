@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 //extension Comparable {
 //    func clamped(to limits: ClosedRange<Self>) -> Self {
@@ -46,5 +47,17 @@ extension Int {
 extension Double {
     func toStr(_ format: String = ".2") -> String {
         return String(format: "%\(format)f", self)
+    }
+}
+
+extension Double {
+    var f: CGFloat {
+        return CGFloat(self)
+    }
+}
+
+extension Int {
+    var f: CGFloat {
+        return CGFloat(self)
     }
 }
