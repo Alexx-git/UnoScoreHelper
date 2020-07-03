@@ -16,7 +16,7 @@ extension GameSessionViewController {
         tableView.delegate = self
         tableView.backgroundColor = .clear
         RoundTableViewCell.register(tableView: tableView)
-        tableView.bxPinHeight(>=2.0)
+        tableView.bxPinHeight(>=1.0)
         tableView.setContentCompressionResistancePriority(.required, for: .vertical)
         tableView.separatorInset = .zero
     }

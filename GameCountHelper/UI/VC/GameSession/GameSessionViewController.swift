@@ -16,7 +16,7 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
     let game: GameSession
     
 //    let playersRowView = RowView()
-    let playersRowView = GenericRowView<PlayerHeaderView>()
+    let playersRowView = PlayerHeaderRowView()
     let titleDivView = DivView()
     let tableView = ContentSizedTableView.newAutoLayout()
     let newRoundButton = SkinButton.newAutoLayout()
@@ -75,13 +75,6 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         playersRowView.insets = .all(12.0)
         playersRowView.spacing = columnSpacing
         playersRowView.numberLabel.text = "#".ls
-        playersRowView.onInit = { element in
-        }
-        playersRowView.closureSetValue = { header, value in
-            let (title, image) = value as! (String, UIImage?)
-            header.label.text = title
-            header.image = image
-        }
         setupTableView()
         
         newRoundButton.setTitle("New Round".ls)
@@ -98,10 +91,11 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         
         tableView.onSizeUpdate = { [unowned self] sz in
 //            print("sz.height: \(sz.height)")
-            let height = (sz.height >= 10.0) ? sz.height : 10
+            let minHeight = 1.f
+            let height = (sz.height >= minHeight) ? sz.height : minHeight
             if let tableHeight = self.tableHeight {
                 tableHeight.constant = height
-                if height > 10.0 {
+                if height > 1.0 {
 //                    var r = self.tableView.frame
 //                    if r.origin.x < 0.0 {
 //                        r.origin.x = 0.0
@@ -133,7 +127,8 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
 
     override func updateViewContent() {
         super.updateViewContent()
-        playersRowView.setRow(values: game.players.map{($0.name ?? "", $0.image ?? nil)})
+        playersRowView.setRow(texts: game.players.map{$0.name ?? ""})
+        playersRowView.setRow(images: game.players.map{$0.image ?? nil})
     }
     
     
@@ -195,7 +190,8 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
                 lastRound -= 1
 //                self.tableView.scrollToRow(at: IndexPath(row:  lastRound, section: 0), at: .bottom, animated: true)
             }
-            
+            self.tableView.reloadData()
+//            self.tableView.onSizeUpdate?(self.tableView.contentSize)
         }
     }
     
@@ -300,8 +296,8 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
             minSize = min(minSize, font.maxFontSizeForText(text, in: size))
         }
         minFont = font.withSize(max(minSize, minAllowedFontSize))
-        tableView.reloadData()
-        self.view.layoutIfNeeded()
+//        tableView.reloadData()
+//        self.view.layoutIfNeeded()
     }
 
 }
