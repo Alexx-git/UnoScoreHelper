@@ -9,6 +9,8 @@
 import UIKit
 import BoxView
 
+
+
 class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UITableViewDataSource {
     
     var players = [Player]()
@@ -150,6 +152,15 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return indexPath.section == 0
+    }
+    
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        if proposedDestinationIndexPath.section == 0 {
+            return proposedDestinationIndexPath
+        } else {
+            let indexPath = IndexPath(row: players.count - 1, section: 0)
+            return indexPath
+        }
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
