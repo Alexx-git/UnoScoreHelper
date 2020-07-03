@@ -141,6 +141,8 @@ class NewRoundViewController: BaseViewController, UITextFieldDelegate {
             editLabel.textAlignment = .center
             editLabel.setContentCompressionResistancePriority(.defaultHigh + 2, for: .horizontal)
             editLabel.bxPinWidth(>=100.0)
+            editLabel.layer.cornerRadius = 5.0
+            editLabel.clipsToBounds = true
             let playerBoxView = BoxView(axis: .x, spacing: 10.0, insets: .zero)
             playerBoxView.items = [nameLabel.boxed, editLabel.boxed]
             nameLabels.append(nameLabel)
