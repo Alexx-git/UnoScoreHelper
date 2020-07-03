@@ -48,6 +48,19 @@ class NewRoundViewController: BaseViewController, UITextFieldDelegate {
     override func loadView() {
         view = BoxView(axis: .y, spacing: 5.0, insets: .all(10.0))
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let ownSize = view.bounds.size
+        var rowCount = 1
+        if ownSize.height > ownSize.width * 1.5 {
+            rowCount = 4
+        }
+        else if ownSize.height > ownSize.width * 0.75 {
+            rowCount = 2
+        }
+        numPadView.rowCount = rowCount
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
