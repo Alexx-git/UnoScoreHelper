@@ -18,6 +18,8 @@ class EditPlayerViewController: TopBarViewController {
     var player: Player?
     
     var image: UIImage?
+    
+    let profileImage = UIImage(named: "profile")
         
     let avatarView = AvatarView()
     
@@ -68,7 +70,7 @@ class EditPlayerViewController: TopBarViewController {
             textField.boxed.bottom(>=0.0),
         ]
         image = player?.image
-        avatarView.imageView.image = image ?? UIImage(named: "profile")
+        avatarView.imageView.image = image ?? profileImage
         avatarView.bxSetSize(avatarSize)
         avatarView.layer.cornerRadius = avatarSize.width * 0.5
         avatarView.button.onClick = { [unowned self] btn in
@@ -110,15 +112,4 @@ class EditPlayerViewController: TopBarViewController {
 //                            .image: skin.avatar.normalGroup]
     }
 
-}
-
-class AvatarView: BoxView {
-    let imageView = UIImageView()
-    let button = StateUpdatingButton()
-    
-    override func setup() {
-        super.setup()
-        items = [imageView.boxed]
-        addBoxItem(button.boxed)
-    }
 }

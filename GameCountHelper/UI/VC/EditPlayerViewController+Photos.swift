@@ -40,7 +40,14 @@ extension EditPlayerViewController: UIImagePickerControllerDelegate, UINavigatio
             self.dropMenuView?.dismiss(animated: false)
             // Load a controller with collection view?
         }
-        showDropMenuItems([photosButton, cameraButton, imageButton], sender: sender, offset: CGPoint(0.0, -40.0))
+        let removeButton = SkinButton.newAutoLayout()
+        removeButton.setTitle("Clear image".ls, for: .normal)
+        removeButton.onClick = {  [unowned self] btn in
+            self.dropMenuView?.dismiss(animated: false)
+            self.image = nil
+            self.avatarView.imageView.image = self.profileImage
+        }
+        showDropMenuItems([photosButton, cameraButton, imageButton, removeButton], sender: sender, offset: CGPoint(0.0, -40.0))
     }
     
     func checkPhotosAccess() {
