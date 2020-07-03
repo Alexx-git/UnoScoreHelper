@@ -9,32 +9,25 @@
 import UIKit
 import BoxView
 
-class PlayerHeaderView: BoxView {
+class PlayerHeaderView: BoxView, RowElement {
+    
+    
     
     var image: UIImage? = nil {
         didSet {
-            imageView.image = image
-            imageView.layer.cornerRadius = widthConstant / 2
-            updateItems()
-        }
-    }
-    
-    var widthConstant: CGFloat = 60.0 {
-        didSet {
+            avatarView.imageView.image = image
             updateItems()
         }
     }
 
-    let imageView = UIImageView()
-    let label = UILabel()
+    let avatarView = AvatarView()
+    let label: SkinLabel? = SkinLabel()
     
     func updateItems() {
         optItems = [
-            imageView.boxed.width(widthConstant).height(widthConstant).useIf(image != nil),
-            label.boxed
+            avatarView.boxed.centerX().width(<=60.0).useIf(image != nil),
+            label!.boxed.top(>=0.0)
         ]
     }
-    
-    
 
 }

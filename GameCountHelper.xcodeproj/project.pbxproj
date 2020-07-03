@@ -55,6 +55,10 @@
 		F502AA3E247847ED008F281A /* PlayerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F502AA3D247847ED008F281A /* PlayerListViewController.swift */; };
 		F509BBBF24AA5C3000AACB4F /* GenericRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F509BBBE24AA5C3000AACB4F /* GenericRowView.swift */; };
 		F509BBFD24ACFA3300AACB4F /* PlayerHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F509BBFC24ACFA3300AACB4F /* PlayerHeaderView.swift */; };
+		F509BC0124AE1BEC00AACB4F /* ElementRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F509BC0024AE1BEC00AACB4F /* ElementRowView.swift */; };
+		F509BC0A24AE6F1000AACB4F /* PlayerHeaderRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F509BC0924AE6F1000AACB4F /* PlayerHeaderRowView.swift */; };
+		F509BC0C24AE772F00AACB4F /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F509BC0B24AE772E00AACB4F /* AvatarView.swift */; };
+		F509BC0E24AF6E2300AACB4F /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F509BC0D24AF6E2300AACB4F /* AboutViewController.swift */; };
 		F52A84A72479909E0049A83A /* AddPlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52A84A62479909E0049A83A /* AddPlayerTableViewCell.swift */; };
 		F52A84A92479BF880049A83A /* UIImage+Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52A84A82479BF880049A83A /* UIImage+Common.swift */; };
 		F5505520248050AC004DC244 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F550551F248050AC004DC244 /* BaseTableViewCell.swift */; };
@@ -142,6 +146,10 @@
 		F502AA3D247847ED008F281A /* PlayerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerListViewController.swift; sourceTree = "<group>"; };
 		F509BBBE24AA5C3000AACB4F /* GenericRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericRowView.swift; sourceTree = "<group>"; };
 		F509BBFC24ACFA3300AACB4F /* PlayerHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHeaderView.swift; sourceTree = "<group>"; };
+		F509BC0024AE1BEC00AACB4F /* ElementRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementRowView.swift; sourceTree = "<group>"; };
+		F509BC0924AE6F1000AACB4F /* PlayerHeaderRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerHeaderRowView.swift; sourceTree = "<group>"; };
+		F509BC0B24AE772E00AACB4F /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		F509BC0D24AF6E2300AACB4F /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		F52A84A62479909E0049A83A /* AddPlayerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlayerTableViewCell.swift; sourceTree = "<group>"; };
 		F52A84A82479BF880049A83A /* UIImage+Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Common.swift"; sourceTree = "<group>"; };
 		F550551F248050AC004DC244 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
@@ -280,7 +288,10 @@
 				F57ABB0724672A9D004BF7D7 /* ClickButton.swift */,
 				F502A9CA2475684C008F281A /* RowView.swift */,
 				F509BBBE24AA5C3000AACB4F /* GenericRowView.swift */,
+				F509BC0024AE1BEC00AACB4F /* ElementRowView.swift */,
+				F509BC0924AE6F1000AACB4F /* PlayerHeaderRowView.swift */,
 				F509BBFC24ACFA3300AACB4F /* PlayerHeaderView.swift */,
+				F509BC0B24AE772E00AACB4F /* AvatarView.swift */,
 				F502AA2624783133008F281A /* ClosureTapGestureRecognizer.swift */,
 			);
 			path = Views;
@@ -403,6 +414,7 @@
 				F550553C2484106A004DC244 /* EditPlayerViewController+Photos.swift */,
 				F550552324805FC4004DC244 /* SkinsViewController.swift */,
 				F5534716248D68CB00883610 /* NewRoundViewController.swift */,
+				F509BC0D24AF6E2300AACB4F /* AboutViewController.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -535,6 +547,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F509BC0124AE1BEC00AACB4F /* ElementRowView.swift in Sources */,
 				F55055392483291E004DC244 /* NSParagraphStyle+properties.swift in Sources */,
 				F5505530248165FB004DC244 /* SkinTextField.swift in Sources */,
 				F502AA12247810F9008F281A /* CommonGeometry.swift in Sources */,
@@ -562,6 +575,7 @@
 				F502AA0B247810F9008F281A /* CP+URL.swift in Sources */,
 				F58BFA95246D838A0067D262 /* RoundTableViewCell.swift in Sources */,
 				F502A9FF247810F9008F281A /* TopBarView.swift in Sources */,
+				F509BC0C24AE772F00AACB4F /* AvatarView.swift in Sources */,
 				F550553D2484106A004DC244 /* EditPlayerViewController+Photos.swift in Sources */,
 				F502AA2424782FB2008F281A /* GameSettings.swift in Sources */,
 				F502AA3824783DB7008F281A /* Functions.swift in Sources */,
@@ -581,6 +595,7 @@
 				F502AA06247810F9008F281A /* UIExtensions.swift in Sources */,
 				F58BFA91246D7F5F0067D262 /* UDStored.swift in Sources */,
 				F57ABB0824672A9D004BF7D7 /* ClickButton.swift in Sources */,
+				F509BC0A24AE6F1000AACB4F /* PlayerHeaderRowView.swift in Sources */,
 				F509BBFD24ACFA3300AACB4F /* PlayerHeaderView.swift in Sources */,
 				F57ABB00246722B1004BF7D7 /* CDStack.swift in Sources */,
 				F502AA08247810F9008F281A /* CP+RawRepresentable.swift in Sources */,
@@ -610,6 +625,7 @@
 				F502A9F9247810F9008F281A /* SkinCheckButton.swift in Sources */,
 				F502AA15247810F9008F281A /* String+Localization.swift in Sources */,
 				F502AA09247810F9008F281A /* PL+Common.swift in Sources */,
+				F509BC0E24AF6E2300AACB4F /* AboutViewController.swift in Sources */,
 				F57ABB0624672988004BF7D7 /* NewGameViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

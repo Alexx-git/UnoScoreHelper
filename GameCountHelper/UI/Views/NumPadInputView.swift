@@ -32,6 +32,12 @@ class NumPadInputView: BoxView, Skinnable {
     let numBtnContentInsets = UIEdgeInsets.allX(4.0).allY(0.0)
     var handler: Handler?
     
+    var rowCount: Int = 2 {
+        didSet {
+            updateLayout()
+        }
+    }
+    
     var numBtnWidthFactor: CGFloat = 1.0
     var actBtnWidthFactor: CGFloat = 1.0
     func setupButton(_ btn: SkinButton) {
@@ -43,6 +49,8 @@ class NumPadInputView: BoxView, Skinnable {
 //        btn.contentEdgeInsets = numBtnContentInsets
         btn.layer.cornerRadius = 5.0
     }
+    
+    
 
     func setupWithHandler(_ handler: @escaping Handler) {
         self.handler = handler
@@ -52,7 +60,7 @@ class NumPadInputView: BoxView, Skinnable {
         let onNumClick: ClickButton.Handler = { [unowned self] btn in
             self.handler?(.num(value: btn.tag))
         }
-        insets = UICommon.insets
+        insets = .allY(16.0)
         numButtons = []
         items = []
         var prevView: UIView?
@@ -94,25 +102,19 @@ class NumPadInputView: BoxView, Skinnable {
         }
         setupButton(cancelButton)
         self.items.append(cancelButton.boxed.left(>=16.0))
-        setupLayout()
+        updateLayout()
     }
     
-    func setupLayout() {
-        let label1 = UILabel()
-        label1.text = "label1"
-        label1.backgroundColor = .yellow
-        let label2 = UILabel()
-        label2.text = "label2"
-        label2.backgroundColor = .cyan
-        
-        let rowCount = 4
+    func updateLayout() {
+        guard numButtons.count > 0 else { return }
+
         rowViews = Array(0..<rowCount).map{_ in BoxView(axis: .x, spacing: 0.0, insets: .zero)}
         if (rowCount == 1) {
-            numBtnWidthFactor = 0.07
-            actBtnWidthFactor = 0.1
+            numBtnWidthFactor = 0.068
+            actBtnWidthFactor = 0.11
             setRowView(rowViews[0], numIndices: Array(0..<10))
-            rowViews[0].items.append(delButton.boxed.left(16.0))
-            rowViews[0].items.append(okButton.boxed.left(16.0))
+            rowViews[0].items.append(delButton.boxed.left(10.0))
+            rowViews[0].items.append(okButton.boxed.left(10.0))
         }
         if (rowCount == 2) {
             numBtnWidthFactor = 0.14
@@ -150,7 +152,7 @@ class NumPadInputView: BoxView, Skinnable {
                 rowView.items.append(.flex(1.0))
             }
         }
-        print("rowView.items: \(rowView.items)")
+//        print("rowView.items: \(rowView.items)")
     }
     
     func setSkin(_ skin: Skin?)
@@ -166,6 +168,7 @@ class NumPadInputView: BoxView, Skinnable {
             okButton.setSkinGroups(groups)
 //            self.setNeedsLayout()
         }
+//        backgroundColor = .green
     }
     
     func updateNumFontScale() {
