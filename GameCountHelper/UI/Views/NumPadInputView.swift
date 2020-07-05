@@ -32,7 +32,7 @@ class NumPadInputView: BoxView, Skinnable {
     let numBtnContentInsets = UIEdgeInsets.allX(4.0).allY(0.0)
     var handler: Handler?
     
-    var rowCount: Int = 2 {
+    var rowCount: Int = 0 {
         didSet {
             updateLayout()
         }
@@ -62,26 +62,17 @@ class NumPadInputView: BoxView, Skinnable {
         }
         insets = .allY(16.0)
         numButtons = []
-        items = []
-        var prevView: UIView?
         for i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] {
             let btn = SkinButton()
             btn.setTitle("\(i)")
             btn.tag = i
             btn.onClick = onNumClick
-//            btn.titleLabel?.adjustsFontSizeToFitWidth = true
-//            btn.titleLabel?.numberOfLines = 1
-//            btn.titleLabel?.lineBreakMode = .byClipping
-//            btn.titleLabel?.baselineAdjustment = .alignCenters
-//            btn.contentVerticalAlignment = .center
             setupNumButton(btn)
             numButtons.append(btn)
         }
         delButton.setTitle("⌫")
         delButton.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
         delButton.fontScale = 1.5
-//        delButton.contentEdgeInsets = delButton.contentEdgeInsets.allY(-10.0)
-        self.items.append(delButton.boxed.left(16.0))
         delButton.onClick = { [unowned self] btn in
             self.handler?(.delete)
         }
@@ -89,25 +80,22 @@ class NumPadInputView: BoxView, Skinnable {
         
         okButton.setTitle("OK".ls)
         okButton.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
-
         okButton.onClick = { [unowned self] btn in
             self.handler?(.ok)
         }
         setupButton(okButton)
-//        self.items.append(okButton.left(16.0))
-        
-        cancelButton.setTitle("Cancel".ls)
-        cancelButton.onClick = { [unowned self] btn in
-            self.handler?(.cancel)
-        }
-        setupButton(cancelButton)
-        self.items.append(cancelButton.boxed.left(>=16.0))
+
         updateLayout()
+    }
+    
+    override func layoutIfNeeded() {
+        super.layoutIfNeeded()
     }
     
     func updateLayout() {
         guard numButtons.count > 0 else { return }
-
+        print("updateLayout numpad: \(self)")
+        print("rowCount: \(rowCount)")
         rowViews = Array(0..<rowCount).map{_ in BoxView(axis: .x, spacing: 0.0, insets: .zero)}
         if (rowCount == 1) {
             numBtnWidthFactor = 0.068
@@ -117,12 +105,14 @@ class NumPadInputView: BoxView, Skinnable {
             rowViews[0].items.append(okButton.boxed.left(10.0))
         }
         if (rowCount == 2) {
-            numBtnWidthFactor = 0.14
+            numBtnWidthFactor = 0.15
             actBtnWidthFactor = 0.16
             setRowView(rowViews[0], numIndices: Array(0..<5))
             setRowView(rowViews[1], numIndices: Array(5..<10))
-            rowViews[0].items.append(delButton.boxed.left(>=16.0))
-            rowViews[1].items.append(okButton.boxed.left(>=16.0))
+            rowViews[0].items.append(.flex(2.0))
+            rowViews[0].items.append(delButton.boxed)
+            rowViews[1].items.append(.flex(2.0))
+            rowViews[1].items.append(okButton.boxed)
         }
         if (rowCount == 4) {
             numBtnWidthFactor = 0.31

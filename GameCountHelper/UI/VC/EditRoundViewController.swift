@@ -1,5 +1,5 @@
 //
-//  NewRoundViewController.swift
+//  EditRoundViewController.swift
 //  GameCountHelper
 //
 //  Created by Vlad on 6/7/20.
@@ -9,7 +9,7 @@
 import UIKit
 import BoxView
 
-class NewRoundViewController: BaseViewController, UITextFieldDelegate {
+class EditRoundViewController: BaseViewController, UITextFieldDelegate {
     
     typealias LabelTapHandler = (SkinLabel) -> Void
     
@@ -20,6 +20,8 @@ class NewRoundViewController: BaseViewController, UITextFieldDelegate {
     var tapHandler: LabelTapHandler?
     
     var roundNumber: Int = 0
+    
+    var values: [Int]?
 
     var players = [Player]()
     
@@ -130,15 +132,24 @@ class NewRoundViewController: BaseViewController, UITextFieldDelegate {
         listBoxView.items = []
         nameLabels = []
         editLabels = []
-        for player in players {
+        for (index, player) in players.enumerated() {
             let nameLabel = SkinLabel.newAutoLayout()
             nameLabel.text = player.name
             nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
             nameLabel.setContentCompressionResistancePriority(.defaultHigh + 1, for: .horizontal)
             let editLabel = SkinLabel.newAutoLayout()
-            editLabel.text = "-"
             editLabel.font = UIFont.systemFont(ofSize: 32)
             editLabel.textAlignment = .center
+            if let value = values?[index] {
+                if value == 0 {
+                    editLabel.text = "-"
+                } else {
+                    editLabel.text = "\(value)"
+                }
+            } else {
+                editLabel.text = "-"
+            }
+            
             editLabel.setContentCompressionResistancePriority(.defaultHigh + 2, for: .horizontal)
             editLabel.bxPinWidth(>=100.0)
             editLabel.layer.cornerRadius = 5.0

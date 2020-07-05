@@ -8,19 +8,13 @@
 
 import Foundation
 
-
-
-//enum KeyboardType: String {
-//    case abc, qwerty
-//}
-
 class GameSettings: NSObject, Codable {
-    
-    
     
     var showTimer = true
     
     var skinName: String?
+    
+    var inPlaceEditing = false
     
     override init() {
         super.init()

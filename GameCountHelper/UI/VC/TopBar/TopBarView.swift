@@ -38,5 +38,5 @@ class TopBarView: BoxView {
         titleLabel.setSkinStyle(skin.barTitle)
         divView.setBrush(skin.divider)
     }
-    
+
 }

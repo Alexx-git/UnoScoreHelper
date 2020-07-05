@@ -32,6 +32,7 @@ extension GameSessionViewController {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("game.rounds.count: \(game.rounds.count)")
         return game.rounds.count
     }
     

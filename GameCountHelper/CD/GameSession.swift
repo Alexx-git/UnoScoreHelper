@@ -50,11 +50,12 @@ extension GameSession {
         return game
     }
     
-    func newRound(with values: [Int]) -> Round {
+    @discardableResult
+    func newRound(with values: [Int]?) -> Round {
         let context = GameManager.shared.cdStack.viewContext()
         let round = Round.createObject(context: context)
         for (index, player) in players.enumerated() {
-            round.score[player.id] = values[index]
+            round.score[player.id] = values?[index] ?? 0
         }
         rounds.append(round)
         context.saveIfNeed()

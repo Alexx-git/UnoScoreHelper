@@ -11,6 +11,7 @@ import CoreData
 
 extension UDStoredKey {
     static let savedGameStartDate = UDStoredKey("last unfinished game start date")
+    static let savedSettings = UDStoredKey("game settings")
 }
 
 class GameManager {
@@ -23,7 +24,7 @@ class GameManager {
     
     let cdStack = CDStack()
     
-    var settings = GameSettings()
+    var settings: GameSettings
     
     var currentSession: GameSession?
     
@@ -33,9 +34,16 @@ class GameManager {
     
     var storedGameDate = UDStored<Date>(key: .savedGameStartDate)
     
+    var storedSettings = UDStored<GameSettings>(key: .savedSettings)
+    
     private(set) var skin = Skin()
     
     init() {
+        if let loadedSettings = storedSettings.value {
+            settings = loadedSettings
+        } else {
+            settings = GameSettings()
+        }
         if #available(iOS 13.0, *) {
             NotificationCenter.default.addObserver(self, selector: #selector(save), name: UIScene.willDeactivateNotification, object: nil)
         } else {

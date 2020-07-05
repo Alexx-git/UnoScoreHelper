@@ -30,9 +30,13 @@ extension GameSessionViewController {
         exitButton.onClick = { [unowned self] btn in
             self.exitGame()
         }
-//        let label = SkinLabel()
-//        label.text = "gvhgv"
-        showDropMenuItems([exitButton], sender: sender)
+        let editPlayersButton = SkinButton.newAutoLayout()
+        editPlayersButton.setTitle("Edit players".ls)
+        editPlayersButton.onClick = { [unowned self] btn in
+            self.dropMenuView?.dismiss(animated: false)
+            self.navigationController?.popViewController(animated: true)
+        }
+        showDropMenuItems([exitButton, editPlayersButton], sender: sender)
     }
     
     func exitGame() {
@@ -42,21 +46,29 @@ extension GameSessionViewController {
         
     func settingsButtonPressed(sender: UIButton)
     {
-        let button = SkinButton.newAutoLayout()
-        button.setTitle("Change skin".ls)
-        button.onClick = { [unowned self] btn in
+        let aboutButton = SkinButton()
+        aboutButton.setTitle("About".ls)
+        aboutButton.onClick = { [unowned self] btn in
+            self.dropMenuView?.dismiss(animated: false)
+            self.navigationController?.pushViewController(AboutViewController(), animated: true)
+        }
+        let changeSkinButton = SkinButton()
+        changeSkinButton.setTitle("Change skin".ls)
+        changeSkinButton.onClick = { [unowned self] btn in
             self.dropMenuView?.dismiss(animated: false)
             self.navigationController?.pushViewController(SkinsViewController(), animated: true)
         }
-
-        let reorderButton = SkinButton.newAutoLayout()
-        reorderButton.setTitle("Edit players".ls)
-        reorderButton.onClick = { [unowned self] btn in
+        let inPlaceEditCheckButton = CheckButtonView()
+        inPlaceEditCheckButton.title = "Edit score in-place".ls
+        inPlaceEditCheckButton.checked = GameManager.shared.settings.inPlaceEditing
+        inPlaceEditCheckButton.onCheck = { [unowned self] checkView in
             self.dropMenuView?.dismiss(animated: false)
-            self.navigationController?.popViewController(animated: true)
+            GameManager.shared.settings.inPlaceEditing = checkView.checked
+            self.updateLayout()
+            self.updateItems()
         }
-
-        showDropMenuItems([button, reorderButton], sender: sender)
+        
+        showDropMenuItems([aboutButton, changeSkinButton, inPlaceEditCheckButton], sender: sender)
     }
      
 }

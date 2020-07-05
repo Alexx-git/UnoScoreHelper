@@ -28,11 +28,9 @@ extension GameSessionViewController {
     @objc func everySecondTimerFired(sender: Timer)
     {
         let timeElapsedTimer: TimeInterval =  -timerStartTime.timeIntervalSinceNow
-        let timeElapsedGeneral = timeElapsedBefore + timeElapsedTimer
-//        session.time = timeElapsedGeneral
-        
+        let timeElapsedGeneral = timeElapsedBefore + timeElapsedTimer        
         
         topBarView.titleLabel.text = usualTimeString(from: timeElapsedGeneral)
-        topBarView.titleLabel.setNeedsDisplay()
+        topBarView.setNeedsLayout()
     }
 }

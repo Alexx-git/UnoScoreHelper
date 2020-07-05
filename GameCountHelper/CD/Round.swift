@@ -21,4 +21,11 @@ extension Round {
     class func entityName() -> String {
         return "Round"
     }
+    
+    var hasValues: Bool {
+        for (_, value) in score {
+            if value != 0 { return true }
+        }
+        return false
+    }
 }

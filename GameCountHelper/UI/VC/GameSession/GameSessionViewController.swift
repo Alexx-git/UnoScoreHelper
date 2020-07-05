@@ -15,15 +15,14 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
     
     let game: GameSession
     
-//    let playersRowView = RowView()
     let playersRowView = PlayerHeaderRowView()
     let titleDivView = DivView()
     let tableView = ContentSizedTableView.newAutoLayout()
     let newRoundButton = SkinButton.newAutoLayout()
     let resultDivView = DivView()
     let resultRowView = RowView()
-//    let editingView = GameRoundEditingView()
-//    let numPadView = NumPadInputView()
+    let numPadView = NumPadInputView()
+    var ownSize: CGSize = .zero
     
     var timer: Timer = Timer()
     var timerStartTime: Date = Date(timeIntervalSinceNow: 0.0)
@@ -40,6 +39,8 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
     var minFont: UIFont?
     
     let columnSpacing: CGFloat = 5.0
+    
+    
 
     //MARK: - Inits
     
@@ -58,20 +59,21 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         
         super.setupViewContent()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-
+        numPadView.setupWithHandler { [unowned self] btnType in
+            print("btnType: \(btnType)")
+            switch btnType {
+                case .num(let value): self.onNumPadAddValue("\(value)")
+                case .delete: self.onNumPadBackspace()
+                case .ok: self.onNumPadOK()
+                default: ()
+            }
+        }
         setupMenuItems()
         topBarView.titleLabel.text = "00:00"
         bgImageView.alpha = 0.5
         view.backgroundColor = .green
-        contentBoxView.items = [
-            playersRowView.boxed,
-            titleDivView.boxed,
-            tableView.boxed,
-            resultDivView.boxed,
-            resultRowView.boxed,
-            newRoundButton.boxed.all(16.0).bottom(>=16.0)
-        ]
-        
+        updateItems()
+        updateLayoutIfNeed()
         playersRowView.insets = .all(12.0)
         playersRowView.spacing = columnSpacing
         playersRowView.numberLabel.text = "#".ls
@@ -90,25 +92,13 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         self.startTimer()
         
         tableView.onSizeUpdate = { [unowned self] sz in
-//            print("sz.height: \(sz.height)")
             let minHeight = 1.f
             let height = (sz.height >= minHeight) ? sz.height : minHeight
             if let tableHeight = self.tableHeight {
                 tableHeight.constant = height
                 if height > 1.0 {
-//                    var r = self.tableView.frame
-//                    if r.origin.x < 0.0 {
-//                        r.origin.x = 0.0
-//                        self.tableView.frame = r
-//                    }
-//                    if (self.tableView.frame.origin.x < 0.0) {
-                        self.view.layoutIfNeeded()
-//                    }
-//                    else {
-//                        UIView.animate(withDuration: 0.3) {
-//                            self.view.layoutIfNeeded()
-//                        }
-//                    }
+                    print("self.view: \(self.view)")
+                    self.view.layoutIfNeeded()
                 }
             }
             else {
@@ -117,13 +107,44 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         }
         
         rowLabelTapHandler = { [unowned self] rowView, label in
-            if let col = rowView.labels.firstIndex(of: label) {
-                let selection = (label, rowView.tag, col)
-                self.setEditSelection(selection)
+            if GameManager.shared.settings.inPlaceEditing {
+                if let col = rowView.labels.firstIndex(of: label) {
+                    let selection = (label, rowView.tag, col)
+                    self.setEditSelection(selection)
+                }
             }
-                
+            else {
+                self.editRowAtIndex(rowView.tag)
+            }
         }
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateLayoutIfNeed()
+    }
+    
+    func updateLayoutIfNeed() {
+        if ownSize != view.bounds.size {
+            ownSize = view.bounds.size
+            updateLayout()
+        }
+    }
+    
+    func updateLayout() {
+        if GameManager.shared.settings.inPlaceEditing {
+            var rowCount = 1
+            print("ownSize: \(ownSize)")
+            if ownSize.height > ownSize.width * 1.5 {
+                rowCount = 4
+            }
+            else if ownSize.height > ownSize.width * 0.75 {
+                rowCount = 2
+            }
+            numPadView.rowCount = rowCount
+        }
+    }
+    
 
     override func updateViewContent() {
         super.updateViewContent()
@@ -150,7 +171,7 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         newRoundButton.setSkinGroups([SkinKey.button: skin.keyStyles])
         tableView.separatorColor = skin.divider.fill
         
-//        numPadView.setSkin(skin)
+        numPadView.setSkin(skin)
         playersRowView.numberWidth = roundViewIndexWidth
         resultRowView.numberWidth = roundViewIndexWidth
 //        editingView.setSkinGroups(SkinKey.textField.groupsWithNormalStyle(skin.h1))
@@ -158,6 +179,26 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         adjustFont()
     }
     
+    func updateItems() {
+        let inPlace = GameManager.shared.settings.inPlaceEditing
+        if inPlace {
+            if !(??self.game.rounds.last?.hasValues) {
+                self.game.newRound(with: nil)
+            }
+        }
+        contentBoxView.optItems = [
+            playersRowView.boxed,
+            titleDivView.boxed,
+            tableView.boxed,
+            resultDivView.boxed,
+            resultRowView.boxed,
+            newRoundButton.boxed.all(16.0).bottom(0.0).useIf(!inPlace),
+            numPadView.boxed.all(16.0).bottom(0.0).useIf(inPlace),
+            BoxItem.guide().height(0.0).bottom(>=16.0)
+        ]
+    }
+    
+
 
     func valuesInPlayerOrder(for round: Round) -> [String] {
         return game.players.map{"\(round.score[$0.id] ?? 0)"}
@@ -220,50 +261,19 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         }
     }
     
-    func editFieldAddString(_ string: String) {
-        
-        if let selection = editSelection {
-            if selection.label.text == "-" {
-                selection.label.text = string
-            }
-            else {
-                selection.label.text? += string
-            }
-            let round = game.rounds[selection.row]
-            let player = game.players[selection.col]
-            round.score[player.id] = Int(selection.label.text ?? "0")
-        }
-        else {
-//            editingView.currentField?.text? += string
-        }
-    }
-    
-    func setEditSelection(_ selection: RowEditSelection) {
-        if let editSelection = editSelection {
-            editSelection.label.state = .normal
-            editSelection.label.layer.cornerRadius = 0.0
-        }
-        editSelection = selection
-        editSelection?.label.state = .selected
-        editSelection?.label.layer.cornerRadius = 5.0
-    }
+
     
     func clickedNewRoundButton() {
-        let newRoundVC = NewRoundViewController(players: game.players)
+        let newRoundVC = EditRoundViewController(players: game.players)
         newRoundVC.roundNumber = game.rounds.count + 1
         newRoundVC.onOk = { [unowned self] scores in
             self.game.newRound(with: scores)
-            if let skin = self.skin {
-                self.updateSkin(skin)
-            }
+//            if let skin = self.skin {
+//                self.updateSkin(skin)
+//            }
             self.updateResults()
         }
         self.present(newRoundVC, animated: true, completion: nil)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-//        playersRowView.adjustFont()
     }
     
 //    func shufflePlayersIn(order players: [Player]) {
