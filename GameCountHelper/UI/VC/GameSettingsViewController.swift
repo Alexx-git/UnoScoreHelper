@@ -10,7 +10,6 @@ import UIKit
 import BoxView
 
 
-
 class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UITableViewDataSource {
     
     var players = [Player]()
@@ -71,20 +70,22 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
         gameButton.setSkinGroups([.button: skin.keyStyles])
     }
     
-    
+    func startGame(with session: GameSession) {
+        navigationController?.popToRootViewController(animated: true)
+        let sessionVC = GameSessionViewController(game: session)
+        self.navigationController?.pushViewController(sessionVC, animated: true)
+    }
     
     func setupForGameState() {
         if let session = GameManager.shared.currentSession {
             gameButton.setTitle("Resume Game".ls)
             gameButton.onClick = { [unowned self] btn in
-                let sessionVC = GameSessionViewController(game: session)
-                self.navigationController?.pushViewController(sessionVC, animated: true)
+                self.startGame(with: session)
             }
         } else {
             gameButton.setTitle("Start Game".ls)
             gameButton.onClick = { [unowned self] btn in
-                let sessionVC = GameSessionViewController(game: GameManager.shared.newSession(with: self.players))
-                self.navigationController?.pushViewController(sessionVC, animated: true)
+                self.startGame(with: GameManager.shared.newSession(with: self.players))
             }
         }
         tableView.reloadData()

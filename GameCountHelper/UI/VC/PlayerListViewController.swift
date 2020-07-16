@@ -32,6 +32,7 @@ class PlayerListViewController: TopBarViewController, UITableViewDelegate, UITab
         topBarView.titleLabel.text = "Choose player"
         
         topBarView.leftButton.setTitle("Cancel".ls)
+        topBarView.leftButton.contentEdgeInsets = .allX(8.0)
         topBarView.leftButton.onClick = { [unowned self] btn in
             self.navigationController?.popViewController(animated: true)
         }

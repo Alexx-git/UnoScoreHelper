@@ -54,7 +54,7 @@ class PlayerTableViewCell: BaseTableViewCell {
             avatarView.setBrush(brush)
         }
     }
-    
+
 }
 
 

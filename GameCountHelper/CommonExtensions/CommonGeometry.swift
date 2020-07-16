@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 extension CGRect {
     
     enum VerticalPosition: CGFloat{
@@ -103,21 +101,6 @@ enum EdgeInsetsEdge {
 }
 
 
-extension UIEdgeInsets {
-	
-	init(edge: EdgeInsetsEdge, value: CGFloat) {
-		self.init()
-		switch edge {
-			case .top: self.top = value
-			case .left: self.left = value
-			case .bottom: self.bottom = value
-			case .right: self.right = value
-		}
-	}
-
-
-}
-
 extension CGAffineTransform {
     
     init(from: CGRect, toRect to: CGRect) {
@@ -127,6 +110,16 @@ extension CGAffineTransform {
 }
 
 extension UIEdgeInsets {
+    
+    init(edge: EdgeInsetsEdge, value: CGFloat) {
+        self.init()
+        switch edge {
+            case .top: self.top = value
+            case .left: self.left = value
+            case .bottom: self.bottom = value
+            case .right: self.right = value
+        }
+    }
     
     static func all(_ value: CGFloat) -> Self {
         return UIEdgeInsets(top: value, left: value, bottom: value, right: value)
@@ -148,12 +141,13 @@ extension UIEdgeInsets {
         return UIEdgeInsets(top: value, left: self.left, bottom: value, right: self.right)
     }
     
-    mutating func with(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> UIEdgeInsets {
-        self.left ?= left
-        self.top ?= top
-        self.right ?= right
-        self.bottom ?= bottom
-        return self
+    func with(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> UIEdgeInsets {
+        var ins = self
+        ins.left ?= left
+        ins.top ?= top
+        ins.right ?= right
+        ins.bottom ?= bottom
+        return ins
     }
     
     var width: CGFloat {

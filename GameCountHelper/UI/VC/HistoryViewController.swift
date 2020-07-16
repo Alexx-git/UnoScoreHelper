@@ -8,23 +8,58 @@
 
 import UIKit
 
-class HistoryViewController: BaseViewController {
+class HistoryViewController: TopBarViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    let tableView = UITableView()
+    
+    var items = [GameSession]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        topBarView.titleLabel.text = "Games History"
+        HistoryTableViewCell.register(tableView: tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
+        contentBoxView.items = [tableView.boxed]
+        items = GameSession.fetchAllInstances(in: GameManager.shared.cdStack.viewContext())
+        tableView.reloadData()
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func setupMenuItems() {
+        topBarView.titleLabel.text = "About".ls
+        topBarView.leftButton.setImage(UIImage.template("back"))
+        topBarView.leftButton.contentEdgeInsets = .allX(8.0)
+        topBarView.leftButton.onClick = { [unowned self] btn in
+            self.navigationController?.popViewController(animated: true)
+        }
     }
-    */
+    
+// MARK: - UITableViewDelegate methods
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        (navigationController?.viewControllers.first as? GameSettingsViewController)?.startGame(with: items[indexPath.row])
+    }
+    
+    
+// MARK: - UITableViewDataSource methods
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = HistoryTableViewCell.dequeue(tableView: tableView)
+        let session = items[indexPath.row]
+        guard let finish = session.finish else {return cell}
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        cell.dateLabel.text = dateFormatter.string(from: finish)
+        var playersString = ""
+        session.players.forEach{playersString += $0.name ?? "" + ", "}
+        cell.playersLabel.text = playersString
+        return cell
+    }
 
 }

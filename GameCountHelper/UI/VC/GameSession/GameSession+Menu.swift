@@ -12,7 +12,7 @@ extension GameSessionViewController {
     
     func setupMenuItems() {
         topBarView.leftButton.setImage(UIImage.template("menu"))
-        topBarView.leftButton.contentEdgeInsets = .allX(8.0)
+//        topBarView.leftButton.contentEdgeInsets = .allX(8.0)
         topBarView.leftButton.onClick = { [unowned self] btn in
             self.menuButtonPressed(sender: btn)
         }
@@ -36,12 +36,23 @@ extension GameSessionViewController {
             self.dropMenuView?.dismiss(animated: false)
             self.navigationController?.popViewController(animated: true)
         }
-        showDropMenuItems([exitButton, editPlayersButton], sender: sender)
+        let gameHistoryButton = SkinButton.newAutoLayout()
+        gameHistoryButton.setTitle("History".ls)
+        gameHistoryButton.onClick = { [unowned self] btn in
+            self.dropMenuView?.dismiss(animated: false)
+            self.showSessionHistory()
+        }
+        showDropMenuItems([exitButton, editPlayersButton, gameHistoryButton], sender: sender)
     }
     
     func exitGame() {
-        GameManager.shared.currentSession = nil
+        GameManager.shared.finishSession()
         navigationController?.popViewController(animated: true)
+    }
+    
+    func showSessionHistory() {
+        let historyVC = HistoryViewController()
+        navigationController?.pushViewController(historyVC, animated: true)
     }
         
     func settingsButtonPressed(sender: UIButton)

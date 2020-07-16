@@ -87,6 +87,7 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         
         resultRowView.insets = UIEdgeInsets.allY(8.0).allX(12.0)
         resultRowView.spacing = columnSpacing
+        resultRowView.numberLabel.text = ":"
         updateResults()
 
         self.startTimer()
@@ -207,12 +208,7 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
     //MARK: - Rounds
     
     func updateResults() {
-        var values = [Int](repeating: 0, count: game.players.count)
-        for round in game.rounds {
-            for (index, player) in game.players.enumerated() {
-                values[index] += round.score[player.id] ?? 0
-            }
-        }
+        var values = game.players.map{game.score(for:$0) ?? 0}
         
 //        editingView.editFields.forEach{$0.text = ""}
 //        editingView.editFields.first?.becomeFirstResponder()
@@ -224,7 +220,6 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
 //            if self.rowHeight != nil {
 //                self.updateTableHeight(animated: true)
 //            }
-            self.resultRowView.numberLabel.text = ":"
             self.resultRowView.setRow(values: values.map{"\($0)"})
             var lastRound = self.game.rounds.count
             if lastRound > 0 {

@@ -48,11 +48,12 @@ extension GameSessionViewController {
     func setEditSelection(_ selection: RowEditSelection) {
         if let editSelection = editSelection {
             editSelection.label.state = .normal
-            editSelection.label.layer.cornerRadius = 0.0
+//            editSelection.label.layer.cornerRadius = 0.0
         }
         editSelection = selection
         editSelection?.label.state = .selected
         editSelection?.label.layer.cornerRadius = 5.0
+        editSelection?.label.clipsToBounds = true
     }
     
     func onNumPadAddValue(_ value: String) {
@@ -76,12 +77,24 @@ extension GameSessionViewController {
     }
     
     func onNumPadOK() {
-        if ??self.game.rounds.last?.hasValues {
-            self.game.newRound(with: nil)
-            tableView.reloadData()
+        for (horIndex, player) in game.players.enumerated() {
+            for (vertIndex, round) in game.rounds.enumerated() {
+                let cell = tableView.cellForRow(at: IndexPath(row: vertIndex, section: 0)) as? RoundTableViewCell
+                let value = cell?.rowView.labels[horIndex].text
+                if value == "-" {
+                    round.score[player.id] = 0
+                } else {
+                    round.score[player.id] = Int(value ?? "0")
+                }
+            }
         }
+        updateResults()
+        if ??self.game.rounds.last?.hasValues {
+            self.game.newRound(with: nil) 
+        }
+        tableView.reloadData()
         editSelection?.label.state = .normal
-        editSelection?.label.layer.cornerRadius = 0.0
+//        editSelection?.label.layer.cornerRadius = 0.0
         
     }
 }

@@ -70,6 +70,12 @@ class GameManager {
         return currentSession!
     }
     
+    func finishSession() {
+        currentSession?.finish = Date.init(timeIntervalSinceNow: 0)
+        currentSession = nil
+        storedGameDate.value = nil
+    }
+    
     func storedSessionDate() -> Date? {
         return storedGameDate.value
     }
@@ -80,6 +86,7 @@ class GameManager {
     }
     
     @objc func save() {
+        
         cdStack.viewContext().saveIfNeed()
     }
 }

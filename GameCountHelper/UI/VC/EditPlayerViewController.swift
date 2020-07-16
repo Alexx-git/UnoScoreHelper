@@ -20,10 +20,14 @@ class EditPlayerViewController: TopBarViewController {
     var image: UIImage?
     
     let profileImage = UIImage(named: "profile")
+    
+    let scrollView = UIScrollView()
         
     let avatarView = AvatarView()
     
-    let textField = UITextField()
+    let textField = SkinTextField()
+    
+    let saveButton = SkinButton()
         
     var handler: Handler
     
@@ -67,7 +71,8 @@ class EditPlayerViewController: TopBarViewController {
         contentBoxView.spacing = 20.0
         contentBoxView.items = [
             avatarView.boxed.centerX(),
-            textField.boxed.bottom(>=0.0),
+            textField.boxed,
+            saveButton.boxed.bottom(>=16.0)
         ]
         image = player?.image
         avatarView.imageView.image = image ?? profileImage
@@ -80,6 +85,13 @@ class EditPlayerViewController: TopBarViewController {
 //        imageView.autoSetDimensions(to: avatarSize)
         avatarView.imageView.layer.cornerRadius = avatarSize.width * 0.5
         avatarView.imageView.clipsToBounds = true
+        
+        saveButton.layer.cornerRadius = 10.0
+        saveButton.setTitle("Save".ls)
+        saveButton.onClick = { [unowned self] btn in
+            self.savePlayer()
+        }
+        
         textField.borderStyle = .roundedRect
         textField.text = player?.name
         textField.placeholder = "Player name".ls
@@ -91,15 +103,18 @@ class EditPlayerViewController: TopBarViewController {
     
     func setupMenuItems() {
         topBarView.titleLabel.text = "Edit player".ls
-        topBarView.leftButton.setTitle("Cancel".ls)
+//        topBarView.leftButton.setTitle("Cancel".ls)
+        topBarView.leftButton.setImage(UIImage.template("back"))
+        topBarView.leftButton.contentEdgeInsets = .allX(8.0)
         topBarView.leftButton.onClick = { [unowned self] btn in
             self.navigationController?.popViewController(animated: true)
         }
 
-        topBarView.rightButton.setTitle("Save".ls)
-        topBarView.rightButton.onClick = { [unowned self] btn in
-            self.savePlayer()
-        }
+//        topBarView.rightButton.setTitle("Save".ls)
+//        topBarView.rightButton.contentEdgeInsets = .allX(8.0)
+//        topBarView.rightButton.onClick = { [unowned self] btn in
+//            self.savePlayer()
+//        }
     }
     
     override func updateSkin(_ skin: Skin) {
@@ -107,9 +122,10 @@ class EditPlayerViewController: TopBarViewController {
         if let brush = skin.avatar.textDrawing?.brush {
             avatarView.setBrush(brush)
         }
-//        playerCellGroups = [.button: skin.barButton,
-//                            .label: skin.h2.normalGroup,
-//                            .image: skin.avatar.normalGroup]
+    
+        textField.setSkinStyle(skin.editableNumbers.styleForState(.normal))
+        
+        saveButton.setSkinGroups([.button: skin.keyStyles])
     }
 
 }

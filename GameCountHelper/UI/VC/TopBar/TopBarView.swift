@@ -21,9 +21,8 @@ class TopBarView: BoxView {
         super.setup()
         axis = .x
         titleLabel.textAlignment = .center
-//        leftButton.contentHorizontalAlignment = .left
-//        rightButton.contentHorizontalAlignment = .right
-        rightButton.backgroundColor = .red
+//        leftButton.backgroundColor = .red
+//        rightButton.backgroundColor = .red
         items = [
             leftButton.boxed.width(>=40.0).height(>=40.0).centerY(),
             titleLabel.boxed.centerX(padding: 8.0),
