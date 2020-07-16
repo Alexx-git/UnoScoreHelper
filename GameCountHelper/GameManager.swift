@@ -71,8 +71,14 @@ class GameManager {
     }
     
     func finishSession() {
-        currentSession?.finish = Date.init(timeIntervalSinceNow: 0)
-        currentSession = nil
+        guard let session = currentSession else {return}
+        if session.rounds.count == 0 || session.players.count == 0 {
+            cdStack.viewContext().delete(session)
+        } else {
+            currentSession?.finish = Date.init(timeIntervalSinceNow: 0)
+            currentSession = nil
+        }
+        save()
         storedGameDate.value = nil
     }
     
