@@ -33,10 +33,18 @@ extension Player {
         return "Player"
     }
     
-    class func newInstance() -> Player {
-        let player = Player.createObject(context: GameManager.shared.cdStack.viewContext())
-        player.name = ""
+    class func player(with name: String, existing: Player? = nil) -> Player? {
+        let context = GameManager.shared.cdStack.viewContext()
+        let all = Player.fetchAllInstances(in: context)
+        for player in all {
+            if player.name == name && player != existing {
+                return nil
+            }
+        }
+        let player = existing ?? Player.createObject(context: context)
+        player.name = name
         player.games = []
+        player.id = Int64(all.count + 1)
         return player
     }
     

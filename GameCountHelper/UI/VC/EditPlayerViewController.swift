@@ -42,28 +42,24 @@ class EditPlayerViewController: TopBarViewController {
     }
     
     func savePlayer() {
-        let players = Player.fetchAllInstances(in: viewContext)
         guard let name = textField.text else {return}
-        
-        for player in players {
-            if (player.name == name) && (player != self.player) {
-                //We have another player with same name. Show Alert
-                return
-            }
-        }
-        if player == nil {
-            player = Player.newInstance()
-            player!.id = Int64(players.count + 1)
-        }
-        player!.name = name
-        player!.image = image
-        player!.saveImage()
-        
-        viewContext.saveIfNeed()
-        self.handler(player!)
-        self.navigationController?.popToRootViewController(animated: true)
-    }
 
+        let temp = Player.player(with: name, existing: player)
+        if temp == nil {
+            showPlayerWithSameNameAlert()
+        } else {
+            player = temp
+            player!.image = image
+            player!.saveImage()
+            viewContext.saveIfNeed()
+            self.handler(player!)
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+    }
+    
+    func showPlayerWithSameNameAlert() {
+        // show alert
+    }
     
     override func setupViewContent() {
         super.setupViewContent()

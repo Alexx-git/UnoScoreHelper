@@ -56,8 +56,7 @@ class NewGameViewController: UIViewController, UITableViewDataSource {
     
     func addPlayer(name: String) {
         DispatchQueue.main.async {
-            let player = Player.newInstance()
-            player.name = name
+            _ = Player.newInstance(with: name)
 //            self.game.player_set.players.append(player)
             self.tableView.reloadData()
         }
