@@ -36,23 +36,12 @@ extension GameSessionViewController {
             self.dropMenuView?.dismiss(animated: false)
             self.navigationController?.popViewController(animated: true)
         }
-        let gameHistoryButton = SkinButton.newAutoLayout()
-        gameHistoryButton.setTitle("History".ls)
-        gameHistoryButton.onClick = { [unowned self] btn in
-            self.dropMenuView?.dismiss(animated: false)
-            self.showSessionHistory()
-        }
-        showDropMenuItems([exitButton, editPlayersButton, gameHistoryButton], sender: sender)
+        showDropMenuItems([exitButton, editPlayersButton], sender: sender)
     }
     
     func exitGame() {
         GameManager.shared.finishSession()
         navigationController?.popViewController(animated: true)
-    }
-    
-    func showSessionHistory() {
-        let historyVC = HistoryViewController()
-        navigationController?.pushViewController(historyVC, animated: true)
     }
         
     func settingsButtonPressed(sender: UIButton)

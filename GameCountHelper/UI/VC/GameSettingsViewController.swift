@@ -71,9 +71,8 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
     }
     
     func startGame(with session: GameSession) {
-        navigationController?.popToRootViewController(animated: true)
         let sessionVC = GameSessionViewController(game: session)
-        self.navigationController?.pushViewController(sessionVC, animated: true)
+        self.navigationController?.setViewControllers([self, sessionVC], animated: true)
     }
     
     func setupForGameState() {
@@ -106,6 +105,26 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
         
     func setupMenuItems() {
         topBarView.titleLabel.text = "Players"
+        topBarView.leftButton.setImage(UIImage.template("menu"))
+        topBarView.leftButton.onClick = { [unowned self] btn in
+            self.menuButtonPressed(sender: btn)
+        }
+    }
+    
+    func menuButtonPressed(sender: UIButton)
+    {
+        let gameHistoryButton = SkinButton.newAutoLayout()
+        gameHistoryButton.setTitle("History".ls)
+        gameHistoryButton.onClick = { [unowned self] btn in
+            self.dropMenuView?.dismiss(animated: false)
+            self.showSessionHistory()
+        }
+        showDropMenuItems([gameHistoryButton], sender: sender)
+    }
+    
+    func showSessionHistory() {
+        let historyVC = HistoryViewController()
+        navigationController?.pushViewController(historyVC, animated: true)
     }
     
     func updateWithPlayer(_ player: Player?) {
