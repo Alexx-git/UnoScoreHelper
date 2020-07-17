@@ -150,7 +150,7 @@ class NumPadInputView: BoxView, Skinnable {
         if let skin = skin {
             let groups: [SkinKey: SkinGroup] = [.button: skin.keyStyles]
             numButtonsSkinFont = skin.keyStyles.styleForState(.normal)?.textDrawing?.font
-            for (index, btn) in self.numButtons.enumerated()
+            for (btn) in self.numButtons
             {
                 btn.setSkinGroups(groups)
             }
@@ -173,7 +173,6 @@ class NumPadInputView: BoxView, Skinnable {
                 $0.updateStateTitles()
             }
 //            okButton.adjustScaleForFont(numFont, text: "OK", rectSize: keyTextSize)
-            print("numButtons.first: \(numButtons.first)")
         }
     }
     

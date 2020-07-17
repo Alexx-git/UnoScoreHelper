@@ -98,7 +98,7 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
             if let tableHeight = self.tableHeight {
                 tableHeight.constant = height
                 if height > 1.0 {
-                    print("self.view: \(self.view)")
+//                    print("self.view: \(self.view)")
                     self.view.layoutIfNeeded()
                 }
             }

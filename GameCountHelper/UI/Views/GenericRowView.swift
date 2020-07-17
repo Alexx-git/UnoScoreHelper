@@ -106,7 +106,6 @@ class GenericRowView<Element: UIView>: BoxView {
     func updateSkin() {
         if let group = skinGroups[SkinKey.label] {
             numberLabel.setSkinStyle(group.styleForState(.normal))
-            let groups = [SkinKey.label: group]
             if let group = skinGroups[SkinKey.divider] {
                 for div in self.dividers {
                     div.setBrush(group.styleForState(.normal)?.box)

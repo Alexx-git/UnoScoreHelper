@@ -41,10 +41,7 @@ class PlayerListViewController: TopBarViewController, UITableViewDelegate, UITab
             self.navigationController?.popViewController(animated: true)
         }
 
-//        topBarView.rightButton.setTitle("Save".ls)
-//        topBarView.rightButton.onClick = { [unowned self] btn in
-//
-//        }
+
     }
     
     
