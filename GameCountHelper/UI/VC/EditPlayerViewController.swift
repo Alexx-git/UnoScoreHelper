@@ -43,10 +43,15 @@ class EditPlayerViewController: TopBarViewController {
     
     func savePlayer() {
         guard let name = textField.text else {return}
+        
+        if name.count == 0 {
+            showInfoAlert(title: "Error", message: "Name must have at least one character")
+            return
+        }
 
         let temp = Player.player(with: name, existing: player)
         if temp == nil {
-            showPlayerWithSameNameAlert()
+            showInfoAlert(title: "Error", message: "Player with this name already exists")
         } else {
             player = temp
             player!.image = image
@@ -55,10 +60,6 @@ class EditPlayerViewController: TopBarViewController {
             self.handler(player!)
             self.navigationController?.popToRootViewController(animated: true)
         }
-    }
-    
-    func showPlayerWithSameNameAlert() {
-        // show alert
     }
     
     override func setupViewContent() {

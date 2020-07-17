@@ -25,13 +25,12 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
     
     var playerCellGroups = [SkinKey: SkinGroup]()
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func updateViewContent() {
+        super.updateViewContent()
         setupForGameState()
     }
     
     override func setupViewContent() {
-        super.setupViewContent()
         tableView.estimatedRowHeight = 100.0;
         tableView.rowHeight = UITableView.automaticDimension;
         
@@ -71,6 +70,10 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
     }
     
     func startGame(with session: GameSession) {
+        guard session.players.count > 0 else {
+            showInfoAlert(title: "Error", message: "Game must have at least one player")
+            return
+        }
         let sessionVC = GameSessionViewController(game: session)
         self.navigationController?.setViewControllers([self, sessionVC], animated: true)
     }
@@ -154,7 +157,7 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
     }
     
     func removePlayer(number: Int) {
-        let player = players[number]
+//        let player = players[number]
         players.remove(at: number)
         tableView.reloadData()
     }
