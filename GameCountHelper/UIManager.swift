@@ -14,7 +14,6 @@ class UIManager {
         
         window.makeKeyAndVisible()
         window.backgroundColor = UIColor.clear
-        let context = GameManager.shared.cdStack.viewContext()
         
         let newGameVC = GameSettingsViewController()
         let navCon = UINavigationController.init(rootViewController: newGameVC)

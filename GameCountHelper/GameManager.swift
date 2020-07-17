@@ -54,7 +54,7 @@ class GameManager {
             currentSession = GameSession.fetch(predicate: predicate, context: cdStack.viewContext())
             if let game = currentSession {
                 for player in game.players {
-                    player.loadImage()
+                    _ = player.loadImage()
                 }
             }
         }
@@ -76,8 +76,8 @@ class GameManager {
             cdStack.viewContext().delete(session)
         } else {
             currentSession?.finish = Date.init(timeIntervalSinceNow: 0)
-            currentSession = nil
         }
+        currentSession = nil
         save()
         storedGameDate.value = nil
     }

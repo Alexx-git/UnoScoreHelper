@@ -16,10 +16,11 @@ class HistoryViewController: TopBarViewController, UITableViewDataSource, UITabl
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        topBarView.titleLabel.text = "Games History"
+        setupMenuItems()
         HistoryTableViewCell.register(tableView: tableView)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = .clear
         contentBoxView.items = [tableView.boxed]
         items = GameSession.fetchAllInstances(in: GameManager.shared.cdStack.viewContext())
         tableView.reloadData()
@@ -27,7 +28,7 @@ class HistoryViewController: TopBarViewController, UITableViewDataSource, UITabl
     }
     
     func setupMenuItems() {
-        topBarView.titleLabel.text = "About".ls
+        topBarView.titleLabel.text = "Games History".ls
         topBarView.leftButton.setImage(UIImage.template("back"))
         topBarView.leftButton.contentEdgeInsets = .allX(8.0)
         topBarView.leftButton.onClick = { [unowned self] btn in
@@ -61,8 +62,11 @@ class HistoryViewController: TopBarViewController, UITableViewDataSource, UITabl
         dateFormatter.timeStyle = .short
         cell.dateLabel.text = dateFormatter.string(from: finish)
         var playersString = ""
-        session.players.forEach{playersString += $0.name ?? "" + ", "}
+        session.players.forEach{playersString += ($0.name ?? "") + ", "}
+        playersString.removeLast()
+        playersString.removeLast()
         cell.playersLabel.text = playersString
+        
         cell.playersLabel.setSkinStyle(skin?.h2)
         return cell
     }

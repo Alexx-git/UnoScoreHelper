@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        let uiManager = UIManager(with: window!)
+        _ = UIManager(with: window!)
         return true
     }
     

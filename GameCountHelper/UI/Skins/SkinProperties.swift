@@ -123,7 +123,7 @@ extension Skin {
             self.effects = try container.decodeIfPresent(Effects.self, forKey: .effects) ?? Effects()
             let drawingFont = try container.decodeIfPresent(Skin.Font.self, forKey: .font) ?? .standard
             self.font = drawingFont.uiFont()
-            var ps = NSMutableParagraphStyle()
+            let ps = NSMutableParagraphStyle()
 //            ps.lineBreakMode = .byTruncatingTail
             self.paragraphStyle = ps
 //            style.alignment = .center
@@ -159,7 +159,7 @@ extension Skin {
             let str = text as NSString
             var drawRect = rect + offset
 //            guard let attr = attributes else { str.draw(in: drawRect); return}
-            let shOffset = brush.shadow?.offset ?? .zero
+//            let shOffset = brush.shadow?.offset ?? .zero
             var attrDict = textAttributes()
             guard let eff = effects else { str.draw(in: drawRect, withAttributes: attrDict); return}
             

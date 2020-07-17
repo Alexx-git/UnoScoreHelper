@@ -207,7 +207,7 @@ class EditRoundViewController: BaseViewController, UITextFieldDelegate {
             label.setSkinGroups(rowSkinGroups)
         }
 //        titleLabel.setSkinStyle(labelStyle)
-        let textFieldStyle = skinGroups[.textField]?.styleForState(.normal)
+//        let textFieldStyle = skinGroups[.textField]?.styleForState(.normal)
         for tf in self.editLabels {
             tf.setSkinGroups(rowSkinGroups)
         }

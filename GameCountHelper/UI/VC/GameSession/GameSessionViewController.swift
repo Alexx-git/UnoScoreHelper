@@ -208,7 +208,7 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
     //MARK: - Rounds
     
     func updateResults() {
-        var values = game.players.map{game.score(for:$0) ?? 0}
+        let values = game.players.map{game.score(for:$0) ?? 0}
         
 //        editingView.editFields.forEach{$0.text = ""}
 //        editingView.editFields.first?.becomeFirstResponder()
