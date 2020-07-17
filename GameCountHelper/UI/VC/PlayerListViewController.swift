@@ -18,11 +18,15 @@ class PlayerListViewController: TopBarViewController, UITableViewDelegate, UITab
     
     var handler: EditPlayerViewController.Handler?
     
+    var playerCellGroups = [SkinKey: SkinGroup]()
+    
+    
     override func setupViewContent() {
         super.setupViewContent()
         contentBoxView.items = [tableView.boxed]
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.backgroundColor = .clear
         PlayerTableViewCell.register(tableView: tableView)
         AddPlayerTableViewCell.register(tableView: tableView)
         setupMenuItems()
@@ -85,6 +89,8 @@ class PlayerListViewController: TopBarViewController, UITableViewDelegate, UITab
             cell.removeButton.onClick = {btn in
                 self.deletePlayer(number: indexPath.row)
             }
+            cell.setSkinGroups(playerCellGroups)
+            
             return cell
         } else {
             let cell = AddPlayerTableViewCell.dequeue(tableView: tableView)
@@ -93,6 +99,7 @@ class PlayerListViewController: TopBarViewController, UITableViewDelegate, UITab
             if let brush = skin?.barButton.styleForState(.normal)?.textDrawing?.brush {
                 cell.plusImageView.setImageBrush(brush)
             }
+            cell.label.setSkinStyle(skin?.h2)
             
             return cell
         }
@@ -104,5 +111,12 @@ class PlayerListViewController: TopBarViewController, UITableViewDelegate, UITab
         players.remove(at: number)
         viewContext.delete(player)
         tableView.reloadData()
+    }
+    
+    override func updateSkin(_ skin: Skin) {
+        super.updateSkin(skin)
+        playerCellGroups = [.button: skin.barButton,
+                            .label: skin.h2.normalGroup,
+                            .image: skin.avatar.normalGroup]
     }
 }

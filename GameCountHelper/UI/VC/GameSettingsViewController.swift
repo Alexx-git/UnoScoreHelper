@@ -100,7 +100,6 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
         AddPlayerTableViewCell.register(tableView: tableView)
         tableView.bxPinHeight(>=10.0)
         tableView.setContentCompressionResistancePriority(.required, for: .vertical)
-        tableView.backgroundColor = .clear
     }
         
     func setupMenuItems() {
@@ -238,10 +237,7 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
                 cell.removeButton.onClick = {btn in
                     self.removePlayer(number: indexPath.row)
                 }
-                if let skin = skin {
-                    cell.setSkinGroups(playerCellGroups)
-                }
-                
+                cell.setSkinGroups(playerCellGroups)
             }
             return cell
         } else {

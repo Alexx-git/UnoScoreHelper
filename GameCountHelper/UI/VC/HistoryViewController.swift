@@ -35,6 +35,10 @@ class HistoryViewController: TopBarViewController, UITableViewDataSource, UITabl
         }
     }
     
+//    override func updateSkin(_ skin: Skin) {
+//        super.updateSkin(skin)
+//    }
+    
 // MARK: - UITableViewDelegate methods
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -59,6 +63,7 @@ class HistoryViewController: TopBarViewController, UITableViewDataSource, UITabl
         var playersString = ""
         session.players.forEach{playersString += $0.name ?? "" + ", "}
         cell.playersLabel.text = playersString
+        cell.playersLabel.setSkinStyle(skin?.h2)
         return cell
     }
 
