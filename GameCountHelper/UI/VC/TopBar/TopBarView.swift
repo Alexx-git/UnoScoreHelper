@@ -17,6 +17,8 @@ class TopBarView: BoxView {
     let titleLabel = SkinLabel.newAutoLayout()
     var heightConstraint: NSLayoutConstraint?
     
+    
+    
     override func setup() {
         super.setup()
         axis = .x

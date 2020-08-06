@@ -10,7 +10,7 @@ import UIKit
 import BoxView
 
 class TopBarViewController: BaseViewController {
-
+    
     let contentBoxView = BoxView()
 
     let topBarView = TopBarView()
@@ -18,18 +18,23 @@ class TopBarViewController: BaseViewController {
     override func setupViewContent() {
         super.setupViewContent()
         topBarView.backgroundColor = .clear
+        safeView.items = [
+            topBarView.boxed.height(52.0),
+            contentBoxView.boxed
+        ]
     }
+
     
     override func updateViewContent() {
         super.updateViewContent()
         
-        if #available(iOS 11, *) {
-            view.layoutMargins = UIApplication.shared.delegate?.window??.safeAreaInsets ?? .zero
-        }
-        view.addBoxItems([
-            topBarView.boxed.height(52.0),
-            contentBoxView.boxed
-        ])
+
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+//        print("self: \(self)")
+//        print("self.view: \(self.view)")
     }
     
     override func updateSkin(_ skin: Skin) {
