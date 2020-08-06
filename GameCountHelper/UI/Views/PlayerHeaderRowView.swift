@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BoxView
 
 class PlayerHeaderRowView: ElementRowView {
 
@@ -22,6 +23,14 @@ class PlayerHeaderRowView: ElementRowView {
         }
         for (index, element) in elements.enumerated() {
             (element as! PlayerHeaderView).image = images[index]
+        }
+    }
+    
+    func setLayoutOrientation(orientation: BoxLayout.Axis) {
+        for element in elements {
+            let header = element as! PlayerHeaderView
+            header.axis = orientation
+            header.updateItems()
         }
     }
 

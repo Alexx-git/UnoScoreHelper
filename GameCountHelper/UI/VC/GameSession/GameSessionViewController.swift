@@ -199,7 +199,14 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         ]
     }
     
-
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        if UIDevice.current.orientation.isLandscape {
+            playersRowView.setLayoutOrientation(orientation: .x)
+        } else {
+            playersRowView.setLayoutOrientation(orientation: .y)
+        }
+    }
 
     func valuesInPlayerOrder(for round: Round) -> [String] {
         return game.players.map{"\(round.score[$0.id] ?? 0)"}
