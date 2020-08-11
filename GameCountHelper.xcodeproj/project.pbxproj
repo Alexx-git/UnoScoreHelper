@@ -373,8 +373,8 @@
 		F57ABADC2466D1C2004BF7D7 /* GameCountHelper */ = {
 			isa = PBXGroup;
 			children = (
-				F502AA2224782FB2008F281A /* GameSettings.swift */,
 				F57ABADD2466D1C2004BF7D7 /* AppDelegate.swift */,
+				F502AA2224782FB2008F281A /* GameSettings.swift */,
 				F57ABAFA2466E8A5004BF7D7 /* UIManager.swift */,
 				F58BFA92246D81110067D262 /* GameManager.swift */,
 				F502AA3724783DB6008F281A /* Functions.swift */,

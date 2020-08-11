@@ -9,7 +9,7 @@
 import UIKit
 import BoxView
 
-class EditRoundViewController: BaseViewController, UITextFieldDelegate {
+class EditRoundViewController: TopBarViewController, UITextFieldDelegate {
     
     typealias LabelTapHandler = (SkinLabel) -> Void
     
@@ -29,27 +29,13 @@ class EditRoundViewController: BaseViewController, UITextFieldDelegate {
     
     var editLabels = [SkinLabel]()
     
-    var skinGroups = [SkinKey: SkinGroup]()
-    
-    var boxView: BoxView {
-        return view as! BoxView
-    }
-    
-    var contentBoxView = BoxView()
-    
-    let titleLabel = SkinLabel()
+    var roundBoxView = BoxView()
     
     var listBoxView = BoxView()
     
     let numPadView = NumPadInputView()
     
     var currentLabel: SkinLabel?
-    
-    var rowSkinGroups = [SkinKey: SkinGroup]()
-    
-    override func loadView() {
-        view = BoxView(axis: .y, spacing: 5.0, insets: .all(10.0))
-    }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -64,16 +50,22 @@ class EditRoundViewController: BaseViewController, UITextFieldDelegate {
         numPadView.rowCount = rowCount
     }
     
+    func setupMenuItems() {
+        topBarView.titleLabel.text = "Round \(roundNumber) scores"
+        topBarView.leftButton.setImage(UIImage.template("back"))
+        topBarView.leftButton.contentEdgeInsets = .allX(8.0)
+        topBarView.leftButton.onClick = { [unowned self] btn in
+            self.cancelButtonClicked()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        boxView.backgroundColor = UIColor(rgb: 0xFFFF00,alpha: 0.5)
-        titleLabel.textAlignment = .center
-        titleLabel.text = "Round \(roundNumber) scores"
-        contentBoxView.backgroundColor = .lightGray
-        contentBoxView.insets = .all(16.0)
-        contentBoxView.spacing = 16.0
-        boxView.items = [contentBoxView.boxed.bottom(>=0.0)]
+        setupMenuItems()
+        roundBoxView.insets = .all(16.0)
+        roundBoxView.spacing = 16.0
+        contentBoxView.items = [roundBoxView.boxed.bottom(>=0.0)]
         let scrollView = UIScrollView()
         scrollView.addBoxItem(listBoxView.boxed)
         listBoxView.bxPinHeight(.zero, to: scrollView).priority = .defaultLow
@@ -86,17 +78,13 @@ class EditRoundViewController: BaseViewController, UITextFieldDelegate {
                 case .cancel: self.cancelButtonClicked()
             }
         }
-        contentBoxView.items = [
-            titleLabel.boxed,
+        roundBoxView.items = [
             scrollView.boxed,
             numPadView.boxed
         ]
         setEditFields(with: players)
         tapHandler = { label in
-            guard label !== self.currentLabel else {return}
-            label.state = .selected
-            self.currentLabel?.state = .normal
-            self.currentLabel = label
+            self.selectLabel(label)
         }
         let tapRec = ClosureTapGestureRecognizer()
         tapRec.onTap = { [unowned self] rec in
@@ -126,6 +114,13 @@ class EditRoundViewController: BaseViewController, UITextFieldDelegate {
     init(players: [Player]) {
         super.init(nibName: nil, bundle: nil)
         self.players = players
+    }
+    
+    func selectLabel(_ label: SkinLabel) {
+        guard label !== currentLabel else {return}
+        label.state = .selected
+        currentLabel?.state = .normal
+        currentLabel = label
     }
     
     private func setEditFields(with players: [Player]) {
@@ -202,14 +197,14 @@ class EditRoundViewController: BaseViewController, UITextFieldDelegate {
     {
         super.updateSkin(skin)
         
-        rowSkinGroups = [SkinKey.label: skin.editableNumbers]
+        let editableSkinGroups = [SkinKey.label: skin.editableNumbers]
         for label in nameLabels {
-            label.setSkinGroups(rowSkinGroups)
+            label.setSkinGroups(editableSkinGroups)
         }
 //        titleLabel.setSkinStyle(labelStyle)
 //        let textFieldStyle = skinGroups[.textField]?.styleForState(.normal)
         for tf in self.editLabels {
-            tf.setSkinGroups(rowSkinGroups)
+            tf.setSkinGroups(editableSkinGroups)
         }
         numPadView.setSkin(skin)
     }

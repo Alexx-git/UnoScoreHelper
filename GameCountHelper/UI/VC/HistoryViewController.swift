@@ -21,8 +21,10 @@ class HistoryViewController: TopBarViewController, UITableViewDataSource, UITabl
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = .clear
+        tableView.separatorInset = .zero
         contentBoxView.items = [tableView.boxed]
         items = GameSession.fetchAllInstances(in: GameManager.shared.cdStack.viewContext())
+        items = items.sorted(by: {$0.finish! > $1.finish!})
         tableView.reloadData()
         // Do any additional setup after loading the view.
     }
@@ -61,12 +63,10 @@ class HistoryViewController: TopBarViewController, UITableViewDataSource, UITabl
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .short
         cell.dateLabel.text = dateFormatter.string(from: finish)
-        var playersString = ""
-        session.players.forEach{playersString += ($0.name ?? "") + ", "}
-        playersString.removeLast()
-        playersString.removeLast()
+        let playersString = (session.players.map{$0.name} as NSArray).componentsJoined(by: ", ")
+        cell.backgroundColor = .clear
         cell.playersLabel.text = playersString
-        
+        cell.dateLabel.setSkinStyle(skin?.text)
         cell.playersLabel.setSkinStyle(skin?.h2)
         return cell
     }

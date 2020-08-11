@@ -22,6 +22,7 @@ extension EditPlayerViewController: UIImagePickerControllerDelegate, UINavigatio
     }
     
     func avatarButtonPressed(sender: UIButton) {
+        view.endEditing(true)
         let photosButton = SkinButton.newAutoLayout()
         photosButton.setTitle("Load from Gallery".ls, for: .normal)
         photosButton.onClick = {  [unowned self] btn in
@@ -34,12 +35,6 @@ extension EditPlayerViewController: UIImagePickerControllerDelegate, UINavigatio
             self.dropMenuView?.dismiss(animated: false)
             self.checkCameraAccess()
         }
-        let imageButton = SkinButton.newAutoLayout()
-        imageButton.setTitle("Select from images".ls, for: .normal)
-        imageButton.onClick = {  [unowned self] btn in
-            self.dropMenuView?.dismiss(animated: false)
-            // Load a controller with collection view?
-        }
         let removeButton = SkinButton.newAutoLayout()
         removeButton.setTitle("Clear image".ls, for: .normal)
         removeButton.onClick = {  [unowned self] btn in
@@ -47,12 +42,12 @@ extension EditPlayerViewController: UIImagePickerControllerDelegate, UINavigatio
             self.image = nil
             self.avatarView.imageView.image = self.profileImage
         }
-        showDropMenuItems([photosButton, cameraButton, imageButton, removeButton], sender: sender, offset: CGPoint(0.0, -40.0))
+        showDropMenuItems([photosButton, cameraButton, removeButton], sender: sender, offset: CGPoint(0.0, -40.0))
     }
     
     func checkPhotosAccess() {
         let access = PHPhotoLibrary.authorizationStatus()
-        if access == .notDetermined {
+        if (access == .notDetermined) || (access == .restricted)  {
             PHPhotoLibrary.requestAuthorization({status in
                 if status == .authorized{
                     DispatchQueue.main.async {
@@ -67,7 +62,7 @@ extension EditPlayerViewController: UIImagePickerControllerDelegate, UINavigatio
     
     func checkCameraAccess() {
         let access = AVCaptureDevice.authorizationStatus(for: .video)
-        if access == .notDetermined {
+        if (access == .notDetermined) || (access == .restricted) {
             AVCaptureDevice.requestAccess(for: .video) {status in
                 if status {
                     DispatchQueue.main.async {

@@ -19,6 +19,7 @@ class HistoryTableViewCell: UITableViewCell {
         let boxView = BoxView()
         contentView.addBoxItem(boxView.boxed)
         boxView.items = [dateLabel.boxed, playersLabel.boxed]
+        boxView.insets = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 5.0, right: 10.0)
     }
     
     

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BoxView
 
 class BaseViewController: UIViewController, CommonDataAccess {
 
@@ -21,12 +22,14 @@ class BaseViewController: UIViewController, CommonDataAccess {
     
     var dropMenuView: DropMenuView?
     
+    let safeView = BoxView()
+    
     override func viewDidLoad() {
         print(">>self: \(self)")
         super.viewDidLoad()
         setupViewContent()
-        self.setupViewConstraints()
-        self.setupOwnViewConstraints()
+//        self.setupViewConstraints()
+//        self.setupOwnViewConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,19 +38,18 @@ class BaseViewController: UIViewController, CommonDataAccess {
         updateViewContent()
         updateSkin(GameManager.shared.skin)
     }
-    
-    public func setupViewConstraints() {
-//        bgImageView.autoPinEdgesToSuperviewEdges()
-    }
-    
-    public func setupOwnViewConstraints() {
-        //to override: setup View constraints only for this class (not for subclasses)
-        //so don't call super.setupViewConstraints()
-    }
+
     
     func setupViewContent() {
 //        view.addSubview(bgImageView)
         bgImageView.contentMode = .scaleAspectFill
+        if #available(iOS 11, *) {
+            view.addSubview(safeView)
+            view.safeAreaLayoutGuide.addBoxItems([safeView.boxed])
+        }
+        else {
+            view.addBoxItems([safeView.boxed])
+        }
 
     }
     

@@ -34,7 +34,9 @@ class NumPadInputView: BoxView, Skinnable {
     
     var rowCount: Int = 0 {
         didSet {
-            updateLayout()
+            if rowCount != oldValue {
+                updateLayout()
+            }
         }
     }
     

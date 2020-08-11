@@ -12,12 +12,24 @@ import BoxView
 
 class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var players = [Player]()
+    var players = [Player]() {
+        didSet {
+            showStartButton = players.count > 0
+        }
+    }
     
     let tableView = ContentSizedTableView.newAutoLayout()
     var tableHeight: NSLayoutConstraint?
     
     let gameButton = SkinButton()
+    
+    var showStartButton = false {
+        didSet {
+            updateItems()
+        }
+    }
+    
+    var viewShown = false
 
     var hasSession: Bool {
         return GameManager.shared.currentSession != nil
@@ -30,29 +42,51 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
         setupForGameState()
     }
     
-    override func setupViewContent() {
-        tableView.estimatedRowHeight = 100.0;
-        tableView.rowHeight = UITableView.automaticDimension;
-        
-        contentBoxView.items = [
-            tableView.boxed,
-            gameButton.boxed.all(16.0).bottom(>=16.0)
+    func updateItems() {
+        contentBoxView.optItems = [
+            tableView.boxed.height(>=40.0),
+            gameButton.boxed.all(16.0).bottom(>=16.0).useIf(showStartButton)
         ]
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewShown = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewShown = false
+    }
+    
+    override func setupViewContent() {
+        super.setupViewContent()
+        tableView.estimatedRowHeight = 20.0;
+        tableView.rowHeight = UITableView.automaticDimension;
+        updateItems()
+        
+        
         gameButton.layer.cornerRadius = 10.0
         setupForGameState()
         
         setupTableView()
         
         setupMenuItems()
-        tableView.onSizeUpdate = { [unowned self] sz in
+        tableView.onSizeUpdate = { [unowned self] sz, oldSz in
             print("sz.height: \(sz.height)")
+            print("oldSz.height: \(oldSz.height)")
             let height = (sz.height >= 10.0) ? sz.height : 10.0
             if let tableHeight = self.tableHeight {
                 tableHeight.constant = height
-                if height > 10.0 {
+//                if sz.height < oldSz.height {
+                if self.viewShown {
+                    print("sz animated")
                     UIView.animate(withDuration: 0.3) {
                         self.view.layoutIfNeeded()
                     }
+                }
+                else {
+                    self.view.layoutIfNeeded()
                 }
             }
             else {
@@ -70,21 +104,25 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
     }
     
     func startGame(with session: GameSession) {
-        guard session.players.count > 0 else {
-            showInfoAlert(title: "Error", message: "Game must have at least one player")
-            return
-        }
+        players = session.players
+        GameManager.shared.currentSession = session
         let sessionVC = GameSessionViewController(game: session)
         self.navigationController?.setViewControllers([self, sessionVC], animated: true)
     }
     
     func setupForGameState() {
         if let session = GameManager.shared.currentSession {
+            topBarView.leftButton.setImage(nil)
+            topBarView.leftButton.onClick = nil
             gameButton.setTitle("Resume Game".ls)
             gameButton.onClick = { [unowned self] btn in
                 self.startGame(with: session)
             }
         } else {
+            topBarView.leftButton.setImage(UIImage.template("menu"))
+            topBarView.leftButton.onClick = { [unowned self] btn in
+                self.menuButtonPressed(sender: btn)
+            }
             gameButton.setTitle("Start Game".ls)
             gameButton.onClick = { [unowned self] btn in
                 self.startGame(with: GameManager.shared.newSession(with: self.players))
@@ -132,6 +170,7 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
     func updateWithPlayer(_ player: Player?) {
         if let player = player {
             self.players.append(player)
+            showStartButton = true
             self.tableView.reloadData()
         }
     }
@@ -158,7 +197,11 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
     
     func removePlayer(number: Int) {
 //        let player = players[number]
+        
         players.remove(at: number)
+        if players.count == 0 {
+            showStartButton = false
+        }
         tableView.reloadData()
     }
     
@@ -232,16 +275,16 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
             cell.avatar = player.image
             cell.label.text = player.name
             if hasSession {
-                cell.showRemoveButton = false
+                cell.removeButtonPosition = .none
             } else {
-                cell.showRemoveButton = true
+                cell.removeButtonPosition = .left
                 cell.removeButton.setImage(.template("minus"))
                 
                 cell.removeButton.onClick = {btn in
                     self.removePlayer(number: indexPath.row)
                 }
-                cell.setSkinGroups(playerCellGroups)
             }
+            cell.setSkinGroups(playerCellGroups)
             return cell
         } else {
             let cell = AddPlayerTableViewCell.dequeue(tableView: tableView)

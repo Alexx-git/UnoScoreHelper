@@ -6,6 +6,9 @@
 //  Copyright © 2020 Alexx. All rights reserved.
 //
 
+//TODO:
+//about insets and text
+
 import UIKit
 import CoreData
 

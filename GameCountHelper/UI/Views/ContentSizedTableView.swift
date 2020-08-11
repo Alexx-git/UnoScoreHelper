@@ -10,14 +10,13 @@ import UIKit
 
 final class ContentSizedTableView: UITableView {
     
-    typealias SizeUpdateHandler = (CGSize) -> Void
+    typealias SizeUpdateHandler = (CGSize, CGSize) -> Void
     
     var onSizeUpdate: SizeUpdateHandler?
     
     override var contentSize:CGSize {
         didSet {
-//            invalidateIntrinsicContentSize()
-            onSizeUpdate?(contentSize)
+            onSizeUpdate?(contentSize, oldValue)
         }
     }
 

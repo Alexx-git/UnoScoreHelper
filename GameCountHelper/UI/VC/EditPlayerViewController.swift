@@ -22,12 +22,16 @@ class EditPlayerViewController: TopBarViewController {
     let profileImage = UIImage(named: "profile")
     
     let scrollView = UIScrollView()
+    
+    let boxView = BoxView()
         
     let avatarView = AvatarView()
     
     let textField = SkinTextField()
     
     let saveButton = SkinButton()
+    
+    var keyboardAvoidingBottomConstraint: NSLayoutConstraint?
         
     var handler: Handler
     
@@ -64,9 +68,14 @@ class EditPlayerViewController: TopBarViewController {
     
     override func setupViewContent() {
         super.setupViewContent()
-        contentBoxView.insets = UIEdgeInsets(top: 20.0, left: 20.0, bottom: 20.0, right: 20.0)
-        contentBoxView.spacing = 20.0
-        contentBoxView.items = [
+        contentBoxView.items = [scrollView.boxed]
+        let constraints = scrollView.addBoxItem(boxView.boxed)
+        print("cons: \(constraints)")
+//        keyboardAvoidingBottomConstraint = constraints[3]
+        scrollView.bxPin(.width, to: .width, of: boxView, pin: .zero)
+        boxView.insets = UIEdgeInsets(top: 20.0, left: 20.0, bottom: 20.0, right: 20.0)
+        boxView.spacing = 20.0
+        boxView.items = [
             avatarView.boxed.centerX(),
             textField.boxed,
             saveButton.boxed.bottom(>=16.0)
@@ -93,6 +102,11 @@ class EditPlayerViewController: TopBarViewController {
         textField.text = player?.name
         textField.placeholder = "Player name".ls
         textField.font = UIFont.systemFont(ofSize: 20)
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
         textField.becomeFirstResponder()
 
         setupMenuItems()
@@ -112,6 +126,24 @@ class EditPlayerViewController: TopBarViewController {
 //        topBarView.rightButton.onClick = { [unowned self] btn in
 //            self.savePlayer()
 //        }
+    }
+    
+    @objc func adjustForKeyboard(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+
+        print("keyboardViewEndFrame: \(keyboardViewEndFrame)")
+        
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            scrollView.contentInset.bottom = 0.0
+            scrollView.setContentOffset(.zero, animated: true)
+        } else {
+            scrollView.contentInset.bottom = keyboardViewEndFrame.height
+            let frame = textField.convert(textField.bounds, to: scrollView)
+            scrollView.scrollRectToVisible(frame, animated: true)
+        }
     }
     
     override func updateSkin(_ skin: Skin) {

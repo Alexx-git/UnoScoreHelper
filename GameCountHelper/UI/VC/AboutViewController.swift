@@ -14,16 +14,21 @@ class AboutViewController: TopBarViewController {
     let scrollView = UIScrollView()
     
     let boxView = BoxView()
+    
+    var labels = [SkinLabel]()
 
     override func setupViewContent() {
         super.setupViewContent()
         setupMenuItems()
         contentBoxView.items = [scrollView.boxed]
+        boxView.insets = UIEdgeInsets(top: 5.0, left: 5.0, bottom: 5.0, right: 5.0)
         scrollView.addBoxItem(boxView.boxed)
         boxView.bxPinWidth(.zero, to: scrollView)
         boxView.bxPinHeight(.zero, to: scrollView).priority = .defaultLow
-        let introTextLabel = addTextLabel(with: "This app is build in order to provide simple and useful tool for counting numeric scores for a couple of players.")
-        let beginTextLabel = addTextLabel(with: "When you open CountHelper, you'll see the last unfinished game if you have any, or the new game screen if not.")
+        let introTextLabel = addTextLabel(with: "This app is build in order to provide simple and useful tool for counting numeric game scores.")
+        labels.append(introTextLabel)
+        let beginTextLabel = addTextLabel(with: "When you open CountHelper, you'll see the last played game if you have any, or the new game screen if not.")
+        labels.append(beginTextLabel)
         boxView.items = [
             introTextLabel.boxed,
             beginTextLabel.boxed
@@ -50,5 +55,13 @@ class AboutViewController: TopBarViewController {
         let label = SkinLabel()
         label.text = text
         return label
+    }
+    
+    override func updateSkin(_ skin: Skin) {
+        super.updateSkin(skin)
+        let rowSkinGroups = [SkinKey.label: skin.editableNumbers]
+        for label in labels {
+            label.setSkinGroups(rowSkinGroups)
+        }
     }
 }

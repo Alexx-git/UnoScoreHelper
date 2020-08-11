@@ -44,7 +44,9 @@ extension Player {
         let player = existing ?? Player.createObject(context: context)
         player.name = name
         player.games = []
-        player.id = Int64(all.count + 1)
+        if existing == nil {
+            player.id = Int64(all.count + 1)
+        }
         return player
     }
     

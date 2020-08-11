@@ -28,10 +28,10 @@ extension GameSessionViewController {
 //        }
 //    }
     
-    func editRowAtIndex(_ rowIndex: Int) {
+    func editLabel(row: Int, column: Int) {
         let editRoundVC = EditRoundViewController(players: game.players)
-        editRoundVC.roundNumber = rowIndex + 1
-        let round = game.rounds[rowIndex]
+        editRoundVC.roundNumber = row + 1
+        let round = game.rounds[row]
         editRoundVC.values = game.players.map{(round.score[$0.id] ?? 0)}
         editRoundVC.onOk = { [unowned self] scores in
             for (index, player) in self.game.players.enumerated() {
@@ -42,6 +42,8 @@ extension GameSessionViewController {
             }
             self.updateResults()
         }
+        let view = editRoundVC.view
+        editRoundVC.selectLabel(editRoundVC.editLabels[column])
         self.present(editRoundVC, animated: true, completion: nil)
     }
         
@@ -64,6 +66,7 @@ extension GameSessionViewController {
                 label.text = (label.text ?? "") + value
             }
         }
+        update()
     }
     
     func onNumPadBackspace() {
@@ -74,26 +77,31 @@ extension GameSessionViewController {
                 label.text?.removeLast()
             }
         }
+        update()
+    }
+    
+    func update() {
+        guard let (label, row, column) = editSelection else {return}
+        let value = label.text
+        let player = game.players[column]
+        let round = game.rounds[row]
+        if value == "-" {
+            round.score[player.id] = 0
+        } else {
+            round.score[player.id] = Int(value ?? "0")
+        }
+        updateResults()
+        tableView.reloadData()
     }
     
     func onNumPadOK() {
-        for (horIndex, player) in game.players.enumerated() {
-            for (vertIndex, round) in game.rounds.enumerated() {
-                let cell = tableView.cellForRow(at: IndexPath(row: vertIndex, section: 0)) as? RoundTableViewCell
-                let value = cell?.rowView.labels[horIndex].text
-                if value == "-" {
-                    round.score[player.id] = 0
-                } else {
-                    round.score[player.id] = Int(value ?? "0")
-                }
-            }
-        }
-        updateResults()
+        
         if ??self.game.rounds.last?.hasValues {
             self.game.newRound(with: nil) 
         }
         tableView.reloadData()
         editSelection?.label.state = .normal
+        editSelection = nil
 //        editSelection?.label.layer.cornerRadius = 0.0
         
     }

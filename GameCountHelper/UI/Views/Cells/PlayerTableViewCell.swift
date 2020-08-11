@@ -11,6 +11,12 @@ import BoxView
 
 class PlayerTableViewCell: BaseTableViewCell {
     
+    enum RemoveButtonPosition {
+        case none
+        case right
+        case left
+    }
+    
     let avatarView = UIImageView.newAutoLayout()
     let label = SkinLabel.newAutoLayout()
     let removeButton = SkinButton.newAutoLayout()
@@ -21,7 +27,7 @@ class PlayerTableViewCell: BaseTableViewCell {
             updateItems()
         }
     }
-    var showRemoveButton: Bool = true {
+    var removeButtonPosition: RemoveButtonPosition = .left {
         didSet {
             updateItems()
         }
@@ -41,9 +47,10 @@ class PlayerTableViewCell: BaseTableViewCell {
     
     func updateItems() {
         boxView.optItems = [
-            removeButton.boxed.centerY().height(40.0).right(-16.0).useIf(showRemoveButton),
+            removeButton.boxed.centerY().height(40.0).right(-16.0).useIf(removeButtonPosition == .left),
             avatarView.boxed.left(16.0).width(imgSide).height( (==imgSide).withPriority(.defaultHigh)).right(-8.0).useIf(avatar != nil),
-            label.boxed.left(16.0).right(>=8.0).centerY()
+            label.boxed.left(16.0).right(>=8.0).centerY(),
+            removeButton.boxed.centerY().height(40.0).useIf(removeButtonPosition == .right)
         ]
     }
     

@@ -82,9 +82,10 @@ class PlayerListViewController: TopBarViewController, UITableViewDelegate, UITab
             if let image = player.image {
                 cell.avatar = image
             }
-            cell.removeButton.setTitle("Delete")
+            cell.removeButtonPosition = .right
+            cell.removeButton.setImage(.template("remove"))
             cell.removeButton.onClick = {btn in
-                self.deletePlayer(number: indexPath.row)
+                self.showDeleteAlert(number: indexPath.row)
             }
             cell.setSkinGroups(playerCellGroups)
             
@@ -101,6 +102,15 @@ class PlayerListViewController: TopBarViewController, UITableViewDelegate, UITab
             return cell
         }
         
+    }
+    
+    func showDeleteAlert(number: Int) {
+        let alert = UIAlertController(title: "Are you sure?", message: "This action cannot be undone. If you delete the player, it will also delete all games that he played.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Delete Player", style: .destructive, handler: {_ in
+            self.deletePlayer(number: number)
+        }))
+        alert.addAction(UIAlertAction(title: "Go Back", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func deletePlayer(number: Int) {

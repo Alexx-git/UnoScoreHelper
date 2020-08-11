@@ -18,9 +18,9 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
     let playersRowView = PlayerHeaderRowView()
     let titleDivView = DivView()
     let tableView = ContentSizedTableView.newAutoLayout()
-    let newRoundButton = SkinButton.newAutoLayout()
     let resultDivView = DivView()
     let resultRowView = RowView()
+    let newRoundButton = SkinButton.newAutoLayout()
     let numPadView = NumPadInputView()
     var ownSize: CGSize = .zero
     
@@ -92,13 +92,12 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
 
         self.startTimer()
         
-        tableView.onSizeUpdate = { [unowned self] sz in
+        tableView.onSizeUpdate = { [unowned self] sz, oldSz in
             let minHeight = 1.f
             let height = (sz.height >= minHeight) ? sz.height : minHeight
             if let tableHeight = self.tableHeight {
                 tableHeight.constant = height
                 if height > 1.0 {
-//                    print("self.view: \(self.view)")
                     self.view.layoutIfNeeded()
                 }
             }
@@ -108,14 +107,14 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         }
         
         rowLabelTapHandler = { [unowned self] rowView, label in
+            guard let col = rowView.labels.firstIndex(of: label) else {return}
+            let row = rowView.tag
             if GameManager.shared.settings.inPlaceEditing {
-                if let col = rowView.labels.firstIndex(of: label) {
-                    let selection = (label, rowView.tag, col)
-                    self.setEditSelection(selection)
-                }
+                let selection = (label, row, col)
+                self.setEditSelection(selection)
             }
             else {
-                self.editRowAtIndex(rowView.tag)
+                self.editLabel(row: row, column: col)
             }
         }
     }
@@ -222,7 +221,7 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
 //        if self.rowHeight != nil {
 //            self.tableHeightIsUpdatedByRound = true
 //        }
-        adjustFont()
+        
         mainAsyncAfter(0.1) {
 //            if self.rowHeight != nil {
 //                self.updateTableHeight(animated: true)
@@ -233,7 +232,12 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
                 lastRound -= 1
 //                self.tableView.scrollToRow(at: IndexPath(row:  lastRound, section: 0), at: .bottom, animated: true)
             }
+            self.adjustFont()
             self.tableView.reloadData()
+            self.editSelection?.label.state = .selected
+            self.editSelection?.label.layer.cornerRadius = 5.0
+            self.editSelection?.label.clipsToBounds = true
+            
 //            self.tableView.onSizeUpdate?(self.tableView.contentSize)
         }
     }
@@ -308,6 +312,8 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
             minSize = min(minSize, font.maxFontSizeForText(text, in: size))
         }
         minFont = font.withSize(max(minSize, minAllowedFontSize))
+        playersRowView.adjustFont()
+        resultRowView.adjustFont()
 //        tableView.reloadData()
 //        self.view.layoutIfNeeded()
     }
