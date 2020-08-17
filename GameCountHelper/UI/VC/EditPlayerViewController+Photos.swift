@@ -29,12 +29,6 @@ extension EditPlayerViewController: UIImagePickerControllerDelegate, UINavigatio
             self.dropMenuView?.dismiss(animated: false)
             self.checkPhotosAccess()
         }
-        let cameraButton = SkinButton.newAutoLayout()
-        cameraButton.setTitle("Take photo from Camera".ls, for: .normal)
-        cameraButton.onClick = {  [unowned self] btn in
-            self.dropMenuView?.dismiss(animated: false)
-            self.checkCameraAccess()
-        }
         let removeButton = SkinButton.newAutoLayout()
         removeButton.setTitle("Clear image".ls, for: .normal)
         removeButton.onClick = {  [unowned self] btn in
@@ -42,7 +36,18 @@ extension EditPlayerViewController: UIImagePickerControllerDelegate, UINavigatio
             self.image = nil
             self.avatarView.imageView.image = self.profileImage
         }
-        showDropMenuItems([photosButton, cameraButton, removeButton], sender: sender, offset: CGPoint(0.0, -40.0))
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let cameraButton = SkinButton.newAutoLayout()
+            cameraButton.setTitle("Take photo from Camera".ls, for: .normal)
+            cameraButton.onClick = {  [unowned self] btn in
+                self.dropMenuView?.dismiss(animated: false)
+                self.checkCameraAccess()
+            }
+            showDropMenuItems([photosButton, cameraButton, removeButton], sender: sender, offset: CGPoint(0.0, -40.0))
+        } else {
+            showDropMenuItems([photosButton, removeButton], sender: sender, offset: CGPoint(0.0, -40.0))
+        }
+        
     }
     
     func checkPhotosAccess() {
