@@ -16,6 +16,8 @@ class GameSettings: NSObject, Codable {
     
     var inPlaceEditing = false
     
+    let digitLimit = 5
+    
     override init() {
         super.init()
     }
