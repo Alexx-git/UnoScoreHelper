@@ -12,6 +12,7 @@ import CoreData
 extension UDStoredKey {
     static let savedGameStartDate = UDStoredKey("last unfinished game start date")
     static let savedSettings = UDStoredKey("game settings")
+    static let savedPlayersIDs = UDStoredKey("ids for players in list if no session is saved")
 }
 
 class GameManager {
@@ -32,9 +33,13 @@ class GameManager {
         return currentSession?.players.count ?? 0
     }
     
+    var players: [Player]?
+    
     var storedGameDate = UDStored<Date>(key: .savedGameStartDate)
     
     var storedSettings = UDStored<GameSettings>(key: .savedSettings)
+    
+    var storedPlayersIDs = UDStored<Array<Int64>>(key: .savedPlayersIDs)
     
     private(set) var skin = Skin()
     
@@ -57,6 +62,9 @@ class GameManager {
                     _ = player.loadImage()
                 }
             }
+        } else if let ids = storedPlayersIDs.value {
+            let predicate = NSPredicate(format: "id IN %@", ids)
+            players = Player.fetchItems(predicate: predicate, context: cdStack.viewContext())
         }
         if let skin = SkinManager.loadSkinWithName(settings.skinName ?? SkinManager.defaultSkinName) {
             setSkin(skin)

@@ -15,6 +15,7 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
     var players = [Player]() {
         didSet {
             showStartButton = players.count > 0
+            GameManager.shared.storedPlayersIDs.value = players.map{$0.id}
         }
     }
     
