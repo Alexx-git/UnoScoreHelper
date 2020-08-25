@@ -64,7 +64,7 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
             switch btnType {
                 case .num(let value): self.onNumPadAddValue("\(value)")
                 case .delete: self.onNumPadBackspace()
-                case .ok: self.onNumPadOK()
+                case .ok: self.onNumPadNewRound()
                 default: ()
             }
         }
@@ -111,7 +111,17 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
             let row = rowView.tag
             if GameManager.shared.settings.inPlaceEditing {
                 let selection = (label, row, col)
-                self.setEditSelection(selection)
+                if let current = self.editSelection {
+                    if selection == current {
+                        current.label.state = .normal
+                        self.editSelection = nil
+                    } else {
+                        self.setEditSelection(selection)
+                    }
+                } else {
+                    self.setEditSelection(selection)
+                }
+                
             }
             else {
                 self.editLabel(row: row, column: col)

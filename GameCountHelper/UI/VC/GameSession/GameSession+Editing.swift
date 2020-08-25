@@ -46,6 +46,12 @@ extension GameSessionViewController {
         editRoundVC.selectLabel(editRoundVC.editLabels[column])
         self.present(editRoundVC, animated: true, completion: nil)
     }
+    
+    func editLabelSetSelected() {
+        editSelection?.label.state = .selected
+        editSelection?.label.layer.cornerRadius = 5.0
+        editSelection?.label.clipsToBounds = true
+    }
         
     func setEditSelection(_ selection: RowEditSelection) {
         if let editSelection = editSelection {
@@ -53,9 +59,7 @@ extension GameSessionViewController {
 //            editSelection.label.layer.cornerRadius = 0.0
         }
         editSelection = selection
-        editSelection?.label.state = .selected
-        editSelection?.label.layer.cornerRadius = 5.0
-        editSelection?.label.clipsToBounds = true
+        editLabelSetSelected()
     }
     
     func onNumPadAddValue(_ value: String) {
@@ -96,11 +100,9 @@ extension GameSessionViewController {
         tableView.reloadData()
     }
     
-    func onNumPadOK() {
+    func onNumPadNewRound() {
         
-        if ??self.game.rounds.last?.hasValues {
-            self.game.newRound(with: nil) 
-        }
+        self.game.newRound(with: nil)
         tableView.reloadData()
         editSelection?.label.state = .normal
         editSelection = nil

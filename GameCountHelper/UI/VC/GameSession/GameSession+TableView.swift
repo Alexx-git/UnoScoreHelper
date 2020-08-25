@@ -57,7 +57,13 @@ extension GameSessionViewController {
                 label.text = "\(score)"
             }
         }
+        
         cell.rowView.setSkinGroups(rowSkinGroups)
+        guard let selection = editSelection else {return cell}
+        if indexPath.row == selection.row {
+            editSelection!.label = cell.rowView.labels[selection.col]
+            editLabelSetSelected()
+        }
         return cell
     }
     
