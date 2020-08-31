@@ -63,6 +63,8 @@ extension GameSessionViewController {
         inPlaceEditCheckButton.checked = GameManager.shared.settings.inPlaceEditing
         inPlaceEditCheckButton.onCheck = { [unowned self] checkView in
             self.dropMenuView?.dismiss(animated: false)
+            self.editSelection?.label.state = .normal
+            self.editSelection = nil
             GameManager.shared.settings.inPlaceEditing = checkView.checked
             self.updateLayout()
             self.updateItems()
