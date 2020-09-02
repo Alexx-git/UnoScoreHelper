@@ -91,8 +91,9 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
                 }
             }
             else {
-                self.tableHeight = self.tableView.bxPinHeight(<=height)
+                self.tableHeight = self.tableView.bxPinHeight((==height).withPriority(.defaultLow))
             }
+            print("self.tableHeight: \(self.tableHeight)")
         }
     }
     
