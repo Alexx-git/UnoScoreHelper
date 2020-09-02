@@ -43,7 +43,7 @@ extension Player {
         }
         let player = existing ?? Player.createObject(context: context)
         player.name = name
-        player.games = []
+//        player.games = []
         if existing == nil {
             player.id = Int64(all.count + 1)
         }

@@ -240,7 +240,7 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
         if indexPath.section == 0 {
             let playerVC = EditPlayerViewController(player: players[indexPath.row]) { [weak self]  player in
                 guard let self = self else { return }
-                self.players[indexPath.row] = player
+//                self.players[indexPath.row] = player
                 tableView.reloadData()
             }
             navigationController?.pushViewController(playerVC, animated: true)
