@@ -44,11 +44,13 @@ class GameManager {
     private(set) var skin = Skin()
     
     init() {
+        
         if let loadedSettings = storedSettings.value {
             settings = loadedSettings
         } else {
             settings = GameSettings()
         }
+
         if #available(iOS 13.0, *) {
             NotificationCenter.default.addObserver(self, selector: #selector(save), name: UIScene.willDeactivateNotification, object: nil)
         } else {
@@ -67,7 +69,7 @@ class GameManager {
             players = Player.fetchItems(predicate: predicate, context: cdStack.viewContext())
         }
         if let skin = SkinManager.loadSkinWithName(settings.skinName ?? SkinManager.defaultSkinName) {
-            setSkin(skin)
+            self.skin = skin
         }
     }
     
@@ -96,11 +98,17 @@ class GameManager {
     
     func setSkin(_ skin: Skin) {
         self.skin = skin
-        settings.skinName = skin.name
+        if settings.sameSkinForAllModes {
+            settings.skinNames[.light] = skin.name
+            settings.skinNames[.dark] = skin.name
+        }
+        else {
+            settings.skinNames[UIStyle.current] = skin.name
+        }
     }
     
     @objc func save() {
-        
+        settings.saveSettings()
         cdStack.viewContext().saveIfNeed()
     }
 }

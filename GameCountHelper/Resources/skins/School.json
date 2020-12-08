@@ -1,39 +1,35 @@
 
 {
-    "imageNames": {},
-    "bgColor": "D6C8B8",
-    "titlesText": {
-        "textDrawing": {
-            "brush": {
-                "fill": "888068",
-                "shadow": {"color": "444444", "radius": 2.0, "offset": [2.0, 2.0]}
-            },
-            "font": {"name": "ArialRoundedMTBold", "size": 74}
-        }
+    "imageNames": {"bg": "grid1"},
+    "bgColor": "FCFCFC",
+    "cell": {
+        "stroke": "FF8090",
+        "strokeWidth": 2
     },
-    "text": {
+    "bigTitle": {
         "textDrawing": {
             "brush": {
-                "fill": "807068"
+                "fill": "2010E0",
             },
-            "font": {"name": "HelveticaNeue-Medium", "size": 18}
+            "font": {"name": "ChalkboardSE-Bold", "size": 54}
         }
     },
     "h1": {
         "textDrawing": {
             "brush": {
-                "fill": "A88460",
+                "fill": "B09076",
                 "shadow": {"color": "444444", "radius": 1.0, "offset": [1.0, 1.0]}
             },
-            "font": {"name": "Arial-BoldMT", "size": 24}
+            "font": {"name": "Arial-BoldMT", "size": 42}
         }
     },
     "h2": {
         "textDrawing": {
             "brush": {
-                "fill": "786660"
+                "fill": "806050"
             },
-            "font": {"name": "HelveticaNeue-Medium", "size": 28}
+            "font": {"name": "HelveticaNeue-CondensedBlack", "size": 30},
+            "shadow": {"color": "444444", "radius": 1.0, "offset": [0.0, 0.0]}
         }
     },
     "avatar": {
@@ -53,16 +49,16 @@
                     "fill": "A88460",
                     "shadow": {"color": "444444", "radius": 1.0, "offset": [1.0, 1.0]}
                 },
-                "font": {"name": "Arial-BoldMT", "size": 24}
+                "font": {"name": "HelveticaNeue-Medium", "size": 24}
             }
         },
         "selected": {
-            "box": {"fill": "F8D490", "stroke": "886440", "strokeWidth": 1.0},
+            "box": {"fill": "D8C490", "stroke": "886440", "strokeWidth": 1.0},
             "textDrawing": {
                 "brush": {
                     "fill": "B89470"
                 },
-                "font": {"name": "Arial-BoldMT", "size": 24}
+                "font": {"name": "HelveticaNeue-Medium", "size": 24}
             }
         }
     },
@@ -129,49 +125,6 @@
         "shadow": {"color": "44444488", "radius": 2.0, "offset": [2.0, 2.0]}
     },
 
-    "letterStyles": {
-        "group": {
-            "selected": {
-                "textDrawing": {
-                    "brush": {"fill": "A07066"},
-                    "font": {"name": "Verdana-Bold", "size": 36}
-                }
-            },
-            "hlSelected": {
-                "box": {"fill": "B0B07080"},
-                "textDrawing": {
-                    "brush": {"fill": "B08076"},
-                    "font": {"name": "Verdana-Bold", "size": 42}
-                }
-            },
-            "normal": {
-                "textDrawing": {
-                    "brush": {"fill": "706066"},
-                    "font": {"name": "Verdana-Bold", "size": 36}
-                }
-            },
-            "hl": {
-                "box": {"fill": "B0B07080"},
-                "textDrawing": {
-                    "brush": {"fill": "908076"},
-                    "font": {"name": "Verdana-Bold", "size": 36}
-                }
-            },
-            "disabled": {
-                "textDrawing": {
-                    "brush": {"fill": "888886"},
-                    "font": {"name": "CourierNewPS-BoldMT", "size": 36}
-                }
-            }
-        },
-        "boxAdjust": {
-            "offset": [0.0, -2.0],
-            "expand": [3.0, 3.0]
-        }
-    },
-    
-    
-    
     "keyStyles": {
         "normal": {
             "box": {
@@ -182,7 +135,7 @@
                 "brush": {
                     "fill": "E0D4C0"
                 },
-                "font": {"name": "Verdana-Bold", "size": 32}
+                "font": {"name": "Arial-BoldMT", "size": 32}
             }
         },
         "hl": {
@@ -194,7 +147,7 @@
                 "brush": {
                     "fill": "D6C8B8"
                 },
-                "font": {"name": "Verdana-Bold", "size": 32}
+                "font": {"name": "Arial-BoldMT", "size": 32}
             }
         },
         "selected": {
@@ -203,7 +156,7 @@
             },
             "textDrawing": {
                 "brush": {"fill": "D0C4B0"},
-                "font": {"name": "Verdana-Bold", "size": 32}
+                "font": {"name": "Arial-BoldMT", "size": 32}
             }
         },
         "hlSelected": {
@@ -213,13 +166,13 @@
             },
             "textDrawing": {
                 "brush": {"fill": "D6C8B8"},
-                "font": {"name": "Verdana-Bold", "size": 32}
+                "font": {"name": "Arial-BoldMT", "size": 32}
             }
         },
         "disabled": {
             "textDrawing": {
                 "brush": {"fill": "888886"},
-                "font": {"name": "CourierNewPS-BoldMT", "size": 32}
+                "font": {"name": "Arial-BoldMT", "size": 32}
             }
         }
     }

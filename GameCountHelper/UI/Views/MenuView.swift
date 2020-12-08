@@ -41,7 +41,7 @@ class MenuView: BaseView, Skinnable {
     }
     
     func setSkin(_ skin:Skin?) {
-        buttonSkinGroup = skin?.menuButton
+        buttonSkinGroup = skin?.barButton
         updateSkin()
     }
     

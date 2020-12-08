@@ -28,10 +28,12 @@ class  SkinTextField: UITextField {
     func setSkinStyle(_ style: Skin.Style?) {
         if var style = style {
             style.scaleFontBy(fontScale)
-            attributes = style.textDrawing?.textAttributes()
-            attributes![.paragraphStyle] = NSParagraphStyle.withAlignment(self.textAlignment)
-            self.typingAttributes = attributes
-            setBrush(style.box)
+            if var attributes = style.textDrawing?.textAttributes() {
+                attributes[.paragraphStyle] = NSParagraphStyle.withAlignment(self.textAlignment)
+                self.typingAttributes = attributes
+                self.defaultTextAttributes = attributes
+                setBrush(style.box)
+            }
         }
     }
 

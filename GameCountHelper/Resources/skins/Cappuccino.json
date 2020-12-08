@@ -1,0 +1,170 @@
+
+{
+    "imageNames": {},
+    "namedColors": {
+        "Clear": "00000000",
+        "Dim": "00000030",
+        "LSh": "FFFFFF",
+        "DSh": "444444",
+        "Bg0": "E8D8CC",
+        "Bg1": "EEE4DA",
+        "Bg2": "D6C8B8",
+        "Fg0": "807068",
+        "Fg1": "907460",
+        "Fg2": "A07C58",
+        "Fg3": "A88460",
+        "Fg4": "B4947C",
+        "Dis": "888888"
+    },
+    "namedFonts": {
+        "Font0": "Arial-BoldMT",
+        "Font1": "ArialRoundedMTBold",
+        "Font2": "HelveticaNeue-Bold",
+        "Font3": "HelveticaNeue-Medium",
+    },
+    "bgColor": "Bg0",
+    "dimColor": "Dim",
+    "cell": {
+        "fill": "Bg0",
+        "stroke": "Fg1",
+        "strokeWidth": 2,
+        "shadow": {"color": "DSh", "radius": 3.0, "offset": [1.0, 1.0]}
+    },
+    "text": {
+        "textDrawing": {
+            "brush": {
+                "fill": "Fg0"
+            },
+            "font": {"name": "Font3", "size": 20}
+        }
+    },
+    "bigTitle": {
+        "textDrawing": {
+            "brush": {
+                "fill": "Fg3",
+                "shadow": {"color": "DSh", "radius": 1.0, "offset": [1.0, 1.0]}
+            },
+            "font": {"name": "Font0", "size": 54}
+        }
+    },
+    "h1": {
+        "textDrawing": {
+            "brush": {
+                "fill": "Fg2",
+                "shadow": {"color": "DSh", "radius": 1.0, "offset": [1.0, 1.0]}
+            },
+            "font": {"name": "Font2", "size": 24}
+        }
+    },
+    "h2": {
+        "textDrawing": {
+            "brush": {
+                "fill": "Fg1"
+            },
+            "font": {"name": "Font2", "size": 20},
+        }
+    },
+    "barTitle": {
+        "textDrawing": {
+            "brush": {
+                "fill": "Fg3",
+                "shadow": {"color": "DSh", "radius": 1.0, "offset": [1.0, 1.0]}
+            },
+            "font": {"name": "Font1", "size": 28}
+        }
+    },
+    "barButton": {
+        "normal": {
+            "textDrawing": {
+                "brush": {
+                    "fill": "Fg3",
+                    "shadow": {"color": "DSh", "radius": 1.0, "offset": [1.0, 1.0]}
+                },
+                "font": {"name": "Font0", "size": 36}
+            }
+        },
+        "hl": {
+            "textDrawing": {
+                "brush": {
+                    "fill": "Fg2",
+                    "strokeWidth": 0,
+                    "shadow": {"color": "LSh", "radius": 2.0, "offset": [0.0, 0.0]},
+                },
+                "font": {"name": "Font0", "size": 36}
+            }
+        }
+    },
+    "avatar": {
+        "textDrawing": {
+            "brush": {
+                "stroke": "Fg3",
+                "strokeWidth": 2,
+                "shadow": {"color": "DSh", "radius": 2.0, "offset": [1.0, 1.0]}
+            }
+        }
+    },
+    "editableNumbers": {
+        "normal": {
+            "box": {"fill": "Clear", "strokeWidth": 0.0},
+            "textDrawing": {
+                "brush": {
+                    "fill": "Fg1",
+                    "shadow": {"color": "DSh", "radius": 0.0, "offset": [0.5, 0.5]}
+                },
+                "font": {"name": "Font2", "size": 32}
+            }
+        },
+        "selected": {
+            "box": {"fill": "Bg1", "stroke": "Fg1", "strokeWidth": 1.0},
+            "textDrawing": {
+                "brush": {
+                    "fill": "Fg0"
+                },
+                "font": {"name": "Font2", "size": 32}
+            }
+        }
+    },
+    "dropMenu": {
+        "fill": "Bg0", "stroke": "Fg1",
+        "strokeWidth": 3,
+        "shadow": {"color": "DSh", "radius": 4.0, "offset": [2.0, 2.0]}
+    },
+    "divider": {
+        "fill": "Fg3",
+        "shadow": {"color": "DSh", "radius": 1.0, "offset": [1.0, 1.0]}
+    },
+
+    "keyStyles": {
+        "normal": {
+            "box": {
+                "fill": "Fg3",
+                "shadow": {"color": "DSh", "radius": 1.0, "offset": [1.0, 1.0]}
+            },
+            "textDrawing": {
+                "brush": {
+                    "fill": "E0D4C0"
+                },
+                "font": {"name": "Font0", "size": 32}
+            }
+        },
+        "hl": {
+            "box": {
+                "fill": "Fg3",
+                "shadow": {"color": "LSh", "radius": 3.0, "offset": [1.0, 1.0]}
+            },
+            "textDrawing": {
+                "brush": {
+                    "fill": "Bg2"
+                },
+                "font": {"name": "Font0", "size": 32}
+            }
+        },
+        "disabled": {
+            "textDrawing": {
+                "brush": {"fill": "Dis"},
+                "font": {"name": "Font0", "size": 32}
+            }
+        }
+    }
+}
+

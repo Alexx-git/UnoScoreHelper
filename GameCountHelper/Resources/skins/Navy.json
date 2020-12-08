@@ -1,0 +1,199 @@
+
+{
+    "imageNames": {"bg": "sea2"},
+    "bgColor": "164478",
+    "cell": {
+        "fill": "164478",
+        "stroke": "B8CEE8",
+        "strokeWidth": 2,
+        "shadow": {"color": "FFFFFF", "radius": 3.0, "offset": [1.0, 1.0]}
+    },
+    "text": {
+        "textDrawing": {
+            "brush": {
+                "fill": "B8CEE8"
+            },
+            "font": {"name": "HelveticaNeue-Medium", "size": 20}
+        }
+    },
+    "bigTitle": {
+        "textDrawing": {
+            "brush": {
+                "fill": "B8CEFF",
+                "shadow": {"color": "FFFFFF", "radius": 1.0, "offset": [-1.0, -1.0]}
+            },
+            "font": {"name": "Arial-BoldMT", "size": 54}
+        }
+    },
+    "h1": {
+        "textDrawing": {
+            "brush": {
+                "fill": "B8CEE8",
+                "shadow": {"color": "444444", "radius": 1.0, "offset": [1.0, 1.0]}
+            },
+            "font": {"name": "HelveticaNeue-Bold", "size": 24}
+        }
+    },
+    "h2": {
+        "textDrawing": {
+            "brush": {
+                "fill": "B8CEE8"
+            },
+            "font": {"name": "HelveticaNeue-Bold", "size": 24},
+            "shadow": {"color": "444444", "radius": 1.0, "offset": [0.0, 0.0]}
+        }
+    },
+    "unused": {
+        "textDrawing": {
+            "brush": {
+                "fill": "A48864", "stroke": "987A64", "strokeWidth": -6,
+            },
+            "font": {"name": "ArialRoundedMTBold", "size": 28}
+        }
+    },
+    "barTitle": {
+        "textDrawing": {
+            "brush": {
+                "fill": "B8CEE8",
+                "shadow": {"color": "444444", "radius": 1.0, "offset": [1.0, 1.0]}
+            },
+            "font": {"name": "ArialRoundedMTBold", "size": 28}
+        }
+    },
+    "barButton": {
+        "normal": {
+            "textDrawing": {
+                "brush": {
+                    "fill": "B8CEE8",
+                    "shadow": {"color": "444444", "radius": 1.0, "offset": [1.0, 1.0]}
+                },
+                "font": {"name": "Arial-BoldMT", "size": 20}
+            }
+        },
+        "hl": {
+            "textDrawing": {
+                "brush": {
+                    "fill": "A07850", "stroke": "605830",
+                    "shadow": {"color": "FFFFFF", "radius": 3.0, "offset": [1.0, 1.0]},
+                    "strokeWidth": 0
+                },
+                "font": {"name": "Arial-BoldMT", "size": 20}
+            }
+        }
+    },
+    "avatar": {
+        "textDrawing": {
+            "brush": {
+                "stroke": "B8CEE8",
+                "strokeWidth": 2,
+                "shadow": {"color": "444444", "radius": 2.0, "offset": [1.0, 1.0]}
+            }
+        }
+    },
+    "editableNumbers": {
+        "normal": {
+            "box": {"fill": "00000000", "strokeWidth": 0.0},
+            "textDrawing": {
+                "brush": {
+                    "fill": "B8CEE8",
+                    "shadow": {"color": "444444", "radius": 0.0, "offset": [0.5, 0.5]}
+                },
+                "font": {"name": "HelveticaNeue-Bold", "size": 24}
+            }
+        },
+        "selected": {
+            "box": {"fill": "B8CEE8", "stroke": "886440", "strokeWidth": 1.0},
+            "textDrawing": {
+                "brush": {
+                    "fill": "B8CEE8"
+                },
+                "font": {"name": "HelveticaNeue-Bold", "size": 24}
+            }
+        }
+    },
+    "dropMenu": {
+        "fill": "B8CEE8", "stroke": "886440",
+        "strokeWidth": 3,
+        "shadow": {"color": "444444", "radius": 4.0, "offset": [2.0, 2.0]}
+    },
+
+    "menuButton": {
+        "normal": {
+            "textDrawing": {
+                "brush": {
+                    "fill": "B8CEE8", "stroke": "907850",
+                    "strokeWidth": 0,
+                    "shadow": {"color": "444444", "radius": 1.0, "offset": [1.0, 1.0]}
+                },
+                "font": {"name": "Arial-BoldMT", "size": 40}
+            }
+        },
+        "hl": {
+            "textDrawing": {
+                "brush": {
+                    "fill": "B8CEE8", "stroke": "605830",
+                    "strokeWidth": 0,
+                    "shadow": {"color": "FFFFFF", "radius": 3.0, "offset": [1.0, 1.0]}
+                },
+                "font": {"name": "Arial-BoldMT", "size": 40}
+            }
+        }
+    },
+    "divider": {
+        "fill": "B8CEE8",
+        "shadow": {"color": "44444488", "radius": 2.0, "offset": [2.0, 2.0]}
+    },
+
+    "keyStyles": {
+        "normal": {
+            "box": {
+                "fill": "B8CEE8",
+                "shadow": {"color": "444444", "radius": 1.0, "offset": [1.0, 1.0]}
+            },
+            "textDrawing": {
+                "brush": {
+                    "fill": "B8CEE8"
+                },
+                "font": {"name": "Arial-BoldMT", "size": 32}
+            }
+        },
+        "hl": {
+            "box": {
+                "fill": "A88460",
+                "shadow": {"color": "FFFFFF", "radius": 3.0, "offset": [1.0, 1.0]}
+            },
+            "textDrawing": {
+                "brush": {
+                    "fill": "B8CEE8"
+                },
+                "font": {"name": "Arial-BoldMT", "size": 32}
+            }
+        },
+        "selected": {
+            "box": {
+                "fill": "B8CEE8"
+            },
+            "textDrawing": {
+                "brush": {"fill": "D0C4B0"},
+                "font": {"name": "Arial-BoldMT", "size": 32}
+            }
+        },
+        "hlSelected": {
+            "box": {
+                "fill": "B8CEE8",
+                "shadow": {"color": "FFFFFF", "radius": 3.0, "offset": [1.0, 1.0]}
+            },
+            "textDrawing": {
+                "brush": {"fill": "B8CEE8"},
+                "font": {"name": "Arial-BoldMT", "size": 32}
+            }
+        },
+        "disabled": {
+            "textDrawing": {
+                "brush": {"fill": "888886"},
+                "font": {"name": "Arial-BoldMT", "size": 32}
+            }
+        }
+    }
+}
+

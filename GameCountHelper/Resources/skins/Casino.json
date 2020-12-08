@@ -1,55 +1,75 @@
 
 {
     "imageNames": {"main": "matrix"},
-    "bgColor": "003200",
+    "bgColor": "007022",
     "cell": {
         "fill": "003200",
         "stroke": "20D020",
         "strokeWidth": 2,
         "shadow": {"color": "444444", "radius": 1.0, "offset": [1.0, 1.0]}
     },
+    "h1": {
+        "textDrawing": {
+            "brush": {
+                "fill": "FF0000",  "stroke": "FFFFFF", "strokeWidth": -3,
+            },
+            "font": {"name": "Charter-Bold", "size": 42}
+        }
+    },
+    "h2": {
+        "textDrawing": {
+            "brush": {
+                "fill": "FFFFFF"
+            },
+            "font": {"name": "Charter-Bold", "size": 30},
+            "shadow": {"color": "444444", "radius": 1.0, "offset": [0.0, 0.0]}
+        }
+    },
     "bigTitle": {
         "textDrawing": {
-            "font": {"name": "RingMatrix3D", "size": 54},
+            "font": {"name": "Charter-BlackItalic", "size": 54},
             "brush": {
-                "fill": "20DD20"
-            }
+                "fill": "FF0000",  "stroke": "FFFFFF", "strokeWidth": -3,
+            },
         }
     },
     "menuButton": {
         "normal": {
             "textDrawing": {
                 "brush": {
-                    "fill": "30EE30",
-                    "shadow": {"color": "FFFF30", "radius": 3.0, "offset": [0.0, 0.0]}
+                    "fill": "E02012"
                 },
-                "font": {"name": "RingMatrixTwo", "size": 42}
+                "font": {"name": "Charter-BlackItalic", "size": 42}
             }
         },
         "hl": {
             "textDrawing": {
                 "brush": {
-                    "fill": "20D020",
-                    "shadow": {"color": "D0D000", "radius": 2.0, "offset": [0.0, 0.0]}
+                    "fill": "FF3020",
+                    "shadow": {"color": "FFFF30", "radius": 3.0, "offset": [0.0, 0.0]}
                 },
-                "font": {"name": "RingMatrixTwo", "size": 38}
+                "font": {"name": "Charter-BlackItalic", "size": 42}
             }
         }
+    },
+    "dropMenu": {
+        "fill": "FFFFFF", "stroke": "002000",
+        "strokeWidth": 2,
     },
     "barButton": {
         "normal": {
             "textDrawing": {
-                "brush": {"fill": "30F030"},
-                "font": {"name": "RingMatrix3D", "size": 20}
+                "brush": {"fill": "FF3020"},
+                "font": {"name": "Charter-Bold", "size": 20}
             }
         },
         "hl": {
             "textDrawing": {
                 "brush": {
-                    "fill": "10D010",
+                    "fill": "FF3020",
                     "shadow": {"color": "004000", "radius": 3.0, "offset": [-2.0, 2.0]}
                 },
-                "font": {"name": "RingMatrixTwo", "size": 20}
+                "font": {"name": "Charter-Bold", "size": 20}
             }
         }
     },
@@ -59,34 +79,28 @@
                 "fill": "CCEECC",
                 "shadow": {"color": "88FF88", "radius": 1.0, "offset": [0.0, 0.0]}
             },
-            "font": {"name": "VT323-Regular", "size": 22}
+            "font": {"name": "Charter-BoldItalic", "size": 22}
         }
     },
-    "dropMenu": {
-        "fill": "003200", "stroke": "20D020",
-        "strokeWidth": 2,
-    },
-
-    
     "letterStyles": {
         "group": {
             "selected": {
                 "textDrawing": {
                     "brush": {"fill": "B0C000"},
-                    "font": {"name": "Famirids", "size": 36},
+                    "font": {"name": "Cochin-Bold", "size": 36},
                 }
             },
             "hlSelected": {
                 "box": {"fill": "B0B07080"},
                 "textDrawing": {
                     "brush": {"fill": "A0FF00"},
-                    "font": {"name": "Famirids", "size": 42},
+                    "font": {"name": "Cochin-Bold", "size": 42},
                 }
             },
             "normal": {
                 "textDrawing": {
                     "brush": {"fill": "20D020"},
-                    "font": {"name": "Famirids", "size": 36}
+                    "font": {"name": "Cochin-Bold", "size": 36}
                 }
             },
             "hl": {
@@ -95,13 +109,13 @@
                     "brush": {"fill": "B0FFB0",
                         "shadow": {"color": "88F088", "radius": 3.0, "offset": [0.0, 0.0]}
                     },
-                    "font": {"name": "Famirids", "size": 36}
+                    "font": {"name": "Cochin-Bold", "size": 36}
                 }
             },
             "disabled": {
                 "textDrawing": {
                     "brush": {"fill": "30EE30"},
-                    "font": {"name": "Famirids", "size": 36}
+                    "font": {"name": "Cochin-Bold", "size": 36}
                 }
             }
         },
@@ -121,7 +135,7 @@
                  "brush": {
                      "fill": "C0FFC0",
                  },
-                 "font": {"name": "Famirids", "size": 36},
+                 "font": {"name": "Cochin-Bold", "size": 36},
              }
          },
          "hl": {
@@ -134,7 +148,7 @@
                  "brush": {
                      "fill": "C0FFC0"
                  },
-                 "font": {"name": "Famirids", "size": 36},
+                 "font": {"name": "Cochin-Bold", "size": 36},
              }
          },
          "selected": {
@@ -145,7 +159,7 @@
              },
              "textDrawing": {
                  "brush": {"fill": "B0FFB0"},
-                 "font": {"name": "Famirids", "size": 36},
+                 "font": {"name": "Cochin-Bold", "size": 36},
              }
          },
          "hlSelected": {
@@ -155,13 +169,13 @@
              },
              "textDrawing": {
                  "brush": {"fill": "D6C8B8"},
-                 "font": {"name": "Famirids", "size": 42},
+                 "font": {"name": "Cochin-Bold", "size": 42},
              }
          },
          "disabled": {
              "textDrawing": {
                  "brush": {"fill": "888886"},
-                 "font": {"name": "Famirids", "size": 36}
+                 "font": {"name": "Cochin-Bold", "size": 36}
              }
          }
      }

@@ -15,13 +15,13 @@ protocol DropMenuItem: FontScalable, SkinStylable where Self: UIView {
 
 class DropMenuView: BoxView, Skinnable {
     
+    let safeBoxView = BoxView()
     let itemsBoxView = BoxView()
 
     weak var owner: BaseViewController?
 
     override func setup() {
         super.setup()
-        self.backgroundColor = UIColor(white: 0.0, alpha: 0.1)
         itemsBoxView.insets = UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0)
         itemsBoxView.spacing = 4.0
         itemsBoxView.layer.cornerRadius = 8.0
@@ -30,11 +30,18 @@ class DropMenuView: BoxView, Skinnable {
             self.dismiss()
         }
         self.addGestureRecognizer(tapRec)
+        
+        if #available(iOS 11, *) {
+            addSubview(safeBoxView)
+            safeAreaLayoutGuide.addBoxItems([safeBoxView.boxed])
+        }
+        else {
+            items = [safeBoxView.boxed]
+        }
     }
     
     func setLayuot(_ layout: BoxLayout) {
-        items = [itemsBoxView.boxed(layout: layout)]
-        
+        safeBoxView.items = [itemsBoxView.boxed(layout: layout)]
     }
 
     func setItemViews(_ itemViews: [DropMenuItem]) {
@@ -45,12 +52,13 @@ class DropMenuView: BoxView, Skinnable {
     }
     
     func setSkin(_ skin: Skin?) {
+        self.backgroundColor = skin?.dimColor
         if let brush = skin?.dropMenu {
             itemsBoxView.setBrush(brush)
         }
         var groups = SkinKeyGroups()
         groups.setOptional(skin?.barButton, forKey: .label)
-        groups.setOptional(skin?.menuButton, forKey: .button)
+        groups.setOptional(skin?.barButton, forKey: .button)
         groups.setOptional(skin?.keyStyles, forKey: .fillButton)
         
         for item in itemsBoxView.items {

@@ -95,6 +95,15 @@
 		F58BFA91246D7F5F0067D262 /* UDStored.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58BFA90246D7F5F0067D262 /* UDStored.swift */; };
 		F58BFA93246D81110067D262 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58BFA92246D81110067D262 /* GameManager.swift */; };
 		F58BFA95246D838A0067D262 /* RoundTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58BFA94246D838A0067D262 /* RoundTableViewCell.swift */; };
+		F5B741CF2520E63B0021E488 /* VT323-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5B741C62520E63B0021E488 /* VT323-Regular.ttf */; };
+		F5B741D02520E63B0021E488 /* RingMatrixTwo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5B741C72520E63B0021E488 /* RingMatrixTwo.ttf */; };
+		F5B741D12520E63B0021E488 /* RingMatrix.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5B741C82520E63B0021E488 /* RingMatrix.ttf */; };
+		F5B741D22520E63B0021E488 /* vcr.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5B741C92520E63B0021E488 /* vcr.ttf */; };
+		F5B741D32520E63B0021E488 /* digital_gothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5B741CA2520E63B0021E488 /* digital_gothic.ttf */; };
+		F5B741D42520E63B0021E488 /* Dyonisius.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5B741CB2520E63B0021E488 /* Dyonisius.ttf */; };
+		F5B741D52520E63B0021E488 /* RingMatrix3D.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5B741CC2520E63B0021E488 /* RingMatrix3D.ttf */; };
+		F5B741D62520E63B0021E488 /* Famirids.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5B741CD2520E63B0021E488 /* Famirids.ttf */; };
+		F5B741D72520E63B0021E488 /* Segment16A Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5B741CE2520E63B0021E488 /* Segment16A Bold.ttf */; };
 		F5F19919248431CC000A2A49 /* GameSession+Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F19918248431CC000A2A49 /* GameSession+Timer.swift */; };
 /* End PBXBuildFile section */
 
@@ -192,6 +201,15 @@
 		F58BFA90246D7F5F0067D262 /* UDStored.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDStored.swift; sourceTree = "<group>"; };
 		F58BFA92246D81110067D262 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		F58BFA94246D838A0067D262 /* RoundTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundTableViewCell.swift; sourceTree = "<group>"; };
+		F5B741C62520E63B0021E488 /* VT323-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "VT323-Regular.ttf"; sourceTree = "<group>"; };
+		F5B741C72520E63B0021E488 /* RingMatrixTwo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = RingMatrixTwo.ttf; sourceTree = "<group>"; };
+		F5B741C82520E63B0021E488 /* RingMatrix.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = RingMatrix.ttf; sourceTree = "<group>"; };
+		F5B741C92520E63B0021E488 /* vcr.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = vcr.ttf; sourceTree = "<group>"; };
+		F5B741CA2520E63B0021E488 /* digital_gothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = digital_gothic.ttf; sourceTree = "<group>"; };
+		F5B741CB2520E63B0021E488 /* Dyonisius.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Dyonisius.ttf; sourceTree = "<group>"; };
+		F5B741CC2520E63B0021E488 /* RingMatrix3D.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = RingMatrix3D.ttf; sourceTree = "<group>"; };
+		F5B741CD2520E63B0021E488 /* Famirids.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Famirids.ttf; sourceTree = "<group>"; };
+		F5B741CE2520E63B0021E488 /* Segment16A Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Segment16A Bold.ttf"; sourceTree = "<group>"; };
 		F5F19918248431CC000A2A49 /* GameSession+Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameSession+Timer.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -326,6 +344,7 @@
 		F502AA2A247839E5008F281A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F5B741C52520E63B0021E488 /* Fonts */,
 				F502AA3224783CE9008F281A /* Localization */,
 				F502AA3024783A1B008F281A /* skins */,
 			);
@@ -442,6 +461,22 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		F5B741C52520E63B0021E488 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				F5B741C62520E63B0021E488 /* VT323-Regular.ttf */,
+				F5B741C72520E63B0021E488 /* RingMatrixTwo.ttf */,
+				F5B741C82520E63B0021E488 /* RingMatrix.ttf */,
+				F5B741C92520E63B0021E488 /* vcr.ttf */,
+				F5B741CA2520E63B0021E488 /* digital_gothic.ttf */,
+				F5B741CB2520E63B0021E488 /* Dyonisius.ttf */,
+				F5B741CC2520E63B0021E488 /* RingMatrix3D.ttf */,
+				F5B741CD2520E63B0021E488 /* Famirids.ttf */,
+				F5B741CE2520E63B0021E488 /* Segment16A Bold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -503,9 +538,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5B741D72520E63B0021E488 /* Segment16A Bold.ttf in Resources */,
+				F5B741D32520E63B0021E488 /* digital_gothic.ttf in Resources */,
+				F5B741D02520E63B0021E488 /* RingMatrixTwo.ttf in Resources */,
+				F5B741D12520E63B0021E488 /* RingMatrix.ttf in Resources */,
 				F502AA3124783A1B008F281A /* skins in Resources */,
+				F5B741D52520E63B0021E488 /* RingMatrix3D.ttf in Resources */,
 				F502AA3624783CE9008F281A /* Localizable.strings in Resources */,
+				F5B741CF2520E63B0021E488 /* VT323-Regular.ttf in Resources */,
+				F5B741D62520E63B0021E488 /* Famirids.ttf in Resources */,
 				F57ABAED2466D1C3004BF7D7 /* LaunchScreen.storyboard in Resources */,
+				F5B741D22520E63B0021E488 /* vcr.ttf in Resources */,
+				F5B741D42520E63B0021E488 /* Dyonisius.ttf in Resources */,
 				F57ABAEA2466D1C3004BF7D7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

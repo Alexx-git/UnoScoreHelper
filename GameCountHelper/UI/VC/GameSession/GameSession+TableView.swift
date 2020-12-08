@@ -38,6 +38,9 @@ extension GameSessionViewController {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = RoundTableViewCell.dequeue(tableView: tableView)
+        let isCompactRows = view.bounds.size.hasSmallHeight
+        let yInset: CGFloat = (isCompactRows) ? 2.0 : 4.0
+        cell.rowView.insets = UIEdgeInsets.allX(12.0).allY(yInset)
         cell.rowView.numberLabel.text = "\(indexPath.row + 1)"
         cell.rowView.numberWidth = roundViewIndexWidth
         cell.rowView.setRow(values: valuesInPlayerOrder(for: game.rounds[indexPath.row]))
@@ -45,9 +48,9 @@ extension GameSessionViewController {
         cell.rowView.spacing = columnSpacing
         cell.rowView.tag = indexPath.row
         cell.rowView.tapHandler = rowLabelTapHandler
-        if let font = minFont {
-            cell.rowView.setFont(font: font)
-        }
+//        if let font = minFont {
+//            cell.rowView.setFont(font: font)
+//        }
         for (index, label) in cell.rowView.labels.enumerated() {
             let player = game.players[index]
             let score = round.score[player.id] ?? 0
@@ -57,7 +60,7 @@ extension GameSessionViewController {
                 label.text = "\(score)"
             }
         }
-        
+        cell.rowView.maxAllowedFontSize = (isCompactRows) ? 18.0 : 36.0
         cell.rowView.setSkinGroups(rowSkinGroups)
         guard let selection = editSelection else {return cell}
         if indexPath.row == selection.row {

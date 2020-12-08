@@ -15,7 +15,7 @@ protocol Skinnable {
 typealias SkinnableView = UIView & Skinnable
 
 enum SkinKey: String {
-    case button, label, fillButton, textField, divider, image
+    case button, label, fillButton, textField, divider, image, title
     
     func groupsWithState(_ state: Skin.State, style: Skin.Style) -> [SkinKey: SkinGroup] {
         return [self: state.groupWithStyle(style)]

@@ -12,18 +12,22 @@ extension Skin {
     
     struct Shadow: Decodable
     {
-        private var colorStr: String
-        var color: UIColor {
-            return UIColor(hexString: colorStr)
-        }
-        var radius: CGFloat
-        var offset: CGSize
+//        private var colorStr: String
+        var color: UIColor = .black
+//        {
+//            return UIColor(hexString: colorStr)
+//        }
+        var radius: CGFloat = 0.0
+        var offset: CGSize = CGSize(width: 0.0, height: 0.0)
         
         enum CodingKeys: String, CodingKey {
             case colorStr = "color", radius, offset
         }
 
-        static let zero: Shadow = Shadow(colorStr: "000000", radius: 0.0, offset: .zero)
+        static let zero: Shadow = Shadow()
+//
+//        }()
+//            Shadow(color: UIColor.black, radius: 0.0, offset: .zero)
         
         func nsShadow() -> NSShadow {
             let sh = NSShadow()
@@ -32,13 +36,40 @@ extension Skin {
             sh.shadowOffset = offset
             return sh
         }
+        
+        init() {
+        }
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            let resolver = decoder.resolver!
+            container.setIfDecoded(&radius, key: .radius)
+            container.setIfDecoded(&offset, key: .offset)
+            color = resolver.colorFrom(container.decodedForKey(.colorStr))
+        }
     }
     
     struct Font: Decodable {
-        var size: CGFloat = 16.0
         var name: String? = nil
+        var size: CGFloat = 16.0
 
-        static let standard = Font(size: 16.0, name: nil)
+        static let standard = Font(name: nil, size: 16.0)
+        
+        enum CodingKeys: String, CodingKey {
+            case size, name
+        }
+        
+        init(name: String?, size: CGFloat) {
+            self.name = name
+            self.size = size
+        }
+
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            let resolver = decoder.resolver!
+            container.setIfDecoded(&size, key: .size)
+            name = resolver.fontNameFrom(container.decodedForKey(.name))
+        }
         
         func uiFont() -> UIFont {
             if let name = name {
@@ -48,6 +79,8 @@ extension Skin {
                 return UIFont.systemFont(ofSize: size)
             }
         }
+        
+        
     }
         
     struct Brush: Decodable {
@@ -70,11 +103,11 @@ extension Skin {
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-        
+            let resolver = decoder.resolver!
             let strokeColorStr = try container.decodeIfPresent(String.self, forKey: .stroke)
-            self.stroke =  UIColor(hexString: strokeColorStr)
+            self.stroke = resolver.colorFrom(strokeColorStr)
             let fillColorStr = try container.decodeIfPresent(String.self, forKey: .fill)
-            self.fill = UIColor(hexString: fillColorStr)
+            self.fill = resolver.colorFrom(fillColorStr)
             self.strokeWidth = try container.decodeIfPresent(CGFloat.self, forKey: .strokeWidth) ?? 0.0
             self.shadow = try container.decodeIfPresent(Skin.Shadow.self, forKey: .shadow)
         }

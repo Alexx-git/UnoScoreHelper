@@ -8,11 +8,36 @@
 
 import UIKit
 
+enum UIStyle: Int, Codable {
+    case light, dark
+    
+    static var current: UIStyle {
+        if #available(iOS 13.0, *) {
+            if UITraitCollection.current.userInterfaceStyle == .dark {
+                return .dark
+            }
+        }
+        return .light
+    }
+
+}
+
 class SkinManager {
+
+    static let decoder: JSONDecoder = {
+        let dec = JSONDecoder()
+        dec.userInfo = [Skin.Resolver.key: Skin.Resolver()]
+        return dec
+    }()
     
-    static let decoder = JSONDecoder()
+
     
-    static let defaultSkinName = "Simple"
+    static let defaultLightSkinName = "Cappuccino"
+    static let defaultDarkSkinName = "Coffee"
+    
+    static var defaultSkinName: String {
+        return defaultLightSkinName
+    }
     
     static let skinsPath = Bundle.main.path(forResource: "skins", ofType: "") ?? ""
     
@@ -59,7 +84,6 @@ class SkinManager {
             }
         }
         return skins
- 
     }
     
 }

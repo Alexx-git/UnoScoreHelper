@@ -24,6 +24,8 @@ class RowView: BoxView {
     
     var minAllowedFontSize: CGFloat = 16.0
     
+    var maxAllowedFontSize: CGFloat = 42.0
+    
     var divWidth: CGFloat = 1.0
     
     var numberWidth: CGFloat {
@@ -77,7 +79,6 @@ class RowView: BoxView {
         var prevLabel: UILabel? = nil
         for _ in 0..<count {
             let divView = UIView()
-            divView.backgroundColor = .red
             self.items.append(divView.boxed.width(divWidth).top(-insets.top).bottom(-insets.bottom))
             dividers.append(divView)
             let label = SkinLabel()
@@ -98,12 +99,14 @@ class RowView: BoxView {
     }
     
     func updateSkin() {
-        if let group = skinGroups[SkinKey.label] {
-            numberLabel.setSkinStyle(group.styleForState(.normal))
+        if var group = skinGroups[SkinKey.label] {
+            group.limitFontSize(maxSize: maxAllowedFontSize)
+            numberLabel.setSkinStyle(skinGroups[.title]?.styleForState(.normal))
             let groups = [SkinKey.label: group]
             for label in self.labels {
                 label.setSkinGroups(groups)
                 label.lineBreakMode = .byTruncatingTail
+//                label.backgroundColor = .yellow
             }
 
         }
@@ -112,10 +115,16 @@ class RowView: BoxView {
                 div.setBrush(group.styleForState(.normal)?.box)
             }
         }
+//        backgroundColor = .red
     }
     
+//    func setFontSize(_ fontSize: CGFloat) {
+//        numberLabel.font = numberLabel.font.withSize(fontSize)
+//        labels.forEach() { $0.font =  $0.font.withSize(fontSize) }
+//    }
+    
     func adjustFont() {
-        var minSize: CGFloat = 40.0
+        var minSize = maxAllowedFontSize
         
         let width = labelWidth()
         let size = CGSize(width: width, height: 40.0)

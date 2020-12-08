@@ -19,4 +19,10 @@ extension KeyedDecodingContainer {
             print("Error when reading json file \(error)")
         }
     }
+    
+    func decodedForKey<T: Decodable>  (_ key: KeyedDecodingContainer<K>.Key) -> T? {
+        return try? (self.decodeIfPresent(T.self, forKey: key))
+    }
 }
+
+

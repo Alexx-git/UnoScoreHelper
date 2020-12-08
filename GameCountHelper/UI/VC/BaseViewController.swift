@@ -38,6 +38,16 @@ class BaseViewController: UIViewController, CommonDataAccess {
         updateViewContent()
         updateSkin(GameManager.shared.skin)
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if #available(iOS 12.0, *) {
+            // Either .unspecified, .light, or .dark
+            let userInterfaceStyle = traitCollection.userInterfaceStyle
+        } 
+        
+    }
 
     
     func setupViewContent() {
@@ -50,7 +60,6 @@ class BaseViewController: UIViewController, CommonDataAccess {
         else {
             view.addBoxItems([safeView.boxed])
         }
-
     }
     
     func updateViewContent() {
@@ -84,5 +93,12 @@ class BaseViewController: UIViewController, CommonDataAccess {
         spinnerView = nil
         spinnerBackgroundView?.removeFromSuperview()
         spinnerBackgroundView = nil
+    }
+    
+}
+
+extension CGSize {
+    var hasSmallHeight: Bool {
+        return height < 500.0
     }
 }

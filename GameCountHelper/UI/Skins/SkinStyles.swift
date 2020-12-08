@@ -54,6 +54,16 @@ extension Skin {
             textDrawing?.adjustFontSizeToFitText(text, in: rectSize)
         }
         
+        mutating func limitFontSize(minSize: CGFloat? = nil , maxSize: CGFloat? = nil) {
+            if let font = textDrawing?.font {
+                let sz = font.pointSize
+                let limitedSize = Swift.min(Swift.max(sz, minSize ?? sz), maxSize ?? sz)
+                if sz != limitedSize {
+                    textDrawing?.font = font.withSize(limitedSize)
+                }
+            }
+        }
+        
         mutating func scaleFontBy(_ multiplier: CGFloat) {
             textDrawing?.scaleFontBy(multiplier)
         }
@@ -83,6 +93,12 @@ extension SkinGroup {
     mutating func adjustFontSizeToFitText(_ text:String, in rectSize:CGSize) {
         for state in self.keys {
             self[state]?.adjustFontSizeToFitText(text, in: rectSize)
+        }
+    }
+    
+    mutating func limitFontSize(minSize: CGFloat? = nil, maxSize: CGFloat? = nil) {
+        for state in self.keys {
+            self[state]?.limitFontSize(minSize: minSize, maxSize: maxSize)
         }
     }
     

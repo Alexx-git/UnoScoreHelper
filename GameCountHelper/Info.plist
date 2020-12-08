@@ -44,5 +44,16 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>UIAppFonts</key>
+    <array>
+        <string>Dyonisius.ttf</string>
+        <string>vcr.ttf</string>
+        <string>Famirids.ttf</string>
+        <string>RingMatrixTwo.ttf</string>
+        <string>RingMatrix3D.ttf</string>
+        <string>digital_gothic.ttf</string>
+        <string>Segment16A Bold.ttf</string>
+        <string>VT323-Regular.ttf</string>
+    </array>
 </dict>
 </plist>
