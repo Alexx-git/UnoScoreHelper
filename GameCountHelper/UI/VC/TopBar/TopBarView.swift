@@ -16,15 +16,12 @@ class TopBarView: BoxView {
     let rightButton = SkinButton.custom()
     let titleLabel = SkinLabel.newAutoLayout()
     var heightConstraint: NSLayoutConstraint?
-    
-    
+
     
     override func setup() {
         super.setup()
         axis = .x
         titleLabel.textAlignment = .center
-//        leftButton.backgroundColor = .red
-//        rightButton.backgroundColor = .red
         items = [
             leftButton.boxed.width(>=40.0).height(>=40.0).centerY(),
             titleLabel.boxed.centerX(padding: 8.0),

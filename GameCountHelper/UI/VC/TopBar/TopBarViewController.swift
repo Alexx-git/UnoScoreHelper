@@ -23,12 +23,9 @@ class TopBarViewController: BaseViewController {
             contentBoxView.boxed
         ]
     }
-
     
     override func updateViewContent() {
         super.updateViewContent()
-        
-
     }
     
     override func viewDidLayoutSubviews() {

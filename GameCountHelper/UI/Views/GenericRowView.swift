@@ -83,7 +83,6 @@ class GenericRowView<Element: UIView>: BoxView {
         var prevEl: Element? = nil
         for _ in 0..<count {
             let divView = UIView()
-            divView.backgroundColor = .red
             self.items.append(divView.boxed.width(divWidth).top(-insets.top).bottom(-insets.bottom))
             dividers.append(divView)
             let element = Element()

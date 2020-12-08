@@ -198,7 +198,6 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
     }
     
     func removePlayer(number: Int) {
-//        let player = players[number]
         
         players.remove(at: number)
         if players.count == 0 {

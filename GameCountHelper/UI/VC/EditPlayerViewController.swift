@@ -90,8 +90,7 @@ class EditPlayerViewController: TopBarViewController {
         avatarView.button.onClick = { [unowned self] btn in
             self.avatarButtonPressed(sender: btn)
         }
-//        imageView.image = UIImage(named: "profile")
-//        imageView.autoSetDimensions(to: avatarSize)
+
         avatarView.imageView.layer.cornerRadius = avatarSize.width * 0.5
         avatarView.imageView.clipsToBounds = true
         
@@ -101,7 +100,6 @@ class EditPlayerViewController: TopBarViewController {
             self.savePlayer()
         }
         
-//        textField.borderStyle = .roundedRect
         textField.text = player?.name
         textField.placeholder = "Player name".ls
         textField.font = UIFont.systemFont(ofSize: 20)
@@ -117,18 +115,11 @@ class EditPlayerViewController: TopBarViewController {
     
     func setupMenuItems() {
         topBarView.titleLabel.text = "Edit player".ls
-//        topBarView.leftButton.setTitle("Cancel".ls)
         topBarView.leftButton.setImage(UIImage.template("back"))
         topBarView.leftButton.contentEdgeInsets = .allX(8.0)
         topBarView.leftButton.onClick = { [unowned self] btn in
             self.navigationController?.popViewController(animated: true)
         }
-
-//        topBarView.rightButton.setTitle("Save".ls)
-//        topBarView.rightButton.contentEdgeInsets = .allX(8.0)
-//        topBarView.rightButton.onClick = { [unowned self] btn in
-//            self.savePlayer()
-//        }
     }
     
     @objc func adjustForKeyboard(notification: Notification) {

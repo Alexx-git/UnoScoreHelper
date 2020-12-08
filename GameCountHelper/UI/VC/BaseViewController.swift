@@ -28,8 +28,6 @@ class BaseViewController: UIViewController, CommonDataAccess {
         print(">>self: \(self)")
         super.viewDidLoad()
         setupViewContent()
-//        self.setupViewConstraints()
-//        self.setupOwnViewConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
