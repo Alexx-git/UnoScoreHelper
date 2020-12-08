@@ -24,7 +24,6 @@ class AboutViewController: TopBarViewController {
         boxView.insets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
         scrollView.addBoxItem(boxView.boxed)
         boxView.bxPinWidth(.zero, to: scrollView)
-        boxView.bxPinHeight(.zero, to: scrollView).priority = .defaultLow
         
         let introTextLabel = addTextLabel(with: "This app is build in order to provide simple and useful tool for counting numeric game scores.")
         labels.append(introTextLabel)
@@ -62,7 +61,7 @@ class AboutViewController: TopBarViewController {
     
     override func updateSkin(_ skin: Skin) {
         super.updateSkin(skin)
-        let rowSkinGroups = [SkinKey.label: skin.editableNumbers]
+        let rowSkinGroups = [SkinKey.label: skin.text.normalGroup]
         for label in labels {
             label.setSkinGroups(rowSkinGroups)
         }

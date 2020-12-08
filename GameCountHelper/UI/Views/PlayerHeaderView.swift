@@ -11,7 +11,7 @@ import BoxView
 
 class PlayerHeaderView: BoxView, RowElement {
     
-    
+    var avatarHeight: CGFloat = 60.0
     
     var image: UIImage? = nil {
         didSet {
@@ -24,19 +24,26 @@ class PlayerHeaderView: BoxView, RowElement {
     let label: SkinLabel? = SkinLabel()
     
     func updateItems() {
+        print("avatarHeight: \(avatarHeight)")
         if axis == .x {
             optItems = [
                 .flex(1.0),
-                avatarView.boxed.centerY().height(<=60.0).left(5.0).useIf(image != nil),
+                avatarView.boxed.centerY().height(==avatarHeight).left(5.0).useIf(image != nil),
                 label!.boxed.left(5.0).right(5.0),
                 .flex(1.0)
             ]
         } else {
             optItems = [
-                avatarView.boxed.centerX().width(<=60.0).useIf(image != nil),
+                avatarView.boxed.centerX().height(==avatarHeight).useIf(image != nil),
                 label!.boxed.top(>=0.0)
             ]
         }
-        
+    }
+    
+    override public func updateConstraints() {
+        super.updateConstraints()
+        print("managedConstraints: \(managedConstraints)")
+//        print("constraints: \(constraints.pretty())")
+//        subviews.forEach() {  print("---\($0)---\n\($0.constraints.pretty())")}
     }
 }

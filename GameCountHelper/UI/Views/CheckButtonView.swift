@@ -15,9 +15,6 @@ typealias CheckHandler = (CheckButtonView) -> ()
 class CheckButtonView: BoxView, DropMenuItem {
 
     
-
-    
-    
     var skinKey: SkinKey = .button
     
     var fontScale: CGFloat = 1.0
@@ -39,6 +36,11 @@ class CheckButtonView: BoxView, DropMenuItem {
         }
         get {  textLabel.text}
     }
+    
+    var numberOfLines: Int {
+        get { return textLabel.numberOfLines }
+        set { textLabel.numberOfLines = newValue }
+    }
 
     var onCheck: CheckHandler?
     
@@ -48,9 +50,7 @@ class CheckButtonView: BoxView, DropMenuItem {
     
     override func setup() {
         super.setup()
-//        addSubview(squareView)
-//        addSubview(boxView)
-        spacing = 4.0
+        spacing = 8.0
         axis = .x
         squareView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(squareView)
@@ -61,10 +61,7 @@ class CheckButtonView: BoxView, DropMenuItem {
 //        addSubview(button)
         addBoxItem(button.boxed)
         button.onClick = { [unowned self] btn in
-            print("self.button.isSelected 1: \(self.button.isSelected)")
             self.button.isSelected = !self.button.isSelected
-            print("self.button.isSelected 2: \(self.button.isSelected)")
-
             self.onCheck?(self)
         }
         button.onStateChange = { [unowned self] btn in
@@ -74,19 +71,11 @@ class CheckButtonView: BoxView, DropMenuItem {
         squareView.bxPin(.right, to: .right, of: checkLabel, pin: ==(-1.0))
         squareView.bxSetAspectFromSize(CGSize(1.0, 1.0))
         squareView.bxPin(.centerY, to: .centerY, of: checkLabel, pin: .zero)
+//        squareView.bxPinHeight(==0.0, to: textLabel)
+//        checkLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         checkLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        textLabel.setContentCompressionResistancePriority(.defaultLow + 10, for: .horizontal)
     }
-    
-//    override func setupConstraints() {
-//        super.setupConstraints()
-//        boxView.alToSuperviewWithEdgeValues(.zero)
-//        button.alToSuperviewWithEdgeValues(.zero)
-//        squareView.autoPinEdge(.left, to: .left, of: checkLabel, withOffset: 3.0)
-//        squareView.autoPinEdge(.right, to: .right, of: checkLabel, withOffset: -1.0)
-//        squareView.autoConstrainAttribute(.height, to: .width, of: squareView)
-//        squareView.autoAlignAxis(.horizontal, toSameAxisOf: checkLabel)
-//        checkLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-//    }
     
     func setFontScale(_ fontScale: CGFloat) {
         self.fontScale = fontScale

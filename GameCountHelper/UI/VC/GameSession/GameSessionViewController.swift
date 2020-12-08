@@ -36,7 +36,7 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
     var rowLabelTapHandler: RowView.LabelTapHandler?
     
     var minAllowedFontSize: CGFloat = 16.0
-    var minFont: UIFont?
+//    var minFont: UIFont?
     
     let columnSpacing: CGFloat = 5.0
     
@@ -74,7 +74,7 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         view.backgroundColor = .green
         updateItems()
         updateLayoutIfNeed()
-        playersRowView.insets = .all(12.0)
+        playersRowView.insets = UIEdgeInsets.allX(12.0).allY(6.0)
         playersRowView.spacing = columnSpacing
         playersRowView.numberLabel.text = "#".ls
         setupTableView()
@@ -85,7 +85,7 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
             self.clickedNewRoundButton()
         }
         
-        resultRowView.insets = UIEdgeInsets.allY(8.0).allX(12.0)
+        resultRowView.insets = UIEdgeInsets.allX(12.0)
         resultRowView.spacing = columnSpacing
         resultRowView.numberLabel.text = ":"
         updateResults()
@@ -153,6 +153,11 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
             }
             numPadView.rowCount = rowCount
         }
+        let isCompactRows = view.bounds.size.hasSmallHeight
+        playersRowView.maxAllowedFontSize = isCompactRows ? 24.0 : 42.0
+        resultRowView.maxAllowedFontSize = isCompactRows ? 22.0 : 42.0
+        adjustFont()
+        tableView.reloadData()
     }
     
 
@@ -170,9 +175,10 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         roundViewIndexWidth = font?.rectSizeForText("444", fontSize: font?.pointSize ?? 16).width ?? 0
 //        let titleGroups = SkinKey.label.groupsWithNormalStyle(skin.h1)
         let divGroup = Skin.State.normal.groupWithStyle(Skin.Style(box: skin.divider, textDrawing: nil))
-        let titleGroups = [SkinKey.label: skin.letterStyles.group, SkinKey.divider: divGroup]
+        let titleGroup = Skin.State.normal.groupWithStyle(skin.h1)
+        let titleGroups = [SkinKey.title: titleGroup, SkinKey.label: titleGroup, SkinKey.divider: divGroup]
         playersRowView.setSkinGroups(titleGroups)
-        let scoreGroups = [SkinKey.label: skin.editableNumbers, SkinKey.divider: divGroup]
+        let scoreGroups = [SkinKey.title: skin.h1.normalGroup, SkinKey.label: skin.editableNumbers, SkinKey.divider: divGroup]
 
         rowSkinGroups = scoreGroups
         titleDivView.setBrush(skin.divider)
@@ -184,9 +190,8 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
         numPadView.setSkin(skin)
         playersRowView.numberWidth = roundViewIndexWidth
         resultRowView.numberWidth = roundViewIndexWidth
-//        editingView.setSkinGroups(SkinKey.textField.groupsWithNormalStyle(skin.h1))
-//        playersRowView.adjustFont()
         adjustFont()
+        tableView.reloadData()
     }
     
     func updateItems() {
@@ -203,18 +208,17 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
             resultDivView.boxed,
             resultRowView.boxed,
             newRoundButton.boxed.all(16.0).bottom(0.0).useIf(!inPlace),
-            numPadView.boxed.all(16.0).bottom(0.0).useIf(inPlace),
-            BoxItem.guide().height(0.0).bottom(>=16.0)
+            numPadView.boxed.allX(16.0).top(8.0).bottom(0.0).useIf(inPlace),
+            BoxItem.guide().height(0.0).bottom(>=0.0)
         ]
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        if UIDevice.current.orientation.isLandscape {
-            playersRowView.setLayoutOrientation(orientation: .x)
-        } else {
-            playersRowView.setLayoutOrientation(orientation: .y)
-        }
+        let avatarHeight: CGFloat = size.hasSmallHeight ? 40.0 : 60.0
+        let playerHeaderAxis: BoxLayout.Axis = (UIDevice.current.orientation.isLandscape) ? .x : .y
+        playersRowView.setLayoutAxis(playerHeaderAxis, avatarHeight: avatarHeight)
+        
     }
 
     func valuesInPlayerOrder(for round: Round) -> [String] {
@@ -321,7 +325,7 @@ class GameSessionViewController: TopBarViewController, UITableViewDataSource, UI
             guard let text = "\(score)" as? NSString else {continue}
             minSize = min(minSize, font.maxFontSizeForText(text, in: size))
         }
-        minFont = font.withSize(max(minSize, minAllowedFontSize))
+//        minFont = font.withSize(max(minSize, minAllowedFontSize))
         playersRowView.adjustFont()
         resultRowView.adjustFont()
 //        tableView.reloadData()

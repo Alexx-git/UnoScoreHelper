@@ -286,6 +286,12 @@ class GameSettingsViewController: TopBarViewController, UITableViewDelegate, UIT
                     self.removePlayer(number: indexPath.row)
                 }
             }
+            let images = players.filter{$0.image != nil}
+            if images.count > 0 {
+                cell.useInset = true
+            } else {
+                cell.useInset = false
+            }
             cell.setSkinGroups(playerCellGroups)
             return cell
         } else {

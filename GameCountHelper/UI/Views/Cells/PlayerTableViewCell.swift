@@ -18,9 +18,11 @@ class PlayerTableViewCell: BaseTableViewCell {
     }
     
     let avatarView = UIImageView.newAutoLayout()
+    let insetView = UIView.newAutoLayout()
     let label = SkinLabel.newAutoLayout()
     let removeButton = SkinButton.newAutoLayout()
     let imgSide: CGFloat = 60.0
+    var useInset: Bool = false
     var avatar: UIImage? = nil {
         didSet {
             avatarView.image = avatar
@@ -49,6 +51,7 @@ class PlayerTableViewCell: BaseTableViewCell {
         boxView.optItems = [
             removeButton.boxed.centerY().height(40.0).right(-16.0).useIf(removeButtonPosition == .left),
             avatarView.boxed.left(16.0).width(imgSide).height( (==imgSide).withPriority(.defaultHigh)).right(-8.0).useIf(avatar != nil),
+            BoxItem.guide().left(16.0).width(imgSide).right(-8.0).useIf(avatar == nil  && useInset),
             label.boxed.left(16.0).right(>=8.0).centerY(),
             removeButton.boxed.centerY().height(40.0).useIf(removeButtonPosition == .right)
         ]

@@ -27,6 +27,8 @@ class EditPlayerViewController: TopBarViewController {
         
     let avatarView = AvatarView()
     
+    let fieldView = BoxView(insets: .all(8.0))
+    
     let textField = SkinTextField()
     
     let saveButton = SkinButton()
@@ -72,12 +74,13 @@ class EditPlayerViewController: TopBarViewController {
         let constraints = scrollView.addBoxItem(boxView.boxed)
         print("cons: \(constraints)")
 //        keyboardAvoidingBottomConstraint = constraints[3]
+        fieldView.items = [textField.boxed]
         scrollView.bxPin(.width, to: .width, of: boxView, pin: .zero)
         boxView.insets = UIEdgeInsets(top: 20.0, left: 20.0, bottom: 20.0, right: 20.0)
         boxView.spacing = 20.0
         boxView.items = [
             avatarView.boxed.centerX(),
-            textField.boxed,
+            fieldView.boxed,
             saveButton.boxed.bottom(>=16.0)
         ]
         image = player?.image
@@ -98,11 +101,11 @@ class EditPlayerViewController: TopBarViewController {
             self.savePlayer()
         }
         
-        textField.borderStyle = .roundedRect
+//        textField.borderStyle = .roundedRect
         textField.text = player?.name
         textField.placeholder = "Player name".ls
         textField.font = UIFont.systemFont(ofSize: 20)
-        
+        fieldView.layer.cornerRadius = 8.0
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
@@ -151,8 +154,9 @@ class EditPlayerViewController: TopBarViewController {
         if let brush = skin.avatar.textDrawing?.brush {
             avatarView.setBrush(brush)
         }
-    
-        textField.setSkinStyle(skin.editableNumbers.styleForState(.normal))
+        fieldView.setBrush(skin.editableNumbers.styleForState(.selected)?.box)
+        textField.setSkinStyle(skin.text)
+//        textField.setSkinStyle(skin.h1)
         
         saveButton.setSkinGroups([.button: skin.keyStyles])
     }

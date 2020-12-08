@@ -62,7 +62,6 @@ class NumPadInputView: BoxView, Skinnable {
         let onNumClick: ClickButton.Handler = { [unowned self] btn in
             self.handler?(.num(value: btn.tag))
         }
-        insets = .allY(16.0)
         numButtons = []
         for i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] {
             let btn = SkinButton()

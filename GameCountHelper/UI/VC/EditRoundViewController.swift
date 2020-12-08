@@ -166,7 +166,7 @@ class EditRoundViewController: TopBarViewController, UITextFieldDelegate {
     func editLabelNumPadClicked(_ value: String) {
         if let edit = currentLabel {
             
-            if edit.text?.count ?? 0 >= GameManager.shared.settings.digitLimit {
+            if edit.text?.count ?? 0 >= GameSettings.digitLimit {
                 showDigitLimitAlert()
             } else if edit.text == "-" {
                 edit.text = value
@@ -213,7 +213,7 @@ class EditRoundViewController: TopBarViewController, UITextFieldDelegate {
     }
     
     func showDigitLimitAlert() {
-        showInfoAlert(title: "Too long!", message: "You may not input values with more than \(GameManager.shared.settings.digitLimit) digits")
+        showInfoAlert(title: "Too long!", message: "You may not input values with more than \(GameSettings.digitLimit) digits")
     }
 
 }

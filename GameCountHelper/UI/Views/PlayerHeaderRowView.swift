@@ -26,11 +26,13 @@ class PlayerHeaderRowView: ElementRowView {
         }
     }
     
-    func setLayoutOrientation(orientation: BoxLayout.Axis) {
+    func setLayoutAxis(_ axis: BoxLayout.Axis, avatarHeight: CGFloat) {
         for element in elements {
-            let header = element as! PlayerHeaderView
-            header.axis = orientation
-            header.updateItems()
+            if let header = element as? PlayerHeaderView {
+                header.axis = axis
+                header.avatarHeight = avatarHeight
+                header.updateItems()
+            }
         }
     }
 

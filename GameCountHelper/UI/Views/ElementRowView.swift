@@ -34,6 +34,8 @@ extension SkinLabel: RowElement {
     
     var minAllowedFontSize: CGFloat = 16.0
     
+    var maxAllowedFontSize: CGFloat = 42.0
+    
     var divWidth: CGFloat = 1.0
     
     var numberWidth: CGFloat {
@@ -129,7 +131,7 @@ extension SkinLabel: RowElement {
     }
     
     func adjustFont() {
-        var minSize: CGFloat = 40.0
+        var minSize = maxAllowedFontSize
         
         let width = labelWidth()
         let size = CGSize(width: width, height: 40.0)

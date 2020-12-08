@@ -64,7 +64,7 @@ extension GameSessionViewController {
     
     func onNumPadAddValue(_ value: String) {
         if let label = editSelection?.label {
-            if label.text?.count ?? 0 >= GameManager.shared.settings.digitLimit {
+            if label.text?.count ?? 0 >= GameSettings.digitLimit {
                 showDigitLimitAlert()
             } else if label.text == "-" {
                 label.text = value
@@ -111,6 +111,6 @@ extension GameSessionViewController {
     }
     
     func showDigitLimitAlert() {
-        showInfoAlert(title: "Too long!", message: "You may not input values with more than \(GameManager.shared.settings.digitLimit) digits")
+        showInfoAlert(title: "Too long!", message: "You may not input values with more than \(GameSettings.digitLimit) digits")
     }
 }
